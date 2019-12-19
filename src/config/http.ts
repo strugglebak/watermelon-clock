@@ -4,7 +4,7 @@ const appID = 'PQ2epU1JRZiN9mCbY2F68kTw '
 const appSecret = 'H2yBbH9gizUgN8vPiFNgXeGr'
 
 const instance = http.create({
-  baseURL: 'https://gp-server.hunger-valley.com/',
+  baseURL: 'https://gp-server.hunger-valley.com',
   headers: {
     't-app-id': appID,
     't-app-secret': appSecret

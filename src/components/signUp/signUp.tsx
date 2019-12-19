@@ -1,7 +1,19 @@
 import React, { Component } from 'react'
-import { Input, Button, Icon } from 'antd'
+import { Input, Button, Icon, message } from 'antd'
+import http from '../../config/http'
+import { Link } from 'react-router-dom'
 
-export class signUp extends Component {
+interface ISignUpState {
+  account: string
+  password: string
+  passwordConfirmed: string
+}
+
+interface IRouter {
+  history: any
+}
+
+export class signUp extends Component<IRouter, ISignUpState> {
 
   constructor(props: any) {
     super(props);
@@ -12,18 +24,32 @@ export class signUp extends Component {
     }
   }
 
+  onChange = (key: keyof ISignUpState, e: any) => {
+    const newState = {} as ISignUpState
+    newState[key] = e.target.value
+    this.setState(newState)
+  }
 
-  onAccountInputChange = (e: any) => {
-    const account = e.target.value
-    this.setState({ account })
+  goToLogin = () => {
+    this.props.history.push('/login')
   }
-  onPasswordInputChange = (e: any) => {
-    const password = e.target.value
-    this.setState({ password })
-  }
-  onPasswordConfirmedInputChange = (e: any) => {
-    const passwordConfirmed = e.target.value
-    this.setState({ passwordConfirmed })
+
+  submit = async () => {
+    const { account, password, passwordConfirmed } = this.state
+    try {
+      await http.post('/sign_up/user', {
+        account, password, password_confirmation: passwordConfirmed
+      })
+
+      message.success('注册成功! 3s 后跳转至登录页...')
+      setTimeout(() => {
+        this.goToLogin()
+      }, 3000)
+
+    } catch (e) {
+      message.error('注册失败!')
+      throw new Error(e)
+    }
   }
 
   render() {
@@ -31,19 +57,21 @@ export class signUp extends Component {
       <>
         <h1>注册</h1>
         <Input
-          placeholder="请输入账号" allowClear
+          placeholder="账号" allowClear
           prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={this.onAccountInputChange}
+          onChange={e => {this.onChange('account', e)}}
         />
-        <Input.Password placeholder="请输入密码" allowClear
+        <Input.Password placeholder="密码" allowClear
           prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={this.onPasswordInputChange}
+          onChange={e => {this.onChange('password', e)}}
         />
         <Input.Password placeholder="确认密码" allowClear
           prefix={<Icon type="safety-certificate" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={this.onPasswordConfirmedInputChange}
+          onChange={e => {this.onChange('passwordConfirmed', e)}}
         />
-        <Button type="primary">注册</Button>
+        <Button type="primary" onClick={this.submit}>注册</Button>
+        <br/>
+        Or 已经有账号？<Link to="/login">立即登录</Link>
       </>
     )
   }

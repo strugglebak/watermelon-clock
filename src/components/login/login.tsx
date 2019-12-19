@@ -1,7 +1,18 @@
 import React, { Component } from 'react'
 import { Input, Button, Icon } from 'antd'
+import http from '../../config/http'
+import { Link } from 'react-router-dom'
 
-export class login extends Component {
+interface ILoginState {
+  account: string
+  password: string
+}
+
+interface IRouter {
+  history: any
+}
+
+export class login extends Component<IRouter, ILoginState> {
 
   constructor(props: any) {
     super(props);
@@ -11,13 +22,27 @@ export class login extends Component {
     }
   }
 
-  onAccountInputChange = (e: any) => {
-    const account = e.target.value
-    this.setState({ account })
+  onChange = (key: keyof ILoginState, e: any) => {
+    const newState = {} as ILoginState
+    newState[key] = e.target.value
+    this.setState(newState)
   }
-  onPasswordInputChange = (e: any) => {
-    const password = e.target.value
-    this.setState({ password })
+
+  goToSignUp = () => {
+    this.props.history.push('/signUp')
+  }
+  goToIndex = () => {
+    this.props.history.push('/')
+  }
+
+  submit = async () => {
+    const { account, password } = this.state
+    try {
+      await http.post('/sign_in/user', { account, password })
+      this.goToIndex()
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 
   render() {
@@ -25,15 +50,17 @@ export class login extends Component {
       <>
         <h1>登录</h1>
         <Input
-          placeholder="请输入账号" allowClear
+          placeholder="账号" allowClear
           prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={this.onAccountInputChange}
+          onChange={e => {this.onChange('account', e)}}
         />
-        <Input.Password placeholder="请输入密码" allowClear
+        <Input.Password placeholder="密码" allowClear
           prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={this.onPasswordInputChange}
+          onChange={e => {this.onChange('password', e)}}
         />
-        <Button type="primary">登录</Button>
+        <Button type="primary" onClick={this.submit}>登录</Button>
+        <br/>
+        Or 还没有账号？<Link to="/signUp">立即注册</Link>
       </>
     )
   }

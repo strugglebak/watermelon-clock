@@ -1,26 +1,52 @@
 import React, { Component } from 'react'
-import Login from '../login/login'
-import SignUp from '../signUp/signUp'
-import { Button } from 'antd'
+import { Button, message } from 'antd'
+import http from '../../config/http'
 
 interface IRouter {
   history: any
 }
 
-export class index extends Component<IRouter, {}> {
-  login = () => {
+interface IIndexState {
+  userInfo: any
+}
+
+export class index extends Component<IRouter, IIndexState> {
+
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      userInfo: {}
+    }
+  }
+
+  async componentWillMount() {
+    await this.getUserInfo()
+  }
+
+  getUserInfo = async () => {
+    try {
+      const response = await http.get('/me')
+      const userInfo = response.data
+      this.setState({ userInfo })
+    } catch (e) {
+      message.error('用户登录失败!')
+    }
+  }
+
+  gotoLogin = () => {
     this.props.history.push('/login')
   }
 
-  signUp = () => {
-    this.props.history.push('/signUp')
+  logout = () => {
+    localStorage.setItem('x-token', '')
+    this.gotoLogin()
   }
 
   render() {
     return (
       <div>
-        <Button onClick={this.login}>登录</Button>
-        <Button onClick={this.signUp}>注册</Button>
+        <h1>欢迎用户 {this.state.userInfo.account} 登录!!!</h1>
+        <Button onClick={this.logout}>注销</Button>
       </div>
     )
   }
