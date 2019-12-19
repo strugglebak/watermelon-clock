@@ -29,7 +29,8 @@ export class index extends Component<IRouter, IIndexState> {
       const userInfo = response.data
       this.setState({ userInfo })
     } catch (e) {
-      message.error('用户登录失败!')
+      // console.log(e)
+      // message.error('用户登录失败!')
     }
   }
 
