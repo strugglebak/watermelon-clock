@@ -32,6 +32,10 @@ instance.interceptors.response.use(
   },
   e => {
     console.log('response error: ', e)
+    if (e.response.status === 401) {
+      // 一般是如果鉴权失败，需要做重定向跳转到登录页
+      window.location.href = '/login'
+    }
     return Promise.reject(e)
   }
 )
