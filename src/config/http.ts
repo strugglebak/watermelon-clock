@@ -1,4 +1,5 @@
 import http from 'axios'
+import history from './history'
 
 const appID = 'PQ2epU1JRZiN9mCbY2F68kTw '
 const appSecret = 'H2yBbH9gizUgN8vPiFNgXeGr'
@@ -34,7 +35,7 @@ instance.interceptors.response.use(
     console.log('response error: ', e)
     if (e.response.status === 401) {
       // 一般是如果鉴权失败，需要做重定向跳转到登录页
-      window.location.href = '/login'
+      history.push('/login')
     }
     return Promise.reject(e)
   }
