@@ -6,7 +6,6 @@ import SignUp from './components/signUp/signUp'
 import {
   BrowserRouter as Router,
   Route,
-  Link
 } from 'react-router-dom'
 
 const App: React.FC = () => {
@@ -21,4 +20,4 @@ const App: React.FC = () => {
   );
 }
 
-export default App;
+export default App
