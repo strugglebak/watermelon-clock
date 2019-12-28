@@ -50,19 +50,27 @@ export class login extends Component<IRouter, ILoginState> {
   render() {
     return (
       <div className="page-login">
-        <h1>登录</h1>
+        <h1 className="login-header">登录</h1>
         <Input
+          className="account-input"
           placeholder="账号" allowClear
           prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('account', e)}}
         />
-        <Input.Password placeholder="密码" allowClear
+        <Input.Password
+          className="password-input"
+          placeholder="密码" allowClear
           prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('password', e)}}
         />
-        <Button type="primary" onClick={this.submit}>登录</Button>
-        <br/>
-        Or 还没有账号？<Link to="/signUp">立即注册</Link>
+        <Button
+          className="login-btn"
+          type="primary" onClick={this.submit}>
+            登录
+        </Button>
+        <p className="register-link">
+          还没有账号？<Link to="/signUp">立即注册</Link>
+        </p>
       </div>
     )
   }

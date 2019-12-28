@@ -3,6 +3,8 @@ import { Input, Button, Icon, message } from 'antd'
 import http from '../../config/http'
 import { Link } from 'react-router-dom'
 
+import './signUp.styl'
+
 interface ISignUpState {
   account: string
   password: string
@@ -54,25 +56,35 @@ export class signUp extends Component<IRouter, ISignUpState> {
 
   render() {
     return (
-      <>
-        <h1>注册</h1>
+      <div className="page-sign-up">
+        <h1 className="sign-up-header">注册</h1>
         <Input
+          className="account-input"
           placeholder="账号" allowClear
           prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('account', e)}}
         />
-        <Input.Password placeholder="密码" allowClear
+        <Input.Password
+          className="password-input"
+          placeholder="密码" allowClear
           prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('password', e)}}
         />
-        <Input.Password placeholder="确认密码" allowClear
+        <Input.Password
+          className="password-confirmed-input"
+          placeholder="确认密码" allowClear
           prefix={<Icon type="safety-certificate" style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('passwordConfirmed', e)}}
         />
-        <Button type="primary" onClick={this.submit}>注册</Button>
-        <br/>
-        Or 已经有账号？<Link to="/login">立即登录</Link>
-      </>
+        <Button
+          className="sign-up-btn"
+          type="primary" onClick={this.submit}>
+            注册
+        </Button>
+        <p className="login-link">
+          已经有账号？<Link to="/login">立即登录</Link>
+        </p>
+      </div>
     )
   }
 }
