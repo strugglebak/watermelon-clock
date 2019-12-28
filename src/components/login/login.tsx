@@ -3,6 +3,8 @@ import { Input, Button, Icon } from 'antd'
 import http from '../../config/http'
 import { Link } from 'react-router-dom'
 
+import './login.styl'
+
 interface ILoginState {
   account: string
   password: string
@@ -47,7 +49,7 @@ export class login extends Component<IRouter, ILoginState> {
 
   render() {
     return (
-      <>
+      <div className="page-login">
         <h1>登录</h1>
         <Input
           placeholder="账号" allowClear
@@ -61,7 +63,7 @@ export class login extends Component<IRouter, ILoginState> {
         <Button type="primary" onClick={this.submit}>登录</Button>
         <br/>
         Or 还没有账号？<Link to="/signUp">立即注册</Link>
-      </>
+      </div>
     )
   }
 }

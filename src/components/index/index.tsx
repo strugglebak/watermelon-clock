@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, message } from 'antd'
+import { Button } from 'antd'
 import http from '../../config/http'
 
 interface IRouter {
