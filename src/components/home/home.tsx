@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Button } from 'antd'
 import http from '../../config/http'
+import Header from '../header/header'
 
-interface IRouter {
+interface IRouterProps {
   history: any
 }
 
@@ -10,7 +10,7 @@ interface IIndexState {
   userInfo: any
 }
 
-export class index extends Component<IRouter, IIndexState> {
+export class home extends Component<IRouterProps, IIndexState> {
 
   constructor(props: any) {
     super(props);
@@ -34,23 +34,16 @@ export class index extends Component<IRouter, IIndexState> {
     }
   }
 
-  gotoLogin = () => {
-    this.props.history.push('/login')
-  }
-
-  logout = () => {
-    localStorage.setItem('x-token', '')
-    this.gotoLogin()
-  }
 
   render() {
     return (
       <div>
-        <h1>欢迎用户 {this.state.userInfo.account} 登录!!!</h1>
-        <Button onClick={this.logout}>注销</Button>
+        <Header
+          userInfo={this.state.userInfo}
+        />
       </div>
     )
   }
 }
 
-export default index
+export default home

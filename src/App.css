@@ -12,6 +12,10 @@ ul li {
   list-style: none;
 }
 
+a {
+  text-decoration: none;
+}
+
 .App {
   /* text-align: center; */
 }

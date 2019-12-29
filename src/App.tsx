@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Index from './components/index/index'
+import Home from './components/home/home'
 import Login from './components/login/login'
 import SignUp from './components/signUp/signUp'
 import history from './config/history'
@@ -10,7 +10,7 @@ const App: React.FC = () => {
   return (
     <Router history={history}>
       <div className="App">
-        <Route path="/" exact={true} component={Index} />
+        <Route path="/" exact={true} component={Home} />
         <Route path="/login" component={Login} />
         <Route path="/signUp" component={SignUp} />
       </div>
