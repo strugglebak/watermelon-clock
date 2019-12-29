@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import http from '../../config/http'
 import Header from '../header/header'
+import Todos from '../todos/todos'
 
 interface IRouterProps {
   history: any
@@ -37,10 +38,9 @@ export class home extends Component<IRouterProps, IIndexState> {
 
   render() {
     return (
-      <div>
-        <Header
-          userInfo={this.state.userInfo}
-        />
+      <div id="Home">
+        <Header userInfo={this.state.userInfo} />
+        <Todos/>
       </div>
     )
   }
