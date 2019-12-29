@@ -63,6 +63,7 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
           onBlur={this.onBlur}
           onKeyUp={this.onKeyUp}
           onChange={this.onChange}
+          value={this.state.description}
           suffix={suffix}
         />
       </div>
