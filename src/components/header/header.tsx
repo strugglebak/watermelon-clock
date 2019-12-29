@@ -21,7 +21,7 @@ const logout = () => {
 const menu = (
   <Menu>
     <Menu.Item key="0"><Icon type="user" />个人设置</Menu.Item>
-    <Menu.Item key="1"><Icon type="logout" onClick={logout}/>登出</Menu.Item>
+    <Menu.Item key="1" onClick={logout}><Icon type="logout"/>登出</Menu.Item>
   </Menu>
 )
 
