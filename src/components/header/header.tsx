@@ -13,7 +13,6 @@ const gotoLogin = () => {
 }
 
 const logout = () => {
-  console.log(111)
   localStorage.setItem('x-token', '')
   gotoLogin()
 }
