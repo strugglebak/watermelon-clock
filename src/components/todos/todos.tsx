@@ -38,7 +38,7 @@ export class todos extends Component<any, ITodosState> {
     try {
       const response = await http.put(`/todos/${id}`, params)
       // 对比 id 找到点击 checkbox 完成的 todo 然后更新对应项
-      const newTodos = todos.map(todo=> {
+      const newTodos = todos.map(todo => {
         return id === todo.id ? response.data.resource : todo
       })
       this.setState({todos: newTodos})
@@ -50,12 +50,27 @@ export class todos extends Component<any, ITodosState> {
   getTodos = async () => {
     try {
       const response = await http.get('/todos')
-      this.setState({
-        todos: response.data.resources
+      const { resources } = response.data
+      // mount 时需要对每个 todo 的编辑状态置为 false
+      const newTodos = resources.map((todo: any) => {
+        return Object.assign({}, todo, { editing: false })
       })
+      this.setState({ todos: newTodos })
     } catch (e) {
       throw new Error(e)
     }
+  }
+
+  // 双击 todo 能进入编辑状态
+  getIntoEditingState = (id: number) => {
+    const { todos } = this.state
+    // 这里依然是通过 id 比对然后更新对应项的 editing 状态
+    const newTodos = todos.map(todo => {
+      return id === todo.id
+        ? Object.assign({}, todo, { editing: true })
+        : Object.assign({}, todo, { editing: false })
+    })
+    this.setState({ todos: newTodos })
   }
 
   render() {
@@ -65,8 +80,10 @@ export class todos extends Component<any, ITodosState> {
         <main>
           <ul>
             {
-              this.state.todos.map(
-                todo=><TodoItem key={todo.id} {...todo} updateTodo={this.updateTodo}/>
+              this.state.todos.map(todo =>
+                <TodoItem key={todo.id} {...todo} updateTodo={this.updateTodo}
+                getIntoEditingState={this.getIntoEditingState}
+                />
               )
             }
           </ul>
