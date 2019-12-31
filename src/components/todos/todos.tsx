@@ -3,6 +3,8 @@ import TodoInput from './todoInput'
 import TodoItem from './todoItem'
 import http from '../../config/http'
 
+import './todos.styl'
+
 interface ITodosState {
   todos: any[]
 }
