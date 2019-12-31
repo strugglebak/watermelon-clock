@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
 import { Input, Icon } from 'antd'
 
+import { connect } from 'react-redux'
+import { addTodo } from '../../redux/actions'
+
+import http from '../../config/http'
+
 interface ITodoInputState {
   description: string
   focus: boolean
 }
 
 interface ITodoInputProps {
-  addTodo: (params: any) => void
+  addTodo: (payload: any) => any
 }
 
 export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
@@ -32,7 +37,6 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
   onKeyUp = (e: any) => {
     if (e.keyCode === 13 && this.state.description !== '') {
       this.addTodo()
-      this.setState({description: ''})
     }
   }
 
@@ -42,9 +46,15 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
     })
   }
 
-  addTodo = () => {
+  addTodo = async () => {
     const { description } = this.state
-    this.props.addTodo({ description })
+    try {
+      const response = await http.post('/todos', { description })
+      this.props.addTodo(response.data.resource)
+    } catch (e) {
+      throw new Error(e)
+    }
+    this.setState({description: ''})
   }
 
   render() {
@@ -71,4 +81,12 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
   }
 }
 
-export default todoInput
+const mapStateToProps = (state: any, ownProps: any) => ({
+  ...ownProps
+})
+
+const mapDispatchToProps = {
+  addTodo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(todoInput)

@@ -3,6 +3,9 @@ import TodoInput from './todoInput'
 import TodoItem from './todoItem'
 import http from '../../config/http'
 
+import { connect } from 'react-redux'
+import { addTodo } from '../../redux/actions'
+
 import './todos.styl'
 
 interface ITodosState {
@@ -24,19 +27,6 @@ export class todos extends Component<any, ITodosState> {
 
   componentDidMount() {
     this.getTodos()
-  }
-
-  addTodo = async (params: any) => {
-    const { description } = params
-    const { todos } = this.state
-    try {
-      const response = await http.post('/todos', { description })
-      this.setState({
-        todos: [response.data.resource, ...todos]
-      })
-    } catch (e) {
-      throw new Error(e)
-    }
   }
 
   updateTodo = async (id: number, params: any) => {
@@ -82,7 +72,7 @@ export class todos extends Component<any, ITodosState> {
   render() {
     return (
       <div className="todos">
-        <TodoInput addTodo={this.addTodo} />
+        <TodoInput />
         <main>
           <ul className="todo-list">
             {
@@ -108,4 +98,13 @@ export class todos extends Component<any, ITodosState> {
   }
 }
 
-export default todos
+const mapStateToProps = (state: any, ownProps: any) => ({
+  todos: state.todos,
+  ...ownProps
+})
+
+const mapDispatchToProps = {
+  addTodo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(todos)
