@@ -16,6 +16,10 @@ export class todos extends Component<any, ITodosState> {
     }
   }
 
+  get unDeletedTodos () { return this.state.todos.filter(todo => !todo.deleted) }
+  get unCompletedTodos () { return this.state.todos.filter(todo => !todo.completed) }
+  get completedTodos () { return this.state.todos.filter(todo => todo.completed) }
+
   componentDidMount() {
     this.getTodos()
   }
@@ -78,11 +82,20 @@ export class todos extends Component<any, ITodosState> {
       <div className="todos">
         <TodoInput addTodo={this.addTodo} />
         <main>
-          <ul>
+          <ul className="todo-list">
             {
-              this.state.todos.map(todo =>
-                <TodoItem key={todo.id} {...todo} updateTodo={this.updateTodo}
-                getIntoEditingState={this.getIntoEditingState}
+              this.unCompletedTodos.map(todo =>
+                <TodoItem key={todo.id} {...todo}
+                  updateTodo={this.updateTodo}
+                  getIntoEditingState={this.getIntoEditingState}
+                />
+              )
+            }
+            {
+              this.completedTodos.map(todo =>
+                <TodoItem key={todo.id} {...todo}
+                  updateTodo={this.updateTodo}
+                  getIntoEditingState={this.getIntoEditingState}
                 />
               )
             }

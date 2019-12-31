@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Checkbox, Icon } from 'antd'
+import classNames from 'classnames'
 
 import './todoItem.styl'
 
@@ -8,7 +9,7 @@ interface ITodoItemProps {
   id: number
   user_id: number
   completed: boolean
-  completed_at: null
+  completed_at: any
   deleted: boolean
   description: string
   extra: any
@@ -50,7 +51,6 @@ export class todoItem extends Component<ITodoItemProps, ITodoItemState> {
   }
 
   onBlur = (e: any) => {
-    console.log(111)
     this.update({
       description: this.state.editingText,
       editing: false
@@ -60,26 +60,37 @@ export class todoItem extends Component<ITodoItemProps, ITodoItemState> {
 
   render() {
 
-    const EditingUI = <div className="editing">
-      <input className="editing-input" type="text" value={this.state.editingText}
-        onChange={e => this.setState({editingText: e.target.value})}
+    const EditingUI = <div className="editing-input-wrapper">
+      <textarea className="editing-input" value={this.state.editingText}
+        onChange={e => this.setState({editingText: e.target.value.trim()})}
         onKeyUp={this.onKeyUp}
         onBlur={this.onBlur}
       />
       <div className="icon-wrapper">
-        <Icon type="enter" style={{
-          cursor: 'pointer', fontSize: '16px'
-        }}/>
-        <Icon type="delete" style={{
-          cursor: 'pointer', fontSize: '16px'
-        }}/>
+        <Icon className="icon-enter" type="enter" style={{
+            cursor: 'pointer', fontSize: '16px'
+          }}
+          onClick={e => this.update({description: this.state.editingText})}
+          />
+        <Icon className="icon-delete" type="delete" style={{
+            cursor: 'pointer', fontSize: '16px'
+          }}
+          theme="filled"
+          onClick={e => this.update({ deleted: true })}
+        />
       </div>
     </div>
 
-    const TextUI = <span onDoubleClick={this.getIntoEditingState}>{this.props.description}</span>
+    const TextUI = <span className="text" onDoubleClick={this.getIntoEditingState}>{this.props.description}</span>
+
+    const todoItemClasses = classNames({
+      todoItem: true,
+      editing: this.props.editing,
+      completed: this.props.completed
+    })
 
     return (
-      <li className="todo-item">
+      <li className={todoItemClasses}>
         <Checkbox className="checkbox" checked={ this.props.completed }
           onChange={e => this.update({ completed: e.target.checked })}
         />

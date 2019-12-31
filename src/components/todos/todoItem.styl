@@ -1,13 +1,32 @@
-.todo-item
+.todoItem
   display flex
+  cursor auto
+  padding 4px
+  &:hover
+    background #f9f9f9
+  &.editing
+    background #FFF4D0
 
-  .editing
+  .editing-input-wrapper
     display flex
     justify-content space-between
     align-items center
     width 100%
+    margin-left 4px
+  span
+    margin-left 4px
 
-  input[type='text']
+  textarea, span.text
     flex 1 1 auto
-    border none
+    outline none
+    border 0
     background transparent
+
+  .editing-input
+    white-space pre-line
+    height 22px
+    resize none
+
+  .icon-wrapper
+    .icon-delete
+      margin-left 4px
