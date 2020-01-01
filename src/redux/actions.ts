@@ -2,7 +2,8 @@ import {
   ADD_TODO,
   INIT_TODOS,
   UPDATE_TODO,
-  EDITING_TODO
+  EDITING_TODO,
+  ADD_WATERMELON
 } from './actionTypes'
 
 export const addTodo = (payload: any) => {
@@ -29,6 +30,13 @@ export const updateTodo = (payload: any) => {
 export const editingTodo = (payload: number) => {
   return {
     type: EDITING_TODO,
+    payload
+  }
+}
+
+export const addWaterMelon = (payload: any) => {
+  return {
+    type: ADD_WATERMELON,
     payload
   }
 }

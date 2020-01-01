@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import http from '../../config/http'
 import Header from '../header/header'
 import Todos from '../todos/todos'
+import WaterMelon from '../waterMelon/waterMelon'
+
+import './home.styl'
 
 interface IRouterProps {
   history: any
@@ -40,7 +43,10 @@ export class home extends Component<IRouterProps, IIndexState> {
     return (
       <div id="Home">
         <Header userInfo={this.state.userInfo} />
-        <Todos/>
+        <main className="content">
+          <WaterMelon/>
+          <Todos/>
+        </main>
       </div>
     )
   }
