@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Checkbox, Icon } from 'antd'
 import classNames from 'classnames'
+import http from '../../config/http'
+
+import { connect } from 'react-redux'
+import {editingTodo, updateTodo} from '../../redux/actions'
 
 import './todoItem.styl'
 
@@ -15,9 +19,9 @@ interface ITodoItemProps {
   extra: any
   created_at: string
   updated_at: string
-  updateTodo: (id: number, params: any) => void
+  updateTodo: (payload: any) => any
+  editingTodo: (payload: number) => any
   editing: boolean
-  getIntoEditingState: (id: number) => void
 }
 
 interface ITodoItemState {
@@ -32,13 +36,18 @@ export class todoItem extends Component<ITodoItemProps, ITodoItemState> {
     }
   }
 
-  update = (params: any) => {
+  update = async (params: any) => {
     const {id} = this.props
-    this.props.updateTodo(id, params)
+    try {
+      const response = await http.put(`/todos/${id}`, params)
+      this.props.updateTodo(response.data.resource)
+    } catch (e) {
+      throw new Error(e)
+    }
   }
 
   getIntoEditingState = () => {
-    this.props.getIntoEditingState(this.props.id)
+    this.props.editingTodo(this.props.id)
   }
 
   onKeyUp = (e: any) => {
@@ -102,4 +111,14 @@ export class todoItem extends Component<ITodoItemProps, ITodoItemState> {
   }
 }
 
-export default todoItem
+const mapStateToProps = (state: any, ownProps: any) => ({
+	...ownProps
+})
+
+const mapDispatchToProps = {
+	editingTodo,
+	updateTodo
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(todoItem)
