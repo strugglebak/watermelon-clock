@@ -1,65 +1,61 @@
 import React, { Component } from 'react'
 import { Button, Icon } from 'antd'
 
+import CountDown from './countDown'
+
 import './waterMelonAction.styl'
 
 interface IWaterMelonActionProps {
   startWaterMelon: () => void
-  unFinishedWaterMelons: any[]
+  unFinishedWaterMelons: any
 }
 
 export class waterMelonAction extends Component<IWaterMelonActionProps, any> {
 
   constructor(props: IWaterMelonActionProps) {
     super(props)
-    this.state = {
-      waterMelonList: this.props.unFinishedWaterMelons
-    }
+  }
+
+  onEnd = () => {
+    this.render()
   }
 
   render() {
-    console.log(this.state.waterMelonList)
-
-    const NoDataUI = <div className="data-show">
-      <Icon className="no-data" type="dropbox"
-        style={{
-          fontSize: '100px',
-          color: '#eee'
-        }}
-      />
-      <p className="no-record">没有记录</p>
-    </div>
-
-    const HasDataUI = <ul className="data-show">
-      {
-        <span>hello world</span>
-        // waterMelonList.map(wm => {
-        //   console.log(wm)
-        // return <li key={wm.id} {...wm}>
-        //     <span>{wm.description}</span>
-        //     <span>{wm.ended_at}</span>
-        //   </li>
-
-        // })
-      }
-    </ul>
-
+    let waterMelonList = this.props.unFinishedWaterMelons
+    let NoDataUI, HasDataUI, html
+    if (waterMelonList === undefined) {
+      html = <div className="btn-wrapper">
+        <Button className="start-task-btn" onClick={this.props.startWaterMelon} >开始西瓜</Button>
+      </div>
+      NoDataUI = <div className="data-show">
+        <Icon className="no-data" type="dropbox"
+          style={{
+            fontSize: '100px',
+            color: '#eee'
+          }}
+        />
+        <p className="no-record">没有记录</p>
+      </div>
+    } else {
+      html = <CountDown time={15000} onEnd={this.onEnd}/>
+      HasDataUI = <ul className="data-show">
+        {
+          waterMelonList.map((wm: any) =>
+           <li key={wm.id} {...wm}>
+              <span>hello world</span>
+              <span>{wm.description}</span>
+              <span>{wm.ended_at}</span>
+            </li>
+          )
+        }
+      </ul>
+    }
 
     return (
       <div className="watermelon-action">
-        <div className="btn-wrapper">
-          <Button className="start-task-btn"
-            onClick={this.props.startWaterMelon}
-          >开始西瓜</Button>
-          <Icon className="icon-close" type="close-circle" style={{
-            color: '#bbb',
-            cursor: 'pointer'
-          }} />
-        </div>
+        { html }
         {
-          this.state.waterMelonList.length > 0
-            ? HasDataUI
-            : NoDataUI
+          waterMelonList?.length > 0 ? HasDataUI : NoDataUI
         }
       </div>
     )

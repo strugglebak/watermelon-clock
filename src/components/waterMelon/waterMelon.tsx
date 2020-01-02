@@ -20,7 +20,9 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
     super(props)
   }
 
-  get unFinishedWaterMelons() { return this.props.waterMelons.filter(wm => !wm.description && !wm.ended_at) }
+  get unFinishedWaterMelons() {
+    return this.props.waterMelons.filter(wm => !wm.description && !wm.ended_at)[0]
+  }
 
   componentDidMount() {
     this.getWaterMelonList()
