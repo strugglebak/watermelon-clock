@@ -4,3 +4,4 @@ export const UPDATE_TODO = 'UPDATE_TODO'
 export const EDITING_TODO = 'EDITING_TODO'
 
 export const ADD_WATERMELON = 'ADD_WATERMELON'
+export const INIT_WATERMELON = 'ADD_WATERMELON'

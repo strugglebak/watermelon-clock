@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Input, Icon } from 'antd'
 
 import { connect } from 'react-redux'
-import { addTodo } from '../../redux/actions'
+import { addTodo } from '../../redux/actions/todosActions'
 
 import http from '../../config/http'
 

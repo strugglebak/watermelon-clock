@@ -4,7 +4,7 @@ import classNames from 'classnames'
 import http from '../../config/http'
 
 import { connect } from 'react-redux'
-import {editingTodo, updateTodo} from '../../redux/actions'
+import {editingTodo, updateTodo} from '../../redux/actions/todosActions'
 
 import './todoItem.styl'
 

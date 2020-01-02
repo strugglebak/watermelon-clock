@@ -4,7 +4,7 @@ import TodoItem from './todoItem'
 import http from '../../config/http'
 
 import { connect } from 'react-redux'
-import { initTodos, updateTodo } from '../../redux/actions'
+import { initTodos, updateTodo } from '../../redux/actions/todosActions'
 
 import './todos.styl'
 
