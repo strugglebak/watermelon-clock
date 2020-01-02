@@ -30,7 +30,9 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
         countDown: time - 1000
       })
 
-      if (time < 0) {
+      console.log(time)
+
+      if (time < 1000) {
         window.clearInterval(timerId)
         this.props.onEnd()
       }
@@ -42,16 +44,12 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
   }
 
   render() {
-    const minute = Math.floor(this.state.countDown/1000/60)
-    const second = Math.floor(this.state.countDown/1000%60)
-    const time = `${minute}:${second < 10 ? `0${second}` : second}`
+    const min = Math.floor(this.state.countDown/1000/60)
+    const sec = Math.floor(this.state.countDown/1000%60)
+    const time = `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
     return (
       <div className="count-down">
         {time}
-        <Icon className="icon-close" type="close-circle" style={{
-          color: '#bbb',
-          cursor: 'pointer'
-        }} />
       </div>
     )
   }

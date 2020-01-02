@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import WaterMelonAction from './waterMelonAction'
 
 import { connect } from 'react-redux'
-import { initWaterMelon, addWaterMelon } from '../../redux/actions/waterMelonActions'
+import {
+  initWaterMelon,
+  addWaterMelon,
+  updateWaterMelon
+} from '../../redux/actions/waterMelonActions'
 
 import http from '../../config/http'
 
@@ -11,6 +15,7 @@ import './waterMelon.styl'
 interface IWaterMelonProps {
   initWaterMelon: (payload: any[]) => any
   addWaterMelon: (payload: any) => any
+  updateWaterMelon: (payload: any) => any
   waterMelons: any[]
 }
 
@@ -54,20 +59,24 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
         <WaterMelonAction
           startWaterMelon={this.startWaterMelon}
           unFinishedWaterMelons={this.unFinishedWaterMelons}
+          updateWaterMelon={this.props.updateWaterMelon}
         />
       </div>
     )
   }
 }
 
-const mapStateToProps = (state: any, ownProps: any) => ({
-	waterMelons: state.waterMelonReducer,
-	...ownProps
-})
+const mapStateToProps = (state: any, ownProps: any) => {
+  return {
+    waterMelons: state.waterMelonReducer,
+    ...ownProps
+  }
+}
 
 const mapDispatchToProps = {
 	initWaterMelon,
-	addWaterMelon
+  addWaterMelon,
+  updateWaterMelon
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(waterMelon)
