@@ -27,8 +27,7 @@ export class waterMelonAction extends Component
   }
 
   onEnd = () => {
-    console.log('exec end')
-    this.render()
+    this.forceUpdate()
   }
 
   onKeyUp = (e: any) => {
@@ -56,7 +55,6 @@ export class waterMelonAction extends Component
     let html = <div/>
 
     if (waterMelon === undefined) {
-      console.log('显示 button')
       html = <Button className="start-task-btn" onClick={this.props.startWaterMelon} >开始西瓜</Button>
     } else {
       const startedAtTime = Date.parse(waterMelon.started_at)
@@ -66,26 +64,22 @@ export class waterMelonAction extends Component
 
       // 倒计时已到
       if (deltaTime > duration) {
-        console.log('显示 input')
         // 显示 input 框
         html = <div className="input-wrapper">
-            <Input
-              placeholder="你刚刚完成了什么工作?"
-              value={this.state.description}
-              onChange={e => this.setState({description: e.target.value})}
-              onKeyUp={e => this.onKeyUp(e)}
-            />
-            <Icon className="icon-close" type="close-circle" style={{
-              color: '#bbb',
-              cursor: 'pointer'
-            }} />
+          <Input
+            placeholder="你刚刚完成了什么工作?"
+            value={this.state.description}
+            onChange={e => this.setState({description: e.target.value})}
+            onKeyUp={e => this.onKeyUp(e)}
+          />
+          <Icon className="icon-close" type="close-circle" style={{
+            color: '#bbb',
+            cursor: 'pointer'
+          }} />
         </div>
       } else if (deltaTime < duration) {
-        console.log('显示 倒计时')
         // 显示倒计时组件
         const time = duration - (currentTime - startedAtTime)
-        console.log(duration, currentTime, startedAtTime)
-        console.log(time)
         html = <div className="count-down-wrapper">
           <CountDown time={time} onEnd={this.onEnd}/>
           <Icon className="icon-close" type="close-circle" style={{
@@ -96,7 +90,8 @@ export class waterMelonAction extends Component
       }
     }
 
-    console.log('开始渲染 html', html)
+    console.log('html', html.props.children)
+
     return (
       <div className="watermelon-action">
         { html }

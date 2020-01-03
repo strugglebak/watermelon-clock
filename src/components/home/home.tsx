@@ -33,8 +33,7 @@ export class home extends Component<IRouterProps, IIndexState> {
       const userInfo = response.data
       this.setState({ userInfo })
     } catch (e) {
-      // console.log(e)
-      // message.error('用户登录失败!')
+      throw new Error(e)
     }
   }
 

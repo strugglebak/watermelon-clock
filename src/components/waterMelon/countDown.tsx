@@ -29,7 +29,6 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
     const time = countDown + delayTime
     const min = Math.floor(time/1000/60)
     const sec = Math.floor(time/1000%60)
-    console.log(min, sec)
     return `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
   }
 
@@ -41,7 +40,6 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
       })
 
       if (time < 0) {
-        console.log('emit end')
         this.props.onEnd()
         window.clearInterval(timerId)
       }
