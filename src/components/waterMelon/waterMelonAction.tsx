@@ -90,8 +90,6 @@ export class waterMelonAction extends Component
       }
     }
 
-    console.log('html', html.props.children)
-
     return (
       <div className="watermelon-action">
         { html }
