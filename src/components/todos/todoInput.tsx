@@ -59,6 +59,7 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
 
   render() {
     const { focus, description } = this.state
+    console.log(focus)
     const suffix = description
       ? <Icon type="enter" style={{
           fontSize: '18px', cursor: 'pointer'

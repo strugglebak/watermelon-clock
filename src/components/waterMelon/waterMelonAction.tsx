@@ -27,6 +27,7 @@ export class waterMelonAction extends Component
   }
 
   onEnd = () => {
+    console.log('exec end')
     this.render()
   }
 
@@ -34,6 +35,7 @@ export class waterMelonAction extends Component
     const { description } = this.state
     const ended_at = new Date()
     if (e.keyCode === 13 && description !== '') {
+      // 更新该西瓜的 description 以及 ended_at
       this.updateDescription({ description, ended_at })
       this.setState({ description: '' })
     }
@@ -53,23 +55,9 @@ export class waterMelonAction extends Component
     let waterMelon = this.props.unFinishedWaterMelons
     let html = <div/>
 
-    console.log('watermelon', waterMelon)
-
     if (waterMelon === undefined) {
-      html = <div className="wrapper">
-        <div className="btn-wrapper">
-          <Button className="start-task-btn" onClick={this.props.startWaterMelon} >开始西瓜</Button>
-        </div>
-        <div className="data-show">
-          <Icon className="no-data" type="dropbox"
-            style={{
-              fontSize: '100px',
-              color: '#eee'
-            }}
-          />
-          <p className="no-record">没有记录</p>
-        </div>
-      </div>
+      console.log('显示 button')
+      html = <Button className="start-task-btn" onClick={this.props.startWaterMelon} >开始西瓜</Button>
     } else {
       const startedAtTime = Date.parse(waterMelon.started_at)
       const currentTime = new Date().getTime()
@@ -78,9 +66,9 @@ export class waterMelonAction extends Component
 
       // 倒计时已到
       if (deltaTime > duration) {
+        console.log('显示 input')
         // 显示 input 框
-        html = <div className="wrapper">
-          <div className="input-wrapper">
+        html = <div className="input-wrapper">
             <Input
               placeholder="你刚刚完成了什么工作?"
               value={this.state.description}
@@ -91,11 +79,13 @@ export class waterMelonAction extends Component
               color: '#bbb',
               cursor: 'pointer'
             }} />
-          </div>
         </div>
       } else if (deltaTime < duration) {
+        console.log('显示 倒计时')
         // 显示倒计时组件
         const time = duration - (currentTime - startedAtTime)
+        console.log(duration, currentTime, startedAtTime)
+        console.log(time)
         html = <div className="count-down-wrapper">
           <CountDown time={time} onEnd={this.onEnd}/>
           <Icon className="icon-close" type="close-circle" style={{
@@ -106,6 +96,7 @@ export class waterMelonAction extends Component
       }
     }
 
+    console.log('开始渲染 html', html)
     return (
       <div className="watermelon-action">
         { html }

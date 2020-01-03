@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Icon } from 'antd'
 
 import './countDown.styl'
 
@@ -14,6 +13,8 @@ interface ICountDownState {
 
 let timerId:NodeJS.Timeout
 
+const delayTime = 2000 // 2s 延时
+
 export class countDown extends Component<ICountDownProps, ICountDownState> {
 
   constructor(props: ICountDownProps) {
@@ -23,6 +24,15 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
     }
   }
 
+  get countDown() {
+    const { countDown } = this.state
+    const time = countDown + delayTime
+    const min = Math.floor(time/1000/60)
+    const sec = Math.floor(time/1000%60)
+    console.log(min, sec)
+    return `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
+  }
+
   componentDidMount() {
     timerId = setInterval(()=> {
       const time = this.state.countDown
@@ -30,11 +40,10 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
         countDown: time - 1000
       })
 
-      console.log(time)
-
-      if (time < 1000) {
-        window.clearInterval(timerId)
+      if (time < 0) {
+        console.log('emit end')
         this.props.onEnd()
+        window.clearInterval(timerId)
       }
     }, 1000)
   }
@@ -44,12 +53,9 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
   }
 
   render() {
-    const min = Math.floor(this.state.countDown/1000/60)
-    const sec = Math.floor(this.state.countDown/1000%60)
-    const time = `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
     return (
       <div className="count-down">
-        {time}
+        {this.countDown}
       </div>
     )
   }
