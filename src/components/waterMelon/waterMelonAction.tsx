@@ -81,7 +81,7 @@ export class waterMelonAction extends Component
         // 显示倒计时组件
         const time = duration - (currentTime - startedAtTime)
         html = <div className="count-down-wrapper">
-          <CountDown time={time} onEnd={this.onEnd}/>
+          <CountDown time={time} onEnd={this.onEnd} duration={duration}/>
           <Icon className="icon-close" type="close-circle" style={{
             color: '#bbb',
             cursor: 'pointer'

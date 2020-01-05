@@ -42,10 +42,11 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
   }
 
   startWaterMelon = async () => {
+    console.log('start watermelon')
     try {
       const response = await http.post('/tomatoes', {
-        // duration: 1500000 // 25min = 25 * 60 * 1000ms
-        duration: 10000 // test 10s
+        duration: 1500000 // 25min = 25 * 60 * 1000ms
+        // duration: 10000 // test 10s
       })
       this.props.addWaterMelon(response.data.resource)
     } catch (e) {

@@ -5,6 +5,7 @@ import './countDown.styl'
 interface ICountDownProps {
   time: number // 传入的倒计时，单位是 ms
   onEnd: () => void
+  duration: number
 }
 
 interface ICountDownState {
@@ -32,6 +33,12 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
     return `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
   }
 
+  get progressWidth() {
+    const { countDown } = this.state
+    const { duration } = this.props
+    return (Math.floor(100 - countDown * 100 / duration))
+  }
+
   componentDidMount() {
     timerId = setInterval(()=> {
       const time = this.state.countDown
@@ -53,7 +60,12 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
   render() {
     return (
       <div className="count-down">
-        {this.countDown}
+        <div className="progress"
+          style={{
+            width: `${this.progressWidth}%`
+          }}
+        ></div>
+        <p className="time">{this.countDown}</p>
       </div>
     )
   }
