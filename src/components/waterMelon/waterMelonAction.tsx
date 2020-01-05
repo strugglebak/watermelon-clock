@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Icon, Input } from 'antd'
+import { Button, Icon, Input, Modal } from 'antd'
 
 import CountDown from './countDown'
 import http from '../../config/http'
@@ -14,7 +14,9 @@ interface IWaterMelonActionProps {
 
 interface IWaterMelonActionState {
   description: string
+  visible: boolean
 }
+
 
 export class waterMelonAction extends Component
 <IWaterMelonActionProps, IWaterMelonActionState> {
@@ -22,7 +24,8 @@ export class waterMelonAction extends Component
   constructor(props: IWaterMelonActionProps) {
     super(props)
     this.state = {
-      description: ''
+      description: '',
+      visible: false,
     }
   }
 
@@ -34,13 +37,18 @@ export class waterMelonAction extends Component
     const { description } = this.state
     const ended_at = new Date()
     if (e.keyCode === 13 && description !== '') {
-      // 更新该西瓜的 description 以及 ended_at
-      this.updateDescription({ description, ended_at })
+      // 更新该西瓜的 description 以及 ended_at aborted
+      this.updateWaterMelon({ description, ended_at })
       this.setState({ description: '' })
     }
   }
 
-  updateDescription = async (params: any) => {
+  abortWaterMelon = () => {
+    this.updateWaterMelon({ aborted: true })
+    this.setState({ description: '', visible: false })
+  }
+
+  updateWaterMelon = async (params: any) => {
     const { id } = this.props.unFinishedWaterMelons
     try {
       const response = await http.put(`/tomatoes/${id}`, params)
@@ -50,9 +58,45 @@ export class waterMelonAction extends Component
     }
   }
 
+  handleOk = (e: any) => {
+    this.setState({ visible: false })
+  }
+
+  handleCancel = (e: any) => {
+    this.setState({ visible: false })
+  }
+
+  abort = () => {
+    this.setState({ visible: true })
+  }
+
   render() {
     let waterMelon = this.props.unFinishedWaterMelons
     let html = <div/>
+    const modal = <Modal
+      visible={this.state.visible}
+      onOk={this.handleOk}
+      onCancel={this.handleCancel}
+      okText="放弃西瓜"
+      cancelText="取消"
+      >
+      <h3 style={{
+        textAlign: 'center'
+      }}>你被什么事情打断了?</h3>
+      <Input
+        value={this.state.description}
+        onChange={e => this.setState({description: e.target.value})}
+        onKeyUp={e => this.abortWaterMelon()}
+      />
+    </Modal>
+    const closeIcon = <Icon 
+      className="icon-close" type="close-circle" 
+      style={{
+        color: '#bbb',
+        cursor: 'pointer'
+      }} 
+      onClick={this.abort}
+    />
 
     if (waterMelon === undefined) {
       html = <Button className="start-task-btn" onClick={this.props.startWaterMelon} >开始西瓜</Button>
@@ -72,20 +116,14 @@ export class waterMelonAction extends Component
             onChange={e => this.setState({description: e.target.value})}
             onKeyUp={e => this.onKeyUp(e)}
           />
-          <Icon className="icon-close" type="close-circle" style={{
-            color: '#bbb',
-            cursor: 'pointer'
-          }} />
+          {closeIcon}
         </div>
       } else if (deltaTime < duration) {
         // 显示倒计时组件
         const time = duration - (currentTime - startedAtTime)
         html = <div className="count-down-wrapper">
           <CountDown time={time} onEnd={this.onEnd} duration={duration}/>
-          <Icon className="icon-close" type="close-circle" style={{
-            color: '#bbb',
-            cursor: 'pointer'
-          }} />
+          {closeIcon}
         </div>
       }
     }
@@ -93,6 +131,7 @@ export class waterMelonAction extends Component
     return (
       <div className="watermelon-action">
         { html }
+        { modal }
       </div>
     )
   }

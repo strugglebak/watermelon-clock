@@ -14,7 +14,7 @@ interface ICountDownState {
 
 let timerId:NodeJS.Timeout
 
-const delayTime = 2000 // 2s 延时
+const delayTime = 0 // 延时
 
 export class countDown extends Component<ICountDownProps, ICountDownState> {
 
