@@ -43,9 +43,12 @@ export class waterMelonAction extends Component
     }
   }
 
-  abortWaterMelon = () => {
-    this.updateWaterMelon({ aborted: true })
-    this.setState({ description: '', visible: false })
+  abortWaterMelon = (e: any) => {
+    const { description } = this.state
+    if (e.keyCode === 13 && description !== '') {
+      this.updateWaterMelon({ aborted: true })
+      this.setState({ description: '', visible: false })
+    }
   }
 
   updateWaterMelon = async (params: any) => {
@@ -86,7 +89,7 @@ export class waterMelonAction extends Component
       <Input
         value={this.state.description}
         onChange={e => this.setState({description: e.target.value})}
-        onKeyUp={e => this.abortWaterMelon()}
+        onKeyUp={e => this.abortWaterMelon(e)}
       />
     </Modal>
     const closeIcon = <Icon 
