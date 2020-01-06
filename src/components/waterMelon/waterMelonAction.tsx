@@ -9,7 +9,7 @@ import './waterMelonAction.styl'
 interface IWaterMelonActionProps {
   startWaterMelon: () => void
   updateWaterMelon: (payload: any) => any
-  unFinishedWaterMelons: any
+  unFinishedWaterMelon: any
 }
 
 interface IWaterMelonActionState {
@@ -52,7 +52,7 @@ export class waterMelonAction extends Component
   }
 
   updateWaterMelon = async (params: any) => {
-    const { id } = this.props.unFinishedWaterMelons
+    const { id } = this.props.unFinishedWaterMelon
     try {
       const response = await http.put(`/tomatoes/${id}`, params)
       this.props.updateWaterMelon(response.data.resource)
@@ -74,7 +74,7 @@ export class waterMelonAction extends Component
   }
 
   render() {
-    let waterMelon = this.props.unFinishedWaterMelons
+    let waterMelon = this.props.unFinishedWaterMelon
     let html = <div/>
     const modal = <Modal
       visible={this.state.visible}
