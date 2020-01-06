@@ -12,7 +12,8 @@ export class todos extends Component<any> {
 
   get unDeletedTodos () { return this.props.todos.filter((todo: any) => !todo.deleted) }
   get unCompletedTodos () { return this.props.todos.filter((todo: any) => !todo.completed) }
-  get completedTodos () { return this.props.todos.filter((todo: any) => todo.completed) }
+  // 只显示 10 个已经完成的任务
+  get completedTodos () { return this.props.todos.filter((todo: any) => todo.completed).splice(0, 10) }
 
   componentDidMount() {
     this.getTodos()
