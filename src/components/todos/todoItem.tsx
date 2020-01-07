@@ -38,6 +38,11 @@ export class todoItem extends Component<ITodoItemProps, ITodoItemState> {
 
   update = async (params: any) => {
     const {id} = this.props
+
+    if (params.completed) {
+      params.completed_at = new Date()
+    }
+
     try {
       const response = await http.put(`/todos/${id}`, params)
       this.props.updateTodo(response.data.resource)
