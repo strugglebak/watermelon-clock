@@ -4,7 +4,6 @@ import WaterMelonList from './waterMelonList'
 
 import { connect } from 'react-redux'
 import {
-  initWaterMelon,
   addWaterMelon,
   updateWaterMelon
 } from '../../redux/actions/waterMelonActions'
@@ -38,19 +37,6 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
     return _.groupBy(finishedWaterMelons, (wm: any) => {
       return format(new Date(wm.started_at), 'yyyy-M-d')
     })
-  }
-
-  componentDidMount() {
-    this.getWaterMelonList()
-  }
-
-  getWaterMelonList = async () => {
-    try {
-      const response = await http.get('/tomatoes')
-      this.props.initWaterMelon(response.data.resources)
-    } catch (e) {
-      throw new Error(e)
-    }
   }
 
   startWaterMelon = async () => {
@@ -90,7 +76,6 @@ const mapStateToProps = (state: any, ownProps: any) => {
 }
 
 const mapDispatchToProps = {
-	initWaterMelon,
   addWaterMelon,
   updateWaterMelon
 }

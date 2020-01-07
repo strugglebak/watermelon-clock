@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import TodoInput from './todoInput'
 import TodoItem from './todoItem'
-import http from '../../config/http'
 
 import { connect } from 'react-redux'
-import { initTodos, updateTodo } from '../../redux/actions/todosActions'
+import { updateTodo } from '../../redux/actions/todosActions'
 
 import './todos.styl'
 
@@ -14,24 +13,6 @@ export class todos extends Component<any> {
   get unCompletedTodos () { return this.props.todos.filter((todo: any) => !todo.completed) }
   // 只显示 10 个已经完成的任务
   get completedTodos () { return this.props.todos.filter((todo: any) => todo.completed).splice(0, 10) }
-
-  componentDidMount() {
-    this.getTodos()
-  }
-
-  getTodos = async () => {
-    try {
-      const response = await http.get('/todos')
-      const { resources } = response.data
-      // mount 时需要对每个 todo 的编辑状态置为 false
-      const newTodos = resources.map((todo: any) => {
-        return Object.assign({}, todo, { editing: false })
-      })
-      this.props.initTodos(newTodos)
-    } catch (e) {
-      throw new Error(e)
-    }
-  }
 
   render() {
     return (
@@ -64,7 +45,6 @@ const mapStateToProps = (state: any, ownProps: any) => ({
 })
 
 const mapDispatchToProps = {
-  initTodos,
   updateTodo
 }
 

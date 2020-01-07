@@ -4,17 +4,17 @@ import Header from '../header/header'
 import Todos from '../todos/todos'
 import WaterMelon from '../waterMelon/waterMelon'
 
-import './home.styl'
+import { connect } from 'react-redux'
+import { initTodos } from '../../redux/actions/todosActions'
+import { initWaterMelon } from '../../redux/actions/waterMelonActions'
 
-interface IRouterProps {
-  history: any
-}
+import './home.styl'
 
 interface IIndexState {
   userInfo: any
 }
 
-export class home extends Component<IRouterProps, IIndexState> {
+export class home extends Component<any, IIndexState> {
 
   constructor(props: any) {
     super(props);
@@ -25,6 +25,8 @@ export class home extends Component<IRouterProps, IIndexState> {
 
   async componentWillMount() {
     await this.getUserInfo()
+    await this.getTodos()
+    await this.getWaterMelon()
   }
 
   getUserInfo = async () => {
@@ -37,6 +39,28 @@ export class home extends Component<IRouterProps, IIndexState> {
     }
   }
 
+  getTodos = async () => {
+    try {
+      const response = await http.get('/todos')
+      const { resources } = response.data
+      // mount 时需要对每个 todo 的编辑状态置为 false
+      const newTodos = resources.map((todo: any) => {
+        return Object.assign({}, todo, { editing: false })
+      })
+      this.props.initTodos(newTodos)
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
+
+  getWaterMelon = async () => {
+    try {
+      const response = await http.get('/tomatoes')
+      this.props.initWaterMelon(response.data.resources)
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 
   render() {
     return (
@@ -51,4 +75,13 @@ export class home extends Component<IRouterProps, IIndexState> {
   }
 }
 
-export default home
+const mapStateToProps = (state: any, ownProps: any) => ({
+  ...ownProps
+})
+
+const mapDispatchToProps = {
+  initTodos,
+  initWaterMelon
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(home)
