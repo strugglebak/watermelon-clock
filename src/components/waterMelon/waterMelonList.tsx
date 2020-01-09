@@ -30,7 +30,7 @@ export class waterMelonList extends Component<IWaterMelonListProps, any> {
       return (
         <li className="daily-watermelons" key={datesKey}>
           <div className="title">
-            <span className="date-time">{format(new Date(datesKey), 'M月dd日')}</span>
+            <span className="date-time">{format(new Date(datesKey), 'M月d日')}</span>
             <span className="finished-watermelon-number">完成了 {waterMelons.length} 个西瓜</span>
           </div>
           <ul className="watermelon-list-detail">
