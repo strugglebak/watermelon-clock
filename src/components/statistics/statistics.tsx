@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { format } from 'date-fns'
+import _ from 'lodash'
+import Polyline from './polyline'
 
 import './statistics.styl'
 
@@ -12,6 +15,13 @@ export class statistics extends Component
 
   get finishedTodos() { 
     return this.props.todos.filter((todo: any) => todo.completed && !todo.deleted) 
+  }
+
+  get dailyTodos() {
+    // 这里获取到的是当天更新的 todos
+    return _.groupBy(this.finishedTodos, (todo: any) => {
+      return format(new Date(todo.updated_at), 'yyyy-MM-d')
+    })
   }
 
   render() {
@@ -28,6 +38,10 @@ export class statistics extends Component
         <li>
           <h3 className="title">任务历史</h3>
           <p className="description">累计完成任务 {this.finishedTodos.length} 个</p>
+          <Polyline
+            data={this.dailyTodos}
+            finishedTodosCount={this.finishedTodos.length}
+          />
         </li>
       </ul>
     )
