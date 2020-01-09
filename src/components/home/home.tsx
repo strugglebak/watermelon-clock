@@ -3,6 +3,7 @@ import http from '../../config/http'
 import Header from '../header/header'
 import Todos from '../todos/todos'
 import WaterMelon from '../waterMelon/waterMelon'
+import Statistics from '../statistics/statistics'
 
 import { connect } from 'react-redux'
 import { initTodos } from '../../redux/actions/todosActions'
@@ -69,6 +70,9 @@ export class home extends Component<any, IIndexState> {
         <main className="content">
           <WaterMelon/>
           <Todos/>
+        </main>
+        <main className="statistics-content">
+          <Statistics/>
         </main>
       </div>
     )
