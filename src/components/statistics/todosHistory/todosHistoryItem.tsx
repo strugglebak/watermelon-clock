@@ -14,6 +14,7 @@ interface ITodosHistoryItemProps {
 
 interface ITodosHistoryItemState {
   restoreText: string
+  deleteText: string
 }
 
 export class todosHistoryItem extends Component
@@ -22,24 +23,39 @@ export class todosHistoryItem extends Component
   constructor(props: ITodosHistoryItemProps) {
     super(props);
     this.state = {
-      restoreText: '恢复'
+      restoreText: '恢复',
+      deleteText: '删除'
     }
   }
 
-  update = async (params: any) => {
-    this.changeRestoreText('提交中...')
+  update = async (e: any, params: any) => {
     const {id} = this.props.todo
+    const {className} = e.currentTarget
+    this.changeActionText({submit: true, className})
     try {
       const response = await http.put(`/todos/${id}`, params)
       this.props.updateTodo(response.data.resource)
-      this.changeRestoreText('恢复')
+      this.changeActionText({submit: false, className})
     } catch (e) {
       throw new Error(e)
     }
   }
 
+  changeActionText = (params: any) => {
+    const { submit, className } = params
+    if (className === 'restore') {
+      submit ? this.changeRestoreText('提交中...') : this.changeRestoreText('恢复')
+    } else {
+      submit ? this.changeDeleteText('提交中...') : this.changeDeleteText('删除')
+    }
+  }
+
   changeRestoreText = (restoreText: string) => {
     this.setState({ restoreText })
+  }
+
+  changeDeleteText = (deleteText: string) => {
+    this.setState({ deleteText })
   }
 
   timeTransfer = (time: string, formatText: string, itemType: string) => {
@@ -56,14 +72,16 @@ export class todosHistoryItem extends Component
     const { itemType } = this.props
     // 已完成的任务中有 恢复和删除按钮
     const restoreAndDeleteAction = <div className="action">
-      <span className="restore" onClick={e => this.update({completed: false})}>
+      <span className="restore" onClick={e => this.update(e, {completed: false})}>
         {this.state.restoreText}
       </span>
-      <span onClick={e => this.update({deleted: true})}>删除</span>
+      <span className="delete" onClick={e => this.update(e, {deleted: true})}>
+        {this.state.deleteText}
+      </span>
     </div>
     // 已删除的任务中有 恢复按钮
     const restoreAction = <div className="action">
-      <span className="restore" onClick={e => this.update({deleted: false})}>
+      <span className="restore" onClick={e => this.update(e, {deleted: false})}>
         {this.state.restoreText}
       </span>
     </div>
