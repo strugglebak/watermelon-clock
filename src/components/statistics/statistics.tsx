@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { format } from 'date-fns'
 import _ from 'lodash'
 import Polyline from './polyline'
+import TodosHistory from './todosHistory/todosHistory'
 
 import './statistics.styl'
 
@@ -26,6 +27,7 @@ export class statistics extends Component
 
   render() {
     return (
+      <>
       <ul className="statistics">
         <li>
           <h3 className="title">统计</h3>
@@ -44,6 +46,8 @@ export class statistics extends Component
           />
         </li>
       </ul>
+      <TodosHistory />
+      </>
     )
   }
 }
