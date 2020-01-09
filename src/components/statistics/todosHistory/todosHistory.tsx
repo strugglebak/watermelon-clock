@@ -23,7 +23,7 @@ export class todosHistory extends Component
     return this.props.todos.filter((todo: any) => todo.deleted)
   }
   get dailyFinshedTodos() {
-    return _.groupBy(this.props.todos, (todo: any) => {
+    return _.groupBy(this.finishedTodos, (todo: any) => {
       return format(new Date(todo.updated_at), 'yyyy-MM-dd')
     })
   } 
@@ -63,7 +63,7 @@ export class todosHistory extends Component
 
             <div className="todos-list">
               {
-                this.finishedTodos.map(
+                todos.map(
                   (todo: any) => 
                     <TodosHistoryItem
                       key={todo.id}
