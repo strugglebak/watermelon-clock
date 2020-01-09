@@ -25,7 +25,6 @@ export class todosHistoryItem extends Component
       restoreText: '恢复'
     }
   }
-  
 
   update = async (params: any) => {
     this.changeRestoreText('提交中...')
@@ -43,8 +42,18 @@ export class todosHistoryItem extends Component
     this.setState({ restoreText })
   }
 
+  timeTransfer = (time: string, formatText: string, itemType: string) => {
+    const formatedTime = format(new Date(time), formatText)
+    const arr = formatedTime.split('-')
+    const str = itemType === 'finished'
+      ? formatedTime
+      : `${arr[0]}月${arr[1]}日`
+    return str
+  }
+
   render() {
     const { updated_at, created_at, description } = this.props.todo
+    const { itemType } = this.props
     // 已完成的任务中有 恢复和删除按钮
     const restoreAndDeleteAction = <div className="action">
       <span className="restore" onClick={e => this.update({completed: false})}>
@@ -65,7 +74,7 @@ export class todosHistoryItem extends Component
         action: restoreAndDeleteAction
       },
       deleted: {
-        formatText: 'yyyy-MM-dd',
+        formatText: 'MM-dd',
         time: created_at,
         action: restoreAction
       }
@@ -75,12 +84,12 @@ export class todosHistoryItem extends Component
       formatText,
       time,
       action 
-    } = mapItemTypeToAction[this.props.itemType]
+    } = mapItemTypeToAction[itemType]
 
     return (
       <div className="todos-history-item">
         <div className="text">
-          <span className="time">{format(new Date(time), formatText)}</span>
+          <span className="time">{this.timeTransfer(time, formatText, itemType)}</span>
           <span className="description">{description}</span>
         </div>
         { action }
