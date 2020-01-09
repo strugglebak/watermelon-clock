@@ -23,6 +23,7 @@ export class polyline extends Component
     const lastDay = datesKeys[datesKeys.length - 1]
     const dayRange = Date.parse(lastDay) - Date.parse(firstDay)
     let count = 0
+    let lastY
     // 画折线图需要 x y 坐标
     // 有断点的折线图每个 x y 都是有范围的
     // 所以这里需要除一个 range
@@ -30,15 +31,16 @@ export class polyline extends Component
       const x = (Date.parse(datesKey) - Date.parse(firstDay)) / dayRange * 240
       count += this.props.data[datesKey].length
       const y = (1 -  (count / this.props.finishedTodosCount)) * 60
+      lastY = y
       return `${x},${y}`
     })
-    return [`${startPoints}`, ...pointsArray, `${lastPoints}`].join(' ')
+    return [`${startPoints}`, ...pointsArray, `240,${lastY}`, `${lastPoints}`].join(' ')
   }
 
   render() {
     return (
       <div className="polyline">
-        <svg>
+        <svg width="100%">
           <polygon 
             fill="rgba(215,78,78,0.1)" 
             stroke="rgba(215,78,78,0.5)" 
