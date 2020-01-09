@@ -1,2 +1,22 @@
 .todos-history-item
-  border 1px solid red
+  display flex
+  justify-content space-between
+  align-items center
+  cursor default
+  padding .5em
+  &:hover
+    background #f4f4f4
+    .action
+      opacity 1
+  .action
+    opacity 0
+    color #0881B3
+    &:hover
+      cursor pointer
+  .restore
+    margin-right 1em
+  .time
+    color #999
+  .description
+    margin-left 1em
+    color #222

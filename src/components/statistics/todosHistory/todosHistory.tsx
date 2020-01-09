@@ -24,32 +24,46 @@ export class todosHistory extends Component
   }
   get dailyFinshedTodos() {
     return _.groupBy(this.props.todos, (todo: any) => {
-      return format(new Date(todo.updated_at), 'yyyy-MM-d')
+      return format(new Date(todo.updated_at), 'yyyy-MM-dd')
     })
   } 
   get finishedDatesKeys() {
     return Object.keys(this.dailyFinshedTodos).sort(
-      // 倒叙排列
+      // 倒序排列
       (a, b) => Date.parse(b) - Date.parse(a)
     )
+  }
+
+  dayOfWeekTransfer = (date: string) => {
+    const dayMap = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+    const index = parseInt(format(new Date(date), 'i'), 10) - 1
+    return dayMap[index]
+  }
+  yearMonthDayTransfer = (date: string) => {
+    const arr = date.split('-')
+    return `${arr[0]}年${arr[1]}月${arr[2]}日`
   }
 
   render() {
     const finishedTodsList = this.finishedDatesKeys.map(
       (datesKey: any) => {
+        const todos = this.dailyFinshedTodos[datesKey]
         return (
           <div className="daily-todos" key={datesKey}>
 
-            <div className="summery">
-              <p className="date">
-                <span>{datesKey}</span>
-                <span>周五</span>
-              </p>
+            <div className="summary">
+              <div className="date-wrapper">
+                <p className="date">
+                  <span className="year-month-day">{this.yearMonthDayTransfer(datesKey)}</span>
+                  <span className="day">{this.dayOfWeekTransfer(datesKey)}</span>
+                </p>
+                <p className="finished-todos-count">完成了 {todos.length} 个任务</p>
+              </div>
             </div>
 
             <div className="todos-list">
               {
-                this.dailyFinshedTodos[datesKey].map(
+                this.finishedTodos.map(
                   (todo: any) => 
                     <TodosHistoryItem
                       key={todo.id}
@@ -75,12 +89,12 @@ export class todosHistory extends Component
     return (
       <Tabs defaultActiveKey="1">
 				<TabPane tab="已完成的任务" key="1">
-					<div className="todo-history">
+					<div className="todos-history">
 						{finishedTodsList}
 					</div>
 				</TabPane>
 				<TabPane tab="已删除的任务" key="2">
-					<div className="todo-history">
+					<div className="todos-history">
 						{deletedTodosList}
 					</div>
 				</TabPane>
