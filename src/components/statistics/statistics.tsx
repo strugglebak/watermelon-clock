@@ -48,7 +48,7 @@ export class statistics extends Component
     const { visible } = mapTitleVisible[newClassName]
     mapTitleVisible[newClassName].visible = !visible
     Object.keys(mapTitleVisible).map(key => {
-      !newClassName.includes(key) && (mapTitleVisible[key].visible = false)
+      return !newClassName.includes(key) && (mapTitleVisible[key].visible = false)
     })
     return mapTitleVisible
   }
