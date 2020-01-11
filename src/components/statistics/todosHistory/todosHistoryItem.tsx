@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { format } from 'date-fns'
 import { updateTodo } from '../../../redux/actions/todosActions'
 import http from '../../../config/http'
+import { timeTransfer } from '../../../helper/util'
 
 import './todosHistoryItem.styl'
 
@@ -58,15 +58,6 @@ export class todosHistoryItem extends Component
     this.setState({ deleteText })
   }
 
-  timeTransfer = (time: string, formatText: string, itemType: string) => {
-    const formatedTime = format(new Date(time), formatText)
-    const arr = formatedTime.split('-')
-    const str = itemType === 'finished'
-      ? formatedTime
-      : `${arr[0]}月${arr[1]}日`
-    return str
-  }
-
   render() {
     const { updated_at, created_at, description } = this.props.todo
     const { itemType } = this.props
@@ -85,6 +76,7 @@ export class todosHistoryItem extends Component
         {this.state.restoreText}
       </span>
     </div>
+
     const mapItemTypeToAction: any = {
       finished: {
         formatText: 'HH:mm',
@@ -107,7 +99,7 @@ export class todosHistoryItem extends Component
     return (
       <div className="todos-history-item">
         <div className="text">
-          <span className="time">{this.timeTransfer(time, formatText, itemType)}</span>
+          <span className="time">{timeTransfer(time, formatText, itemType)}</span>
           <span className="description">{description}</span>
         </div>
         { action }

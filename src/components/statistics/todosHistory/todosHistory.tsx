@@ -4,6 +4,10 @@ import { format } from 'date-fns'
 import _ from 'lodash'
 import { Tabs } from 'antd'
 import TodosHistoryItem from './todosHistoryItem'
+import {
+  dayOfWeekTransfer,
+  yearMonthDayTransfer
+} from '../../../helper/util'
 
 import './todosHistory.styl'
 
@@ -34,16 +38,6 @@ export class todosHistory extends Component
     )
   }
 
-  dayOfWeekTransfer = (date: string) => {
-    const dayMap = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-    const index = parseInt(format(new Date(date), 'i'), 10) - 1
-    return dayMap[index]
-  }
-  yearMonthDayTransfer = (date: string) => {
-    const arr = date.split('-')
-    return `${arr[0]}年${arr[1]}月${arr[2]}日`
-  }
-
   render() {
     const finishedTodsList = this.finishedDatesKeys.map(
       (datesKey: any) => {
@@ -54,8 +48,8 @@ export class todosHistory extends Component
             <div className="summary">
               <div className="date-wrapper">
                 <p className="date">
-                  <span className="year-month-day">{this.yearMonthDayTransfer(datesKey)}</span>
-                  <span className="day">{this.dayOfWeekTransfer(datesKey)}</span>
+                  <span className="year-month-day">{yearMonthDayTransfer(datesKey)}</span>
+                  <span className="day">{dayOfWeekTransfer(datesKey)}</span>
                 </p>
                 <p className="finished-todos-count">完成了 {todos.length} 个任务</p>
               </div>
