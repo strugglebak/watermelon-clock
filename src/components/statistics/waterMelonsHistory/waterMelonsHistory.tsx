@@ -60,15 +60,25 @@ export class waterMelonsHistory extends Component
   }
 
   get dailyFinishedWaterMelons() {
-    // 这里按照 x年x月x日 的形式排列数据
     return _.groupBy(this.finishedWaterMelons, (wm: any) => {
+      return format(new Date(wm.started_at), 'yyyy-M-d')
+    })
+  }
+
+  get dailyAbortedWaterMelons() {
+    return _.groupBy(this.abortedWaterMelons, (wm: any) => {
       return format(new Date(wm.started_at), 'yyyy-M-d')
     })
   }
 
   get finishedDatesKeys() {
     return Object.keys(this.dailyFinishedWaterMelons).sort(
-      // 倒序排列
+      (a, b) => Date.parse(b) - Date.parse(a)
+    )
+  }
+
+  get abortedDatesKeys() {
+    return Object.keys(this.dailyAbortedWaterMelons).sort(
       (a, b) => Date.parse(b) - Date.parse(a)
     )
   }
@@ -83,10 +93,10 @@ export class waterMelonsHistory extends Component
       }
     )
 
-    const abortedWaterMelonsList = this.finishedDatesKeys.map(
+    const abortedWaterMelonsList = this.abortedDatesKeys.map(
       (datesKey: any) => {
-        const watermelons = this.abortedWaterMelons
-        const Props = { datesKey, watermelons, itemType: 'aborted'}
+        const watermelons = this.dailyAbortedWaterMelons[datesKey]
+        const Props = { datesKey, watermelons, itemType: 'aborted' }
         return List(Props)
       }
     )

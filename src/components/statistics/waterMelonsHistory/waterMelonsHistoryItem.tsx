@@ -123,10 +123,10 @@ export class waterMelonsHistoryItem extends Component
     const { itemType } = this.props
     const formatText = 'HH:mm'
 
-    const normalDescription = <span 
+    const normalDescription = <p 
       className="description">
-      {description}
-    </span>
+      {description || <span className="null">西瓜描述为空</span>}
+    </p>
     const inputDescripiton = <textarea 
       ref={this.inputRef}
       rows={1} cols={30}
