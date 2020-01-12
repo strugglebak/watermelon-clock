@@ -37,9 +37,7 @@ export class waterMelonsHistoryItem extends Component
     const {className} = e.currentTarget
     this.changeActionText({submit: true, className})
     try {
-      console.log('params', params)
       const response = await http.put(`/tomatoes/${id}`, params)
-      console.log('response', response)
       this.props.updateWaterMelon(response.data.resource)
       this.changeActionText({submit: false, className})
     } catch (e) {
@@ -101,11 +99,17 @@ export class waterMelonsHistoryItem extends Component
     // 避免两次渲染造成的内容抖动
     this.resize()
     this.setState({ editingText: e.target.value })
+  }
+
+  onEditingKeyUp = (e: any) => {
     if (e.keyCode === 13 && this.state.editingText !== '') {
       this.update(e, {
         description: this.state.editingText,
         aborted: this.props.itemType === 'aborted'
       })
+      this.setState({ editable: false })
+      this.changeEditText('编辑')
+      this.changeDeleteText('删除')
     }
   }
 
@@ -137,6 +141,7 @@ export class waterMelonsHistoryItem extends Component
       className="editing-input" 
       value={this.state.editingText}
       onChange={e => this.onEditingChange(e)}
+      onKeyUp={e => this.onEditingKeyUp(e)}
     />
 
     const normalAction = <div className="action">
