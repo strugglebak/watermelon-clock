@@ -15,6 +15,8 @@ interface IWaterMelonsHistoryItemProps {
 interface IWaterMelonsHistoryItemState {
   editText: string
   deleteText: string
+  editable: boolean
+  editingText: string
 }
 
 export class waterMelonsHistoryItem extends Component 
@@ -24,7 +26,9 @@ export class waterMelonsHistoryItem extends Component
     super(props);
     this.state = {
       editText: '编辑',
-      deleteText: '删除'
+      deleteText: '删除',
+      editable: false,
+      editingText: this.props.watermelon.description
     }
   }
 
@@ -44,13 +48,13 @@ export class waterMelonsHistoryItem extends Component
   changeActionText = (params: any) => {
     const { submit, className } = params
     if (className === 'edit') {
-      submit ? this.changeRestoreText('提交中...') : this.changeRestoreText('编辑')
+      submit ? this.changeEditText('提交中...') : this.changeEditText('编辑')
     } else {
       submit ? this.changeDeleteText('提交中...') : this.changeDeleteText('删除')
     }
   }
 
-  changeRestoreText = (editText: string) => {
+  changeEditText = (editText: string) => {
     this.setState({ editText })
   }
 
@@ -58,31 +62,110 @@ export class waterMelonsHistoryItem extends Component
     this.setState({ deleteText })
   }
 
+  onEditClick = (e: any) => {
+    this.setState({ editable: true })
+    this.changeEditText('提交')
+    this.changeDeleteText('取消')
+  }
+
+  onDeleteClick = (e: any) => {
+    this.setState({ editable: false })
+    this.update(e, {
+      extra: {deleted: true}
+    })
+  }
+
+  onSubmitClick = (e: any) => {
+    this.setState({ editable: false })
+    this.update(e, {
+      description: this.state.editingText,
+      aborted: this.props.itemType === 'aborted'
+    })
+    this.changeEditText('编辑')
+    this.changeDeleteText('删除')
+  }
+
+  onCancelClick = (e: any) => {
+    this.setState({ editable: false })
+    this.changeEditText('编辑')
+    this.changeDeleteText('删除')
+  }
+
+  onEditingChange = (e: any) => {
+    // 先触发 resize 后触发 render
+    // 避免两次渲染造成的内容抖动
+    this.resize()
+    this.setState({ editingText: e.target.value })
+    if (e.keyCode === 13 && this.state.editingText !== '') {
+      this.update(e, {
+        description: this.state.editingText,
+        aborted: this.props.itemType === 'aborted'
+      })
+    }
+  }
+
+  // textarea resize 参考
+  // https://www.jianshu.com/p/2fab017977bb
+  resize = ()=> {
+    if (this.inputRef) {
+      const { current } = this.inputRef
+      const { style } = current as any
+      style!.height = 'auto'
+      style!.height = (current!.scrollHeight) + 'px'
+    }
+  }
+
+  inputRef = React.createRef<HTMLTextAreaElement>()
+
   render() {
     const { updated_at, created_at, description } = this.props.watermelon
     const { itemType } = this.props
-    const action = <div className="action">
-      <span className="edit" onClick={e => this.update(e, {completed: false})}>
+    const formatText = 'HH:mm'
+
+    const normalDescription = <span 
+      className="description">
+      {description}
+    </span>
+    const inputDescripiton = <textarea 
+      ref={this.inputRef}
+      rows={1} cols={30}
+      className="editing-input" 
+      value={this.state.editingText}
+      onChange={e => this.onEditingChange(e)}
+    />
+
+    const normalAction = <div className="action">
+      <span className="edit" onClick={e => this.onEditClick(e)}>
         {this.state.editText}
       </span>
-      <span className="delete" onClick={e => this.update(e, {deleted: true})}>
+      <span className="delete" onClick={e => this.onDeleteClick(e)}>
         {this.state.deleteText}
       </span>
     </div>
 
-    const formatText = 'HH:mm'
+    const inputAction = <div className="action">
+      <span className="submit" onClick={e => this.onSubmitClick(e)}>
+        {this.state.editText}
+      </span>
+      <span className="cancel" onClick={e => this.onCancelClick(e)}>
+        {this.state.deleteText}
+      </span>
+    </div>
+
+    const Descripiton = this.state.editable ? inputDescripiton : normalDescription
+    const Action = this.state.editable ? inputAction : normalAction
 
     return (
       <div className="watermelons-history-item">
         <div className="text">
-          <span className="time">
+          <p className="time">
             {timeTransfer(created_at, formatText, itemType)}
             <span> - </span>
             {timeTransfer(updated_at, formatText, itemType)}
-          </span>
-          <span className="description">{description}</span>
+          </p>
+          { Descripiton }
         </div>
-        { action }
+        { Action }
       </div>
     )
   }
