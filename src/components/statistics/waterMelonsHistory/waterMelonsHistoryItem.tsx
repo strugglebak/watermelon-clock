@@ -13,7 +13,7 @@ interface IWaterMelonsHistoryItemProps {
 }
 
 interface IWaterMelonsHistoryItemState {
-  restoreText: string
+  editText: string
   deleteText: string
 }
 
@@ -23,7 +23,7 @@ export class waterMelonsHistoryItem extends Component
   constructor(props: IWaterMelonsHistoryItemProps) {
     super(props);
     this.state = {
-      restoreText: '恢复',
+      editText: '编辑',
       deleteText: '删除'
     }
   }
@@ -43,15 +43,15 @@ export class waterMelonsHistoryItem extends Component
 
   changeActionText = (params: any) => {
     const { submit, className } = params
-    if (className === 'restore') {
-      submit ? this.changeRestoreText('提交中...') : this.changeRestoreText('恢复')
+    if (className === 'edit') {
+      submit ? this.changeRestoreText('提交中...') : this.changeRestoreText('编辑')
     } else {
       submit ? this.changeDeleteText('提交中...') : this.changeDeleteText('删除')
     }
   }
 
-  changeRestoreText = (restoreText: string) => {
-    this.setState({ restoreText })
+  changeRestoreText = (editText: string) => {
+    this.setState({ editText })
   }
 
   changeDeleteText = (deleteText: string) => {
@@ -61,44 +61,25 @@ export class waterMelonsHistoryItem extends Component
   render() {
     const { updated_at, created_at, description } = this.props.watermelon
     const { itemType } = this.props
-    // 已完成的任务中有 恢复和删除按钮
-    const restoreAndDeleteAction = <div className="action">
-      <span className="restore" onClick={e => this.update(e, {completed: false})}>
-        {this.state.restoreText}
+    const action = <div className="action">
+      <span className="edit" onClick={e => this.update(e, {completed: false})}>
+        {this.state.editText}
       </span>
       <span className="delete" onClick={e => this.update(e, {deleted: true})}>
         {this.state.deleteText}
       </span>
     </div>
-    // 已删除的任务中有 恢复按钮
-    const restoreAction = <div className="action">
-      <span className="restore" onClick={e => this.update(e, {deleted: false})}>
-        {this.state.restoreText}
-      </span>
-    </div>
 
-    const mapItemTypeToAction: any = {
-      finished: {
-        formatText: 'HH:mm',
-        time: updated_at,
-        action: restoreAndDeleteAction
-      },
-      deleted: {
-        formatText: 'MM-dd',
-        time: created_at,
-        action: restoreAction
-      }
-    }
+    const formatText = 'HH:mm'
 
-    const { 
-      formatText,
-      time,
-      action 
-    } = mapItemTypeToAction[itemType]
     return (
       <div className="watermelons-history-item">
         <div className="text">
-          <span className="time">{timeTransfer(time, formatText, itemType)}</span>
+          <span className="time">
+            {timeTransfer(created_at, formatText, itemType)}
+            <span> - </span>
+            {timeTransfer(updated_at, formatText, itemType)}
+          </span>
           <span className="description">{description}</span>
         </div>
         { action }

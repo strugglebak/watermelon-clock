@@ -43,7 +43,7 @@ export function yearMonthDayTransfer(date: string): any {
 export function timeTransfer (time: string, formatText: string, itemType: string): any {
     const formatedTime = format(new Date(time), formatText)
     const arr = formatedTime.split('-')
-    const str = itemType === 'finished'
+    const str = itemType === 'finished' || itemType === 'aborted'
       ? formatedTime
       : `${arr[0]}月${arr[1]}日`
     return str

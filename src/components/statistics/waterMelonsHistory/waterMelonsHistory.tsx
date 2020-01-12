@@ -17,6 +17,37 @@ interface IWaterMelonsHistoryProps {
   waterMelons: any[]
 }
 
+const List = (Props: any, Slot?: any) => {
+  const { datesKey, watermelons, itemType } = Props
+  return (
+    <div className="daily-watermelons" key={datesKey}>
+
+      <div className="summary">
+        <div className="date-wrapper">
+          <p className="date">
+            <span className="year-month-day">{yearMonthDayTransfer(datesKey)}</span>
+            <span className="day">{dayOfWeekTransfer(datesKey)}</span>
+          </p>
+          {Slot || ''}
+        </div>
+      </div>
+
+      <div className="watermelons-list">
+        {
+          watermelons.map(
+            (wm: any) => 
+              <WaterMelonHistoryItem
+                key={wm.id}
+                watermelon={wm}
+                itemType={itemType}
+              />
+          )
+        }
+      </div>
+    </div>
+  )
+}
+
 export class waterMelonsHistory extends Component 
 <IWaterMelonsHistoryProps, any> {
 
@@ -24,8 +55,8 @@ export class waterMelonsHistory extends Component
      return this.props.waterMelons.filter((wm: any) => wm.description && wm.ended_at && !wm.aborted)
   }
 
-  get deletedaWaterMelons() {
-    return this.props.waterMelons.filter((wm: any) => wm.extra && wm.extra.deleted)
+  get abortedWaterMelons() {
+    return this.props.waterMelons.filter((wm: any) => wm.aborted)
   }
 
   get dailyFinishedWaterMelons() {
@@ -46,55 +77,30 @@ export class waterMelonsHistory extends Component
     const finishedWaterMelonsList = this.finishedDatesKeys.map(
       (datesKey: any) => {
         const watermelons = this.dailyFinishedWaterMelons[datesKey]
-        return (
-          <div className="daily-watermelons" key={datesKey}>
-
-            <div className="summary">
-              <div className="date-wrapper">
-                <p className="date">
-                  <span className="year-month-day">{yearMonthDayTransfer(datesKey)}</span>
-                  <span className="day">{dayOfWeekTransfer(datesKey)}</span>
-                </p>
-                <p className="finished-watermelons-count">完成了 {watermelons.length} 个西瓜</p>
-              </div>
-            </div>
-
-            <div className="watermelons-list">
-              {
-                watermelons.map(
-                  (wm: any) => 
-                    <WaterMelonHistoryItem
-                      key={wm.id}
-                      watermelon={wm}
-                      itemType="finished"
-                    />
-                )
-              }
-            </div>
-          </div>
-        )
+        const Props = { datesKey, watermelons, itemType: 'finished' }
+        const Slot = <p className="finished-watermelons-count">完成了 {watermelons.length} 个西瓜</p>
+        return List(Props, Slot)
       }
     )
 
-    const deletedWaterMelonsList = this.deletedaWaterMelons.map(
-      (wm: any) => 
-        <WaterMelonHistoryItem
-          key={wm.id}
-          watermelon={wm}
-          itemType="deleted"
-        />
+    const abortedWaterMelonsList = this.finishedDatesKeys.map(
+      (datesKey: any) => {
+        const watermelons = this.abortedWaterMelons
+        const Props = { datesKey, watermelons, itemType: 'aborted'}
+        return List(Props)
+      }
     )
 
     return (
       <Tabs defaultActiveKey="1">
-				<TabPane tab="已完成的任务" key="1">
+				<TabPane tab="完成的西瓜" key="1">
 					<div className="watermelons-history">
 						{finishedWaterMelonsList}
 					</div>
 				</TabPane>
-				<TabPane tab="已删除的任务" key="2">
+				<TabPane tab="打断记录" key="2">
 					<div className="watermelons-history">
-						{deletedWaterMelonsList}
+						{abortedWaterMelonsList}
 					</div>
 				</TabPane>
 			</Tabs>
