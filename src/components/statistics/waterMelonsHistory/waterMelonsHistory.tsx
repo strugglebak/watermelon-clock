@@ -52,11 +52,14 @@ export class waterMelonsHistory extends Component
 <IWaterMelonsHistoryProps, any> {
 
   get finishedWaterMelons() {
-     return this.props.waterMelons.filter((wm: any) => wm.description && wm.ended_at && !wm.aborted)
+     return this.props.waterMelons.filter(
+       (wm: any) => 
+        wm.description && wm.ended_at && !wm.aborted && !wm.extra?.deleted
+     )
   }
 
   get abortedWaterMelons() {
-    return this.props.waterMelons.filter((wm: any) => wm.aborted)
+    return this.props.waterMelons.filter((wm: any) => wm.aborted && !wm.extra.deleted)
   }
 
   get dailyFinishedWaterMelons() {

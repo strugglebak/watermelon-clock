@@ -37,7 +37,9 @@ export class waterMelonsHistoryItem extends Component
     const {className} = e.currentTarget
     this.changeActionText({submit: true, className})
     try {
+      console.log('params', params)
       const response = await http.put(`/tomatoes/${id}`, params)
+      console.log('response', response)
       this.props.updateWaterMelon(response.data.resource)
       this.changeActionText({submit: false, className})
     } catch (e) {
@@ -70,9 +72,11 @@ export class waterMelonsHistoryItem extends Component
   }
 
   onDeleteClick = (e: any) => {
+    const { description, aborted } = this.props.watermelon
     this.setState({ editable: false })
     this.update(e, {
-      extra: {deleted: true}
+      description, aborted,
+      extra: { deleted: true }
     })
   }
 

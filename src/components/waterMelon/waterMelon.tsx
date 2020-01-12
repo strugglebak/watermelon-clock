@@ -28,7 +28,9 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
     // description 以及 ended_at 为 null 的就是刚刚开始的西瓜任务
     // 点击了开始西瓜之后，会出现倒计时，此时该西瓜的 description 和 ended_at 为 null
     // 当 input 出现时，提交信息后会修改该西瓜的 description 以及 ended_at
-    return this.props.waterMelons.filter(wm => !wm.description && !wm.ended_at && !wm.aborted)[0]
+    return this.props.waterMelons.filter(
+      wm => !wm.description && !wm.ended_at && !wm.aborted && !wm.extra.deleted
+    )[0]
   }
 
   get finishedWaterMelons() {
