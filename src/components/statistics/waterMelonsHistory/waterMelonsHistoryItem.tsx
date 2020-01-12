@@ -63,7 +63,8 @@ export class waterMelonsHistoryItem extends Component
   }
 
   onEditClick = (e: any) => {
-    this.setState({ editable: true })
+    const { description } = this.props.watermelon
+    this.setState({ editable: true, editingText: description })
     this.changeEditText('提交')
     this.changeDeleteText('取消')
   }
