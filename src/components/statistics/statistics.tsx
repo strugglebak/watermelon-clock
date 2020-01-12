@@ -13,6 +13,7 @@ import './statistics.styl'
 
 interface IStatisticsProps {
   todos: any[]
+  waterMelons: any[]
 }
 
 interface IStatisticsState {
@@ -57,10 +58,23 @@ export class statistics extends Component
     return this.props.todos.filter((todo: any) => todo.completed && !todo.deleted) 
   }
 
+  get finishedWaterMelons() {
+     return this.props.waterMelons.filter(
+       (wm: any) => 
+        wm.description && wm.ended_at && !wm.aborted && !wm.extra?.deleted
+     )
+  }
+
   get dailyTodos() {
     // 这里获取到的是当天更新的 todos
     return _.groupBy(this.finishedTodos, (todo: any) => {
       return format(new Date(todo.updated_at), 'yyyy-MM-d')
+    })
+  }
+
+  get dailyWaterMelons() {
+    return _.groupBy(this.finishedWaterMelons, (wm: any) => {
+      return format(new Date(wm.updated_at), 'yyyy-MM-d')
     })
   }
 
@@ -91,14 +105,18 @@ export class statistics extends Component
         </li>
         <li className={watermelonTitleClasses}>
           <h3 className="title">西瓜历史</h3>
-          <p className="description">累计完成西瓜</p>
+          <p className="description">累计完成西瓜 {this.finishedWaterMelons.length} 个</p>
+          <Polyline
+            data={this.dailyWaterMelons}
+            finishedCount={this.finishedWaterMelons.length}
+          />
         </li>
         <li className={todosTitleClasses}>
           <h3 className="title">任务历史</h3>
           <p className="description">累计完成任务 {this.finishedTodos.length} 个</p>
           <Polyline
             data={this.dailyTodos}
-            finishedTodosCount={this.finishedTodos.length}
+            finishedCount={this.finishedTodos.length}
           />
         </li>
       </ul>
@@ -120,6 +138,7 @@ export class statistics extends Component
 
 const mapStateToProps = (state: any, ownProps: any) => ({
     todos: state.todosReducer,
+    waterMelons: state.waterMelonReducer,
     ownProps
 })
 

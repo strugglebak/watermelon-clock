@@ -4,7 +4,7 @@ import './polyline.styl'
 
 interface IPolylineProps {
   data: any
-  finishedTodosCount: number
+  finishedCount: number
 }
 
 export class polyline extends Component
@@ -32,7 +32,7 @@ export class polyline extends Component
     const pointsArray = datesKeys.map((datesKey: any) => {
       const x = (Date.parse(datesKey) - Date.parse(firstDay)) / dayRange * 320
       count += this.props.data[datesKey].length
-      const y = (1 -  (count / this.props.finishedTodosCount)) * 60
+      const y = (1 -  (count / this.props.finishedCount)) * 60
       lastY = y
       return `${x},${y}`
     })
