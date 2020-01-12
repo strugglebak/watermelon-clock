@@ -17,6 +17,7 @@ interface IWaterMelonsHistoryItemState {
   deleteText: string
   editable: boolean
   editingText: string
+  isEnterCode: boolean
 }
 
 export class waterMelonsHistoryItem extends Component 
@@ -28,13 +29,15 @@ export class waterMelonsHistoryItem extends Component
       editText: '编辑',
       deleteText: '删除',
       editable: false,
-      editingText: this.props.watermelon.description
+      editingText: this.props.watermelon.description,
+      isEnterCode: false
     }
   }
 
   update = async (e: any, params: any) => {
     const {id} = this.props.watermelon
     const {className} = e.currentTarget
+    this.setState({isEnterCode: false})
     this.changeActionText({submit: true, className})
     try {
       const response = await http.put(`/tomatoes/${id}`, params)
@@ -97,19 +100,19 @@ export class waterMelonsHistoryItem extends Component
   onEditingChange = (e: any) => {
     // 先触发 resize 后触发 render
     // 避免两次渲染造成的内容抖动
-    this.resize()
+    !this.state.isEnterCode && this.resize()
     this.setState({ editingText: e.target.value })
   }
 
-  onEditingKeyUp = (e: any) => {
+  onEditingKeyDown = (e: any) => {
     if (e.keyCode === 13 && this.state.editingText !== '') {
+      this.setState({ editable: false, isEnterCode: true })
+      this.changeEditText('编辑')
+      this.changeDeleteText('删除')
       this.update(e, {
         description: this.state.editingText,
         aborted: this.props.itemType === 'aborted'
       })
-      this.setState({ editable: false })
-      this.changeEditText('编辑')
-      this.changeDeleteText('删除')
     }
   }
 
@@ -133,15 +136,15 @@ export class waterMelonsHistoryItem extends Component
 
     const normalDescription = <p 
       className="description">
-      {description || <span className="null">西瓜描述为空</span>}
+      {description.trim() || <span className="null">西瓜描述为空</span>}
     </p>
     const inputDescripiton = <textarea 
       ref={this.inputRef}
       rows={1} cols={30}
       className="editing-input" 
-      value={this.state.editingText}
+      value={this.state.editingText.trim()}
       onChange={e => this.onEditingChange(e)}
-      onKeyUp={e => this.onEditingKeyUp(e)}
+      onKeyDown={e => this.onEditingKeyDown(e)}
     />
 
     const normalAction = <div className="action">
