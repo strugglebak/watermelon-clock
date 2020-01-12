@@ -116,6 +116,10 @@ export class waterMelonsHistoryItem extends Component
     }
   }
 
+  onEditingFocus = (e: any) => {
+    this.resize()
+  }
+
   // textarea resize 参考
   // https://www.jianshu.com/p/2fab017977bb
   resize = ()=> {
@@ -136,15 +140,16 @@ export class waterMelonsHistoryItem extends Component
 
     const normalDescription = <p 
       className="description">
-      {description!.trim() || <span className="null">西瓜描述为空</span>}
+      {description || <span className="null">西瓜描述为空</span>}
     </p>
     const inputDescripiton = <textarea 
       ref={this.inputRef}
       rows={1} cols={30}
       className="editing-input" 
-      value={this.state.editingText.trim()}
+      value={this.state.editingText}
       onChange={e => this.onEditingChange(e)}
       onKeyDown={e => this.onEditingKeyDown(e)}
+      onFocus={e => this.onEditingFocus(e)}
     />
 
     const normalAction = <div className="action">
