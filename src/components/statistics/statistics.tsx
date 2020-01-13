@@ -19,6 +19,7 @@ interface IStatisticsProps {
 
 interface IStatisticsState {
   mapTitleVisible: any
+  liWidth: number
 }
 
 export class statistics extends Component
@@ -28,14 +29,31 @@ export class statistics extends Component
     super(props)
     this.state = {
       mapTitleVisible: {
-       summaryTitle: { visible: false },
+       weeklyTitle: { visible: false },
        watermelonTitle: { visible: false },
        todosTitle: { visible: false }
-      }
+      },
+      liWidth: this.liRef.current?.offsetWidth || 0
     }
+  }
+  ulRef = React.createRef<HTMLUListElement>()
+  liRef = React.createRef<HTMLLIElement>()
+
+  updateSize = () => {
+    const liWidth = this.liRef.current?.offsetWidth || 0
+    this.state.liWidth !== liWidth && (
+      this.setState({ liWidth })
+    )
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateSize)
   }
   
   componentDidMount() {
+    this.updateSize()
+    window.addEventListener('resize', this.updateSize)
+
     delegate(this.ulRef.current, 'click', 'li', (e: any, el: any) => {
       const { className } = el
       this.setState({
@@ -83,19 +101,16 @@ export class statistics extends Component
     const weekData: any[] = [...Array(7)].map(() => [])
     this.finishedWaterMelons.map((wm: any) => {
       const day = new Date(wm.created_at).getDay()
-      console.log(wm)
       weekData[day].push(wm)
     })
-
     return weekData
   }
 
-  ulRef = React.createRef<HTMLUListElement>()
 
   render() {
-    const summaryTitleClasses = classNames({
-      summaryTitle: true,
-      visible: this.state.mapTitleVisible.summaryTitle.visible
+    const weeklyTitleClasses = classNames({
+      weeklyTitle: true,
+      visible: this.state.mapTitleVisible.weeklyTitle.visible
     })
 
     const watermelonTitleClasses = classNames({
@@ -111,9 +126,13 @@ export class statistics extends Component
     return (
       <>
       <ul className="statistics" ref={this.ulRef}>
-        <li className={summaryTitleClasses}>
+        <li className={weeklyTitleClasses} ref={this.liRef}>
           <h3 className="title">统计</h3>
           <p className="description">一周统计</p>
+          <BarChart
+            data={this.weeklyWaterMelons}
+            finishedCount={this.state.liWidth}
+          />
         </li>
         <li className={watermelonTitleClasses}>
           <h3 className="title">西瓜历史</h3>
@@ -133,7 +152,7 @@ export class statistics extends Component
         </li>
       </ul>
       <div className="history-wrapper">
-        <div className={summaryTitleClasses}>
+        <div className={weeklyTitleClasses}>
           <WeeklyHistory/>
         </div>
         <div className={watermelonTitleClasses}>
