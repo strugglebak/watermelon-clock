@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-
 import { connect } from 'react-redux'
-import { format } from 'date-fns'
-import _ from 'lodash'
 import { Tabs } from 'antd'
 
 import './monthlyHistory.styl'
@@ -20,12 +17,12 @@ export class weeklyHistory extends Component
     return (
       <Tabs defaultActiveKey="1">
 				<TabPane tab="西瓜统计" key="1">
-					<div className="weekly-history">
+					<div className="monthly-history">
             西瓜
 					</div>
 				</TabPane>
 				<TabPane tab="任务统计" key="2">
-					<div className="weekly-history">
+					<div className="monthly-history">
             任务
 					</div>
 				</TabPane>
