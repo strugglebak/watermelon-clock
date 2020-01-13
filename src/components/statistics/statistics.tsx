@@ -6,7 +6,7 @@ import Polyline from './polyline'
 import BarChart from './barChart'
 import TodosHistory from './todosHistory/todosHistory'
 import WaterMelonsHistory from './waterMelonsHistory/waterMelonsHistory'
-import WeeklyHistory from './weeklyHistory/weeklyHistroy'
+import MonthlyHistory from './monthlyHistory/monthlyHistory'
 import { delegate } from '../../helper/util'
 import classNames from 'classnames'
 
@@ -29,7 +29,7 @@ export class statistics extends Component
     super(props)
     this.state = {
       mapTitleVisible: {
-       weeklyTitle: { visible: false },
+       monthlyTitle: { visible: false },
        watermelonTitle: { visible: false },
        todosTitle: { visible: false }
       },
@@ -97,7 +97,7 @@ export class statistics extends Component
     })
   }
 
-  get weeklyWaterMelons() {
+  get monthlyWaterMelons() {
     const weekData: any[] = [...Array(7)].map(() => [])
     this.finishedWaterMelons.map((wm: any) => {
       const day = new Date(wm.created_at).getDay()
@@ -106,7 +106,7 @@ export class statistics extends Component
     return weekData
   }
 
-  get monthlyWaterMelons() {
+  get monthlyWaterMelonsLength() {
     return this.finishedWaterMelons.filter(
       wm =>
       new Date(wm.started_at).getMonth()
@@ -117,9 +117,9 @@ export class statistics extends Component
 
 
   render() {
-    const weeklyTitleClasses = classNames({
-      weeklyTitle: true,
-      visible: this.state.mapTitleVisible.weeklyTitle.visible
+    const monthlyTitleClasses = classNames({
+      monthlyTitle: true,
+      visible: this.state.mapTitleVisible.monthlyTitle.visible
     })
 
     const watermelonTitleClasses = classNames({
@@ -135,16 +135,16 @@ export class statistics extends Component
     return (
       <>
       <ul className="statistics" ref={this.ulRef}>
-        <li className={weeklyTitleClasses} ref={this.liRef}>
+        <li className={monthlyTitleClasses} ref={this.liRef}>
           <h3 className="title">统计</h3>
           <p className="description">
             {new Date().getMonth() + 1}月累计
           </p>
           <span className="number">
-            {this.monthlyWaterMelons}
+            {this.monthlyWaterMelonsLength}
           </span>
           <BarChart
-            data={this.weeklyWaterMelons}
+            data={this.monthlyWaterMelons}
             finishedCount={this.state.liWidth}
           />
         </li>
@@ -168,8 +168,8 @@ export class statistics extends Component
         </li>
       </ul>
       <div className="history-wrapper">
-        <div className={weeklyTitleClasses}>
-          <WeeklyHistory/>
+        <div className={monthlyTitleClasses}>
+          <MonthlyHistory/>
         </div>
         <div className={watermelonTitleClasses}>
           <WaterMelonsHistory/>
