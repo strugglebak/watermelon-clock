@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { updateWaterMelon } from '../../../redux/actions/waterMelonActions'
 import http from '../../../config/http'
 import { timeTransfer } from '../../../helper/util'
+import classNames from 'classnames'
 
 import './waterMelonsHistoryItem.styl'
 
@@ -173,8 +174,13 @@ export class waterMelonsHistoryItem extends Component
     const Descripiton = this.state.editable ? inputDescripiton : normalDescription
     const Action = this.state.editable ? inputAction : normalAction
 
+    const waterMelonHistoryItemClasses = classNames({
+      watermelonsHistoryItem: true,
+      editable: this.state.editable
+    })
+
     return (
-      <div className="watermelons-history-item">
+      <div className={waterMelonHistoryItemClasses}>
         <div className="text">
           <p className="time">
             {timeTransfer(created_at, formatText, itemType)}
