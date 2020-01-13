@@ -37,7 +37,6 @@ export class waterMelonsHistoryItem extends Component
 
   update = async (e: any, params: any) => {
     const {id} = this.props.watermelon
-    const {className} = e.currentTarget
     try {
       const response = await http.put(`/tomatoes/${id}`, params)
       this.props.updateWaterMelon(response.data.resource)
@@ -65,7 +64,7 @@ export class waterMelonsHistoryItem extends Component
 
   onEditClick = (e: any) => {
     const { description } = this.props.watermelon
-    this.setState({ editable: true, editingText: description })
+    this.setState({ editable: true, editingText: description || undefined })
     this.changeEditText('提交')
     this.changeDeleteText('取消')
   }
@@ -83,6 +82,7 @@ export class waterMelonsHistoryItem extends Component
       description: this.state.editingText,
       aborted: this.props.itemType === 'aborted'
     })
+    this.setState({editable: false})
     this.changeEditText('编辑')
     this.changeDeleteText('删除')
   }
