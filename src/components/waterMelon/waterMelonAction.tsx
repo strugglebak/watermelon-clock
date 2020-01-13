@@ -62,7 +62,10 @@ export class waterMelonAction extends Component
   }
 
   handleOk = (e: any) => {
-    this.setState({ visible: false })
+    const { description } = this.state
+    const ended_at = new Date()
+    this.updateWaterMelon({ description, ended_at })
+    this.setState({ description: '', visible: false })
   }
 
   handleCancel = (e: any) => {
