@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import { format } from 'date-fns'
 import _ from 'lodash'
 import Polyline from './polyline'
+import BarChart from './barChart'
 import TodosHistory from './todosHistory/todosHistory'
 import WaterMelonsHistory from './waterMelonsHistory/waterMelonsHistory'
-import SummaryHistory from './summaryHistory/summaryHistroy'
+import WeeklyHistory from './weeklyHistory/weeklyHistroy'
 import { delegate } from '../../helper/util'
 import classNames from 'classnames'
 
@@ -78,6 +79,17 @@ export class statistics extends Component
     })
   }
 
+  get weeklyWaterMelons() {
+    const weekData: any[] = [...Array(7)].map(() => [])
+    this.finishedWaterMelons.map((wm: any) => {
+      const day = new Date(wm.created_at).getDay()
+      console.log(wm)
+      weekData[day].push(wm)
+    })
+
+    return weekData
+  }
+
   ulRef = React.createRef<HTMLUListElement>()
 
   render() {
@@ -122,7 +134,7 @@ export class statistics extends Component
       </ul>
       <div className="history-wrapper">
         <div className={summaryTitleClasses}>
-          <SummaryHistory/>
+          <WeeklyHistory/>
         </div>
         <div className={watermelonTitleClasses}>
           <WaterMelonsHistory/>

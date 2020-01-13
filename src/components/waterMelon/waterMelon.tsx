@@ -29,12 +29,14 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
     // 点击了开始西瓜之后，会出现倒计时，此时该西瓜的 description 和 ended_at 为 null
     // 当 input 出现时，提交信息后会修改该西瓜的 description 以及 ended_at
     return this.props.waterMelons.filter(
-      wm => !wm.description && !wm.ended_at && !wm.aborted && !wm.extra.deleted
+      wm => !wm.description && !wm.ended_at && !wm.aborted && !wm?.extra?.deleted
     )[0]
   }
 
   get finishedWaterMelons() {
-    const finishedWaterMelons = this.props.waterMelons.filter(wm => wm.description && wm.ended_at && !wm.aborted)
+    const finishedWaterMelons = this.props.waterMelons.filter(
+      wm => wm.description && wm.ended_at && !wm.aborted && !wm?.extra?.deleted
+    )
     // // 这里按照 x年x月x日 的形式排列数据
     return _.groupBy(finishedWaterMelons, (wm: any) => {
       return format(new Date(wm.started_at), 'yyyy-M-d')

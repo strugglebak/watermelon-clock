@@ -12,10 +12,11 @@ export default (state: any[] = [], action: any) => {
       return [...(action.payload).map((wm: any) => {
         if (!wm.extra) {
           wm.extra = {}
-          wm.extra.deleted = false
+          Object.assign(wm.extra, { deleted: false })
         }
         return wm
       })]
+      // return [...action.payload]
     case UPDATE_WATERMELON:
       return state.map(wm => {
         return wm.id === action.payload.id
