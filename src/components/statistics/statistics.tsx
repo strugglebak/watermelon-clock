@@ -106,6 +106,15 @@ export class statistics extends Component
     return weekData
   }
 
+  get monthlyWaterMelons() {
+    return this.finishedWaterMelons.filter(
+      wm =>
+      new Date(wm.started_at).getMonth()
+      ===
+      new Date().getMonth()
+    ).length
+  }
+
 
   render() {
     const weeklyTitleClasses = classNames({
@@ -128,7 +137,12 @@ export class statistics extends Component
       <ul className="statistics" ref={this.ulRef}>
         <li className={weeklyTitleClasses} ref={this.liRef}>
           <h3 className="title">统计</h3>
-          <p className="description">一周统计</p>
+          <p className="description">
+            {new Date().getMonth() + 1}月累计
+          </p>
+          <span className="number">
+            {this.monthlyWaterMelons}
+          </span>
           <BarChart
             data={this.weeklyWaterMelons}
             finishedCount={this.state.liWidth}
@@ -136,7 +150,8 @@ export class statistics extends Component
         </li>
         <li className={watermelonTitleClasses}>
           <h3 className="title">西瓜历史</h3>
-          <p className="description">累计完成西瓜 {this.finishedWaterMelons.length} 个</p>
+          <p className="description">累计完成西瓜</p>
+          <span className="number">{this.finishedWaterMelons.length}</span>
           <Polyline
             data={this.dailyWaterMelons}
             finishedCount={this.finishedWaterMelons.length}
@@ -144,7 +159,8 @@ export class statistics extends Component
         </li>
         <li className={todosTitleClasses}>
           <h3 className="title">任务历史</h3>
-          <p className="description">累计完成任务 {this.finishedTodos.length} 个</p>
+          <p className="description">累计完成任务</p>
+          <span className="number">{this.finishedTodos.length}</span>
           <Polyline
             data={this.dailyTodos}
             finishedCount={this.finishedTodos.length}
