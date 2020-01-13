@@ -45,9 +45,7 @@ export class todosHistoryItem extends Component
     const { submit, className } = params
     if (className === 'restore') {
       submit ? this.changeRestoreText('提交中...') : this.changeRestoreText('恢复')
-    } else {
-      submit ? this.changeDeleteText('提交中...') : this.changeDeleteText('删除')
-    }
+    }   
   }
 
   changeRestoreText = (restoreText: string) => {
