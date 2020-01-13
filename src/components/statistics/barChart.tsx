@@ -8,12 +8,14 @@ interface IBarChartProps {
 }
 
 const height = 60
+const gap = 3 // x 坐标之间的间隔
 
 export class barChart extends Component
 <IBarChartProps> {
   points = () => {
     const { data, finishedCount } = this.props
     const xRange = 10
+    // 利用 reduce 找出数据中7天中完成西瓜数最多的数
     const yRange = data.reduce(
       (acc, cur) => {
         return acc > cur.length ? acc : cur.length
@@ -21,7 +23,7 @@ export class barChart extends Component
       0
     )
     return data.map((item, index) => {
-      const x = (index + 3) / xRange * finishedCount - 8
+      const x = (index + gap) / xRange * finishedCount - 8
       let y = (1 - item.length / (yRange || 1)) * height
       y >= height && (y = height - 1)
       return [x, y]
