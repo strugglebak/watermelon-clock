@@ -9,6 +9,10 @@ interface IDotLineProps {
   width: number
 }
 
+// 调整 x, y 点之间的坐标差，使得图形能够完全显示
+const xBias = 35
+const yBias = 10 
+
 export class dotLine extends Component
 <IDotLineProps> {
 
@@ -22,8 +26,8 @@ export class dotLine extends Component
     yRange === 0 && (yRange = 5)
     return Object.keys(data).map(
       date => {
-        const x = (new Date(date).getDate() - 0.5) / xRange * width
-        const y = (1 - data[date].length / yRange) * 160 + 10
+        const x = (new Date(date).getDate() - 0.5) / xRange * (width - xBias)
+        const y = (1 - data[date].length / yRange) * 160 + yBias
         return [x, y, data[date].length]
       }
     )
@@ -34,7 +38,7 @@ export class dotLine extends Component
     return (
       <div className="dot-line">
         <svg width='100%' height='200'>
-          <rect x={0} y={0} width={width} height={170}/>
+          <rect x={0} y={0} width='100%' height={170}/>
           <path 
             d={
               this.points().reduce(
