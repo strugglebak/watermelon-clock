@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-// import './barChart.styl'
+import './barChart.styl'
 
 interface IBarChartProps {
   data: any[]
@@ -32,18 +32,16 @@ export class barChart extends Component
 
   render() {
     return (
-      <div className="bar-chart">
-        <svg width='100%' height={height}>
-        {
-          this.points().map((point, index) => (
-            <rect key={index} fill="rgba(215,78,78,0.5)" 
-              x={point[0]} y={point[1]} 
-              width={16} height={height - point[1] || 0}
-            />
-          ))
-        }
-        </svg>
-      </div>
+      <svg className="bar-chart" width='100%' height={height}>
+      {
+        this.points().map((point, index) => (
+          <rect key={index} fill="rgba(215,78,78,0.5)" 
+            x={point[0]} y={point[1]} 
+            width={16} height={height - point[1] || 0}
+          />
+        ))
+      }
+      </svg>
     )
   }
 }

@@ -137,12 +137,14 @@ export class statistics extends Component
       <ul className="statistics" ref={this.ulRef}>
         <li className={monthlyTitleClasses} ref={this.liRef}>
           <h3 className="title">统计</h3>
-          <p className="description">
-            {new Date().getMonth() + 1}月累计
-          </p>
-          <span className="number">
-            {this.monthlyWaterMelonsLength}
-          </span>
+          <div className="description-wrapper">
+            <span className="description">
+              {new Date().getMonth() + 1}月累计
+            </span>
+            <span className="number">
+              {this.monthlyWaterMelonsLength}
+            </span>
+          </div>
           <BarChart
             data={this.monthlyWaterMelons}
             finishedCount={this.state.liWidth}
@@ -150,20 +152,26 @@ export class statistics extends Component
         </li>
         <li className={watermelonTitleClasses}>
           <h3 className="title">西瓜历史</h3>
-          <p className="description">累计完成西瓜</p>
-          <span className="number">{this.finishedWaterMelons.length}</span>
+          <div className="description-wrapper">
+            <span className="description">累计完成西瓜</span>
+            <span className="number">{this.finishedWaterMelons.length}</span>
+          </div>
           <Polyline
             data={this.dailyWaterMelons}
             finishedCount={this.finishedWaterMelons.length}
+            width={this.state.liWidth}
           />
         </li>
         <li className={todosTitleClasses}>
           <h3 className="title">任务历史</h3>
-          <p className="description">累计完成任务</p>
-          <span className="number">{this.finishedTodos.length}</span>
+          <div className="description-wrapper">
+            <span className="description">累计完成任务</span>
+            <span className="number">{this.finishedTodos.length}</span>
+          </div>
           <Polyline
             data={this.dailyTodos}
             finishedCount={this.finishedTodos.length}
+            width={this.state.liWidth}
           />
         </li>
       </ul>
