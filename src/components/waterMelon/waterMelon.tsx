@@ -44,7 +44,6 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
   }
 
   startWaterMelon = async () => {
-    console.log('start watermelon')
     try {
       const response = await http.post('/tomatoes', {
         duration: 1500000 // 25min = 25 * 60 * 1000ms

@@ -20,6 +20,7 @@ interface IStatisticsProps {
 interface IStatisticsState {
   mapTitleVisible: any
   liWidth: number
+  ulWidth: number
 }
 
 export class statistics extends Component
@@ -33,7 +34,8 @@ export class statistics extends Component
        watermelonTitle: { visible: false },
        todosTitle: { visible: false }
       },
-      liWidth: this.liRef.current?.offsetWidth || 0
+      liWidth: this.liRef.current?.offsetWidth || 0,
+      ulWidth: this.ulRef.current?.offsetWidth || 0
     }
   }
   ulRef = React.createRef<HTMLUListElement>()
@@ -41,8 +43,13 @@ export class statistics extends Component
 
   updateSize = () => {
     const liWidth = this.liRef.current?.offsetWidth || 0
+    let ulWidth = this.ulRef.current?.offsetWidth || 0
+    ulWidth < 0 && (ulWidth = 0)
     this.state.liWidth !== liWidth && (
       this.setState({ liWidth })
+    )
+    this.state.ulWidth !== ulWidth && (
+      this.setState({ ulWidth })
     )
   }
 
@@ -177,7 +184,10 @@ export class statistics extends Component
       </ul>
       <div className="history-wrapper">
         <div className={monthlyTitleClasses}>
-          <MonthlyHistory/>
+          <MonthlyHistory 
+            finishedTodos={this.finishedTodos}
+            finishedWaterMelons={this.finishedWaterMelons}
+            width={this.state.ulWidth}/>
         </div>
         <div className={watermelonTitleClasses}>
           <WaterMelonsHistory/>

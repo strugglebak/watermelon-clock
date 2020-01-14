@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Tooltip } from 'antd'
 
+import './dotLine.styl'
+
 interface IDotLineProps {
   data: any
   xRange: number
