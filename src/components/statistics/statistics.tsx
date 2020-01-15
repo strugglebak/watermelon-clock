@@ -108,7 +108,7 @@ export class statistics extends Component
     const weekData: any[] = [...Array(7)].map(() => [])
     this.finishedWaterMelons.map((wm: any) => {
       const day = new Date(wm.created_at).getDay()
-      weekData[day].push(wm)
+      return weekData[day].push(wm)
     })
     return weekData
   }

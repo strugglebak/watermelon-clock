@@ -34,7 +34,7 @@ export class dotLine extends Component
   }
 
   render() {
-    const { width } = this.props
+    // const { width } = this.props
     return (
       <div className="dot-line">
         <svg width='100%' height='200'>
