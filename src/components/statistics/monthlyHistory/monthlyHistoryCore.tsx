@@ -3,6 +3,7 @@ import { format, getDaysInMonth } from 'date-fns'
 import DotLine from './dotLine'
 import classNames from 'classnames'
 import { DatePicker } from 'antd'
+import moment from 'moment'
 
 import './monthlyHistoryCore.styl'
 
@@ -15,6 +16,8 @@ interface IMonthlyHistoryCoreState {
   currentMonth: string
   currentYear: string
 }
+
+const timeFormat = ['YYYY', 'MM']
 
 export class monthlyHistoryCore extends Component
 <IMonthlyHistoryCoreProps, IMonthlyHistoryCoreState> {
@@ -134,11 +137,18 @@ export class monthlyHistoryCore extends Component
         <div className="monthly-action">
           <span className="monthly-action-title">当前年月: </span>
           <div className="monthly-action-year">
-            <DatePicker onChange={this.onChange} picker="year" placeholder="请选择年份" />
+            <DatePicker
+              defaultValue={moment(this.state.currentYear, timeFormat[0])}
+              format={timeFormat[0]}
+              onChange={this.onChange} picker="year" placeholder="请选择年份" />
             <span className="monthly-action-text">年</span>
           </div>
           <div className="monthly-action-month">
-            <DatePicker onChange={this.onChange} picker="month" placeholder="请选择月份"/>
+            <DatePicker
+              defaultValue={moment(this.state.currentMonth, timeFormat[1])}
+              format={timeFormat[1]}
+              mode="month"
+              onChange={this.onChange} picker="month" placeholder="请选择月份"/>
             <span className="monthly-action-text">月</span>
           </div>
         </div>
