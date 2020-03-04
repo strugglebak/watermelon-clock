@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { format, getDaysInMonth } from 'date-fns'
 import DotLine from './dotLine'
 import classNames from 'classnames'
+import { DatePicker } from 'antd'
 
 import './monthlyHistoryCore.styl'
 
@@ -51,14 +52,14 @@ export class monthlyHistoryCore extends Component
 
     const prevTotalNumber = this.props.finishedData
       .filter(
-        (data: any) => 
+        (data: any) =>
         format(new Date(data.calTime), 'MM') === prevMonth
        )
       .filter(
-        (data: any) => 
+        (data: any) =>
         format(new Date(data.calTime), 'yyyy') === prevYear
       ).length
-    
+
     let increase = ((this.totalNumber - prevTotalNumber) / prevTotalNumber).toFixed(2)
     if (Number(increase) === Infinity) increase = '1.00'
     else if (!Number(increase)) increase = '0'
@@ -70,11 +71,11 @@ export class monthlyHistoryCore extends Component
     const { currentMonth, currentYear } = this.state
     return finishedData
       .filter(
-        (data: any) => 
+        (data: any) =>
         format(new Date(data.calTime), 'MM') === currentMonth
        )
       .filter(
-        (data: any) => 
+        (data: any) =>
         format(new Date(data.calTime), 'yyyy') === currentYear
       )
   }
@@ -112,6 +113,10 @@ export class monthlyHistoryCore extends Component
     return { data, xRange: totalDays}
   }
 
+  onChange = (date: any, dateString: string) => {
+    console.log(date, dateString)
+  }
+
   render() {
 
     const { width } = this.props
@@ -126,27 +131,40 @@ export class monthlyHistoryCore extends Component
 
     return (
       <div className="monthly-history-core">
-        <ul>
-          <li>
-            <strong className="number">{this.totalNumber}</strong>
-            <span className="unit">总数</span>
-          </li>
-          <li>
-            <strong className="number">{this.daliyAverageNumber}</strong>
-            <span className="unit">日平均数</span>
-          </li>
-          <li>
-            <strong className={monthlyIncreaseClasses}>
-              {
-                Number(monthlyIncreaseNumber) > 0
-                  ? `+${monthlyIncreaseNumber}`
-                  : `-${monthlyIncreaseNumber}`
-              }
-            </strong>
-            <span className="unit">月增长量</span>
-          </li>
-        </ul>
-        <DotLine data={data} xRange={xRange} width={width} />
+        <div className="monthly-action">
+          <span className="monthly-action-title">当前年月: </span>
+          <div className="monthly-action-year">
+            <DatePicker onChange={this.onChange} picker="year" placeholder="请选择年份" />
+            <span className="monthly-action-text">年</span>
+          </div>
+          <div className="monthly-action-month">
+            <DatePicker onChange={this.onChange} picker="month" placeholder="请选择月份"/>
+            <span className="monthly-action-text">月</span>
+          </div>
+        </div>
+        <div className="monthly-history-statistics-wrapper">
+          <ul>
+            <li>
+              <strong className="number">{this.totalNumber}</strong>
+              <span className="unit">总数</span>
+            </li>
+            <li>
+              <strong className="number">{this.daliyAverageNumber}</strong>
+              <span className="unit">日平均数</span>
+            </li>
+            <li>
+              <strong className={monthlyIncreaseClasses}>
+                {
+                  Number(monthlyIncreaseNumber) > 0
+                    ? `+${monthlyIncreaseNumber}`
+                    : `-${monthlyIncreaseNumber}`
+                }
+              </strong>
+              <span className="unit">月增长量</span>
+            </li>
+          </ul>
+          <DotLine data={data} xRange={xRange} width={width} />
+        </div>
       </div>
     )
   }
