@@ -116,8 +116,14 @@ export class monthlyHistoryCore extends Component
     return { data, xRange: totalDays}
   }
 
-  onChange = (date: any, dateString: string) => {
-    console.log(date, dateString)
+  onChangeYear = (date: any, dateString: string) => {
+    if (!date || !dateString || this.state.currentYear === `${dateString}`) return
+    this.setState({ currentYear: dateString })
+  }
+
+  onChangeMonth = (date: any, dateString: string) => {
+    if (!date || !dateString || this.state.currentMonth === `${dateString}`) return
+    this.setState({ currentMonth: dateString })
   }
 
   render() {
@@ -140,7 +146,7 @@ export class monthlyHistoryCore extends Component
             <DatePicker
               defaultValue={moment(this.state.currentYear, timeFormat[0])}
               format={timeFormat[0]}
-              onChange={this.onChange} picker="year" placeholder="请选择年份" />
+              onChange={this.onChangeYear} picker="year" placeholder="请选择年份" />
             <span className="monthly-action-text">年</span>
           </div>
           <div className="monthly-action-month">
@@ -148,7 +154,7 @@ export class monthlyHistoryCore extends Component
               defaultValue={moment(this.state.currentMonth, timeFormat[1])}
               format={timeFormat[1]}
               mode="month"
-              onChange={this.onChange} picker="month" placeholder="请选择月份"/>
+              onChange={this.onChangeMonth} picker="month" placeholder="请选择月份"/>
             <span className="monthly-action-text">月</span>
           </div>
         </div>
