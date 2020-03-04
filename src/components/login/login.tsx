@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Input, Button, Icon } from 'antd'
+import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { Input, Button } from 'antd';
 import http from '../../config/http'
 import { Link } from 'react-router-dom'
 
@@ -54,13 +55,13 @@ export class login extends Component<IRouter, ILoginState> {
         <Input
           className="account-input"
           placeholder="账号" allowClear
-          prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('account', e)}}
         />
         <Input.Password
           className="password-input"
           placeholder="密码" allowClear
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('password', e)}}
         />
         <Button
@@ -72,7 +73,7 @@ export class login extends Component<IRouter, ILoginState> {
           还没有账号？<Link to="/signUp">立即注册</Link>
         </p>
       </div>
-    )
+    );
   }
 }
 

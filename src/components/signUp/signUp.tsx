@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Input, Button, Icon, message } from 'antd'
+import { LockOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons';
+import { Input, Button, message } from 'antd';
 import http from '../../config/http'
 import { Link } from 'react-router-dom'
 
@@ -61,19 +62,19 @@ export class signUp extends Component<IRouter, ISignUpState> {
         <Input
           className="account-input"
           placeholder="账号" allowClear
-          prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('account', e)}}
         />
         <Input.Password
           className="password-input"
           placeholder="密码" allowClear
-          prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('password', e)}}
         />
         <Input.Password
           className="password-confirmed-input"
           placeholder="确认密码" allowClear
-          prefix={<Icon type="safety-certificate" style={{ color: 'rgba(0,0,0,.25)' }} />}
+          prefix={<SafetyCertificateOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('passwordConfirmed', e)}}
         />
         <Button
@@ -85,7 +86,7 @@ export class signUp extends Component<IRouter, ISignUpState> {
           已经有账号？<Link to="/login">立即登录</Link>
         </p>
       </div>
-    )
+    );
   }
 }
 

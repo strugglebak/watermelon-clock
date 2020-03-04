@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Button, Icon, Input, Modal } from 'antd'
+import { CloseCircleOutlined } from '@ant-design/icons';
+import { Button, Input, Modal } from 'antd';
 
 import CountDown from './countDown'
 import http from '../../config/http'
@@ -95,14 +96,13 @@ export class waterMelonAction extends Component
         onKeyUp={e => this.abortWaterMelon(e)}
       />
     </Modal>
-    const closeIcon = <Icon 
-      className="icon-close" type="close-circle" 
+    const closeIcon = <CloseCircleOutlined
+      className="icon-close"
       style={{
         color: '#bbb',
         cursor: 'pointer'
-      }} 
-      onClick={this.abort}
-    />
+      }}
+      onClick={this.abort} />
 
     if (waterMelon === undefined) {
       html = <Button className="start-task-btn" onClick={this.props.startWaterMelon} >开始西瓜</Button>

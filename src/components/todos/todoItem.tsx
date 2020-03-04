@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Checkbox, Icon } from 'antd'
+import { DeleteFilled, EnterOutlined } from '@ant-design/icons';
+import { Checkbox } from 'antd';
 import classNames from 'classnames'
 import http from '../../config/http'
 
@@ -81,17 +82,18 @@ export class todoItem extends Component<ITodoItemProps, ITodoItemState> {
         onBlur={this.onBlur}
       />
       <div className="icon-wrapper">
-        <Icon className="icon-enter" type="enter" style={{
-            cursor: 'pointer', fontSize: '16px'
-          }}
-          onClick={e => this.update({description: this.state.editingText})}
-          />
-        <Icon className="icon-delete" type="delete" style={{
-            cursor: 'pointer', fontSize: '16px'
-          }}
-          theme="filled"
-          onClick={e => this.update({ deleted: true })}
-        />
+        <EnterOutlined
+          className="icon-enter"
+          style={{
+              cursor: 'pointer', fontSize: '16px'
+            }}
+          onClick={e => this.update({description: this.state.editingText})} />
+        <DeleteFilled
+          className="icon-delete"
+          style={{
+              cursor: 'pointer', fontSize: '16px'
+            }}
+          onClick={e => this.update({ deleted: true })} />
       </div>
     </div>
 

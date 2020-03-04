@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Menu, Dropdown, Icon } from 'antd'
+import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { Menu, Dropdown } from 'antd';
 import history from '../../config/history'
 
 import './header.styl'
@@ -19,8 +20,8 @@ const logout = () => {
 
 const menu = (
   <Menu>
-    <Menu.Item key="0"><Icon type="user" />个人设置</Menu.Item>
-    <Menu.Item key="1" onClick={logout}><Icon type="logout"/>登出</Menu.Item>
+    <Menu.Item key="0"><UserOutlined />个人设置</Menu.Item>
+    <Menu.Item key="1" onClick={logout}><LogoutOutlined />登出</Menu.Item>
   </Menu>
 )
 
@@ -37,11 +38,11 @@ export class header extends Component<IHeaderProps> {
             {
               this.props.userInfo && this.props.userInfo.account
             }
-            <Icon type="down" className="icon-down" />
+            <DownOutlined className="icon-down" />
           </span>
         </Dropdown>
       </div>
-    )
+    );
   }
 }
 

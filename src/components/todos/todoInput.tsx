@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Input, Icon } from 'antd'
+import { EnterOutlined } from '@ant-design/icons';
+import { Input } from 'antd';
 
 import { connect } from 'react-redux'
 import { addTodo } from '../../redux/actions/todosActions'
@@ -61,11 +62,11 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
     const { focus, description } = this.state
     console.log(focus)
     const suffix = description
-      ? <Icon type="enter" style={{
-          fontSize: '18px', cursor: 'pointer'
-        }}
-        onClick={this.addTodo}
-        />
+      ? <EnterOutlined
+      style={{
+            fontSize: '18px', cursor: 'pointer'
+          }}
+      onClick={this.addTodo} />
       : <span/>
     return (
       <div className="todo-input">
