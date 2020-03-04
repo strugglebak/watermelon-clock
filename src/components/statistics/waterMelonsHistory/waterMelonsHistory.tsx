@@ -35,7 +35,7 @@ const List = (Props: any, Slot?: any) => {
       <div className="watermelons-list">
         {
           watermelons.map(
-            (wm: any) => 
+            (wm: any) =>
               <WaterMelonHistoryItem
                 key={wm.id}
                 watermelon={wm}
@@ -48,12 +48,12 @@ const List = (Props: any, Slot?: any) => {
   )
 }
 
-export class waterMelonsHistory extends Component 
+export class waterMelonsHistory extends Component
 <IWaterMelonsHistoryProps, any> {
 
   get finishedWaterMelons() {
      return this.props.waterMelons.filter(
-       (wm: any) => 
+       (wm: any) =>
         wm.description && wm.ended_at && !wm.aborted && !wm?.extra?.deleted
      )
   }
@@ -105,7 +105,7 @@ export class waterMelonsHistory extends Component
     )
 
     return (
-      <Tabs defaultActiveKey="1">
+      <Tabs defaultActiveKey="1" type="card">
 				<TabPane tab="完成的西瓜" key="1">
 					<div className="watermelons-history">
 						{finishedWaterMelonsList}

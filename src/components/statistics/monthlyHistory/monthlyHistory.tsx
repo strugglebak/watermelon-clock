@@ -15,7 +15,7 @@ interface IWeeklyHistoryProps {
 export class weeklyHistory extends Component
 <IWeeklyHistoryProps, any> {
 
-  get finishedTodos() { 
+  get finishedTodos() {
     // return this.props.finishedTodos.map(todo => ({calTime: todo.completed_at, id: todo.id}))
     // 暂时这么写
     return this.props.finishedTodos.map(todo => ({calTime: todo.updated_at, id: todo.id}))
@@ -28,7 +28,7 @@ export class weeklyHistory extends Component
   render() {
     const { width } = this.props
     return (
-      <Tabs defaultActiveKey="1">
+      <Tabs defaultActiveKey="1" type="card">
 				<TabPane tab="西瓜统计" key="1">
 					<div className="monthly-history">
             <MonthlyHistoryCore

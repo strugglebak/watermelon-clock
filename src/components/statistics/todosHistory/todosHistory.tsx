@@ -30,7 +30,7 @@ export class todosHistory extends Component
     return _.groupBy(this.finishedTodos, (todo: any) => {
       return format(new Date(todo.updated_at), 'yyyy-MM-dd')
     })
-  } 
+  }
   get finishedDatesKeys() {
     return Object.keys(this.dailyFinshedTodos).sort(
       // 倒序排列
@@ -58,7 +58,7 @@ export class todosHistory extends Component
             <div className="todos-list">
               {
                 todos.map(
-                  (todo: any) => 
+                  (todo: any) =>
                     <TodosHistoryItem
                       key={todo.id}
                       todo={todo}
@@ -73,7 +73,7 @@ export class todosHistory extends Component
     )
 
     const deletedTodosList = this.deletedTodos.map(
-      (todo: any) => 
+      (todo: any) =>
         <TodosHistoryItem
           key={todo.id}
           todo={todo}
@@ -81,7 +81,7 @@ export class todosHistory extends Component
         />
     )
     return (
-      <Tabs defaultActiveKey="1">
+      <Tabs defaultActiveKey="1" type="card">
 				<TabPane tab="已完成的任务" key="1">
 					<div className="todos-history">
 						{finishedTodsList}
