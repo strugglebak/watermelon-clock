@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { format } from 'date-fns'
 import _ from 'lodash'
-import { Tabs } from 'antd'
+import { Tabs, Pagination } from 'antd'
 import TodosHistoryItem from './todosHistoryItem'
 import {
   dayOfWeekTransfer,
@@ -16,9 +16,20 @@ const TabPane = Tabs.TabPane
 interface ITodosHistoryProps {
   todos: any[]
 }
+interface ITodosHistoryState {
+  currentPage: number
+  deletedCurrentPage: number
+}
 
 export class todosHistory extends Component
-<ITodosHistoryProps, any> {
+<ITodosHistoryProps, ITodosHistoryState> {
+  constructor(props: ITodosHistoryProps) {
+    super(props)
+    this.state = {
+      currentPage: 1,
+      deletedCurrentPage: 1
+    }
+  }
 
   get finishedTodos() {
     return this.props.todos.filter((todo: any) => todo.completed && !todo.deleted)
@@ -32,14 +43,25 @@ export class todosHistory extends Component
     })
   }
   get finishedDatesKeys() {
-    return Object.keys(this.dailyFinishedTodos).sort(
+    const {currentPage} = this.state
+    return Object.keys(this.dailyFinishedTodos)
+    .sort(
       // 倒序排列
       (a, b) => Date.parse(b) - Date.parse(a)
     )
+    .slice((currentPage-1)*3, currentPage*3) // 分页逻辑
+  }
+
+  togglePagination = (currentPage: number) => {
+    this.setState({currentPage})
+  }
+
+  toggleDeletedPagination = (deletedCurrentPage: number) => {
+    this.setState({deletedCurrentPage})
   }
 
   render() {
-    const finishedTodsList = this.finishedDatesKeys.map(
+    const finishedTodosList = this.finishedDatesKeys.map(
       (datesKey: any) => {
         const todos = this.dailyFinishedTodos[datesKey]
         return (
@@ -72,7 +94,10 @@ export class todosHistory extends Component
       }
     )
 
-    const deletedTodosList = this.deletedTodos.map(
+    const {deletedCurrentPage} = this.state
+    const deletedTodosList = this.deletedTodos
+    .slice((deletedCurrentPage - 1)*12, deletedCurrentPage*12)
+    .map(
       (todo: any) =>
         <TodosHistoryItem
           key={todo.id}
@@ -84,13 +109,27 @@ export class todosHistory extends Component
       <Tabs defaultActiveKey="1" type="card">
 				<TabPane tab="已完成的任务" key="1">
 					<div className="todos-history">
-						{finishedTodsList}
+						{finishedTodosList}
 					</div>
+          <Pagination defaultCurrent={1}
+            pageSize={3} // 每页显示3条数据，可以与上面的 currentPage*3 对应上
+            hideOnSinglePage={true}
+            total={Object.keys(this.dailyFinishedTodos).length}
+            current={this.state.currentPage}
+            onChange={this.togglePagination}
+          />
 				</TabPane>
 				<TabPane tab="已删除的任务" key="2">
 					<div className="todos-history">
 						{deletedTodosList}
 					</div>
+          <Pagination defaultCurrent={1}
+            pageSize={12}
+            hideOnSinglePage={true}
+            total={this.deletedTodos.length}
+            current={this.state.deletedCurrentPage}
+            onChange={this.toggleDeletedPagination}
+          />
 				</TabPane>
 			</Tabs>
     )

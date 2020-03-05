@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 
 /**
- * 
+ *
  * @param element 监听元素
  * @param eventType 监听事件
  * @param selector element 中的子元素
@@ -9,9 +9,9 @@ import { format } from 'date-fns'
  */
 
 export function delegate(
-  element: any, 
-  eventType: any, 
-  selector: any, 
+  element: any,
+  eventType: any,
+  selector: any,
   fn: any
 ): any {
     element.addEventListener(eventType, (e: any) => {
@@ -41,10 +41,14 @@ export function yearMonthDayTransfer(date: string): any {
 
 
 export function timeTransfer (time: string, formatText: string, itemType: string): any {
-    const formatedTime = format(new Date(time), formatText)
-    const arr = formatedTime.split('-')
-    const str = itemType === 'finished' || itemType === 'aborted'
-      ? formatedTime
-      : `${arr[0]}月${arr[1]}日`
-    return str
-  }
+  const formattedTime = format(new Date(time), formatText)
+  const arr = formattedTime.split('-')
+  const str = itemType === 'finished' || itemType === 'aborted'
+    ? formattedTime
+    : `${arr[0]}年${arr[1]}月${arr[2]}日`
+  return str
+}
+
+export function formatTimeToClock(date: string) {
+  return format(new Date(date), 'HH:mm')
+}

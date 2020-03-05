@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updateTodo } from '../../../redux/actions/todosActions'
 import http from '../../../config/http'
-import { timeTransfer } from '../../../helper/util'
+import { timeTransfer, formatTimeToClock } from '../../../helper/util'
 
 import './todosHistoryItem.styl'
 
@@ -45,7 +45,7 @@ export class todosHistoryItem extends Component
     const { submit, className } = params
     if (className === 'restore') {
       submit ? this.changeRestoreText('提交中...') : this.changeRestoreText('恢复')
-    }   
+    }
   }
 
   changeRestoreText = (restoreText: string) => {
@@ -82,22 +82,27 @@ export class todosHistoryItem extends Component
         action: restoreAndDeleteAction
       },
       deleted: {
-        formatText: 'MM-dd',
+        formatText: 'yyyy-MM-dd',
         time: created_at,
         action: restoreAction
       }
     }
 
-    const { 
+    const {
       formatText,
       time,
-      action 
+      action
     } = mapItemTypeToAction[itemType]
+
+    const clock = <span className="clock">{formatTimeToClock(time)}</span>
 
     return (
       <div className="todos-history-item">
         <div className="text">
           <span className="time">{timeTransfer(time, formatText, itemType)}</span>
+          {
+            itemType === 'deleted' ? clock : null
+          }
           <span className="description">{description}</span>
         </div>
         { action }
