@@ -16,6 +16,10 @@ const TabPane = Tabs.TabPane
 interface IWaterMelonsHistoryProps {
   waterMelons: any[]
 }
+interface IWaterMelonsHistoryState {
+  currentPage: number
+  abortedCurrentPage: number
+}
 
 const List = (Props: any, Slot?: any) => {
   const { datesKey, watermelons, itemType } = Props
@@ -49,7 +53,14 @@ const List = (Props: any, Slot?: any) => {
 }
 
 export class waterMelonsHistory extends Component
-<IWaterMelonsHistoryProps, any> {
+<IWaterMelonsHistoryProps, IWaterMelonsHistoryState> {
+  constructor(props: IWaterMelonsHistoryProps) {
+    super(props)
+    this.state = {
+      currentPage: 1,
+      abortedCurrentPage: 1
+    }
+  }
 
   get finishedWaterMelons() {
      return this.props.waterMelons.filter(
@@ -75,15 +86,28 @@ export class waterMelonsHistory extends Component
   }
 
   get finishedDatesKeys() {
-    return Object.keys(this.dailyFinishedWaterMelons).sort(
+    const {currentPage} = this.state
+    return Object.keys(this.dailyFinishedWaterMelons)
+    .sort(
       (a, b) => Date.parse(b) - Date.parse(a)
     )
+    .slice((currentPage-1)*3, currentPage*3) // 分页逻辑
   }
 
   get abortedDatesKeys() {
-    return Object.keys(this.dailyAbortedWaterMelons).sort(
+    const {abortedCurrentPage} = this.state
+    return Object.keys(this.dailyAbortedWaterMelons)
+    .sort(
       (a, b) => Date.parse(b) - Date.parse(a)
     )
+    .slice((abortedCurrentPage-1)*3, abortedCurrentPage*3) // 分页逻辑
+  }
+
+  togglePagination = (currentPage: number) => {
+    this.setState({currentPage})
+  }
+  toggleAbortedPagination = (abortedCurrentPage: number) => {
+    this.setState({abortedCurrentPage})
   }
 
   render() {
@@ -110,13 +134,25 @@ export class waterMelonsHistory extends Component
 					<div className="watermelons-history">
 						{finishedWaterMelonsList}
 					</div>
-          <Pagination defaultCurrent={1} total={50} />
+          <Pagination defaultCurrent={1}
+            pageSize={3}
+            hideOnSinglePage={true}
+            total={Object.keys(this.dailyFinishedWaterMelons).length}
+            current={this.state.currentPage}
+            onChange={this.togglePagination}
+          />
 				</TabPane>
 				<TabPane tab="打断记录" key="2">
 					<div className="watermelons-history">
 						{abortedWaterMelonsList}
 					</div>
-          <Pagination defaultCurrent={1} total={50} />
+          <Pagination defaultCurrent={1}
+            pageSize={3}
+            hideOnSinglePage={true}
+            total={Object.keys(this.abortedWaterMelons).length}
+            current={this.state.abortedCurrentPage}
+            onChange={this.toggleAbortedPagination}
+          />
 				</TabPane>
 			</Tabs>
     )
