@@ -26,13 +26,13 @@ export class todosHistory extends Component
   get deletedTodos() {
     return this.props.todos.filter((todo: any) => todo.deleted)
   }
-  get dailyFinshedTodos() {
+  get dailyFinishedTodos() {
     return _.groupBy(this.finishedTodos, (todo: any) => {
       return format(new Date(todo.updated_at), 'yyyy-MM-dd')
     })
   }
   get finishedDatesKeys() {
-    return Object.keys(this.dailyFinshedTodos).sort(
+    return Object.keys(this.dailyFinishedTodos).sort(
       // 倒序排列
       (a, b) => Date.parse(b) - Date.parse(a)
     )
@@ -41,7 +41,7 @@ export class todosHistory extends Component
   render() {
     const finishedTodsList = this.finishedDatesKeys.map(
       (datesKey: any) => {
-        const todos = this.dailyFinshedTodos[datesKey]
+        const todos = this.dailyFinishedTodos[datesKey]
         return (
           <div className="daily-todos" key={datesKey}>
 
