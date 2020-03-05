@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { format } from 'date-fns'
 import _ from 'lodash'
-import { Tabs } from 'antd'
+import { Tabs, Pagination } from 'antd'
 import {
   dayOfWeekTransfer,
   yearMonthDayTransfer
@@ -110,11 +110,13 @@ export class waterMelonsHistory extends Component
 					<div className="watermelons-history">
 						{finishedWaterMelonsList}
 					</div>
+          <Pagination defaultCurrent={1} total={50} />
 				</TabPane>
 				<TabPane tab="打断记录" key="2">
 					<div className="watermelons-history">
 						{abortedWaterMelonsList}
 					</div>
+          <Pagination defaultCurrent={1} total={50} />
 				</TabPane>
 			</Tabs>
     )

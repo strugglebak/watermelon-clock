@@ -21,7 +21,7 @@ interface IWaterMelonsHistoryItemState {
   isEnterCode: boolean
 }
 
-export class waterMelonsHistoryItem extends Component 
+export class waterMelonsHistoryItem extends Component
 <IWaterMelonsHistoryItemProps, IWaterMelonsHistoryItemState> {
 
   constructor(props: IWaterMelonsHistoryItemProps) {
@@ -134,14 +134,14 @@ export class waterMelonsHistoryItem extends Component
     const { itemType } = this.props
     const formatText = 'HH:mm'
 
-    const normalDescription = <p 
+    const normalDescription = <p
       className="description">
       {description || <span className="null">西瓜描述为空</span>}
     </p>
-    const inputDescripiton = <textarea 
+    const inputDescription = <textarea
       ref={this.inputRef}
       rows={1} cols={30}
-      className="editing-input" 
+      className="editing-input"
       value={this.state.editingText}
       onChange={e => this.onEditingChange(e)}
       onKeyDown={e => this.onEditingKeyDown(e)}
@@ -166,7 +166,7 @@ export class waterMelonsHistoryItem extends Component
       </span>
     </div>
 
-    const Descripiton = this.state.editable ? inputDescripiton : normalDescription
+    const Description = this.state.editable ? inputDescription : normalDescription
     const Action = this.state.editable ? inputAction : normalAction
 
     const waterMelonHistoryItemClasses = classNames({
@@ -182,7 +182,7 @@ export class waterMelonsHistoryItem extends Component
             <span> - </span>
             {timeTransfer(updated_at, formatText, itemType)}
           </p>
-          { Descripiton }
+          { Description }
         </div>
         { Action }
       </div>
