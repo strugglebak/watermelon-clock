@@ -2,12 +2,18 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { format } from 'date-fns'
 import _ from 'lodash'
-import { Tabs, Pagination } from 'antd'
+import { Tabs, Pagination, Button, Tooltip } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import {
   dayOfWeekTransfer,
   yearMonthDayTransfer
 } from '../../../helper/util'
 import WaterMelonHistoryItem from './waterMelonsHistoryItem'
+import AddNewWaterMelon from './newWaterMelon'
+import {
+  addWaterMelon,
+  updateWaterMelon
+} from '../../../redux/actions/waterMelonActions'
 
 import './waterMelonsHistory.styl'
 
@@ -15,10 +21,14 @@ const TabPane = Tabs.TabPane
 
 interface IWaterMelonsHistoryProps {
   waterMelons: any[]
+  addWaterMelon: (payload: any) => any
+  updateWaterMelon: (payload: any) => any
 }
 interface IWaterMelonsHistoryState {
   currentPage: number
   abortedCurrentPage: number
+  tabKey: string
+  isShowSupplyPane: boolean
 }
 
 const List = (Props: any, Slot?: any) => {
@@ -58,7 +68,9 @@ export class waterMelonsHistory extends Component
     super(props)
     this.state = {
       currentPage: 1,
-      abortedCurrentPage: 1
+      abortedCurrentPage: 1,
+      tabKey: '1',
+      isShowSupplyPane: false
     }
   }
 
@@ -110,6 +122,19 @@ export class waterMelonsHistory extends Component
     this.setState({abortedCurrentPage})
   }
 
+  onChangeTab = (tabKey: string) => {
+    tabKey !== this.state.tabKey && this.setState({tabKey})
+  }
+
+  cancelAddPane = () => {
+    this.setState({isShowSupplyPane: false})
+  }
+
+  addNewWaterMelon = (params: any) => {
+    this.setState({isShowSupplyPane: true})
+    this.props.addWaterMelon(params)
+  }
+
   render() {
     const finishedWaterMelonsList = this.finishedDatesKeys.map(
       (datesKey: any) => {
@@ -128,9 +153,30 @@ export class waterMelonsHistory extends Component
       }
     )
 
+    const operations = this.state.tabKey === '1'
+      ? (
+        <Tooltip title="补记西瓜">
+          <Button className="supply-watermelon"
+            icon={<PlusOutlined />}
+            onClick={() => this.setState({isShowSupplyPane: true})}
+          />
+        </Tooltip>
+      )
+      : null
+
     return (
-      <Tabs defaultActiveKey="1" type="card">
+      <Tabs defaultActiveKey="1" type="card" tabBarExtraContent={operations}
+        onChange={this.onChangeTab}
+      >
 				<TabPane tab="完成的西瓜" key="1">
+          {
+            this.state.isShowSupplyPane
+              ? <AddNewWaterMelon
+                cancelAddPane={this.cancelAddPane}
+                addNewWaterMelon={this.addNewWaterMelon}
+              />
+              : null
+          }
 					<div className="watermelons-history">
 						{finishedWaterMelonsList}
 					</div>
@@ -164,4 +210,9 @@ const mapStateToProps = (state: any, ownProps: any) => ({
   ...ownProps
 })
 
-export default connect(mapStateToProps)(waterMelonsHistory)
+const mapDispatchToProps = {
+  addWaterMelon,
+  updateWaterMelon
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(waterMelonsHistory)
