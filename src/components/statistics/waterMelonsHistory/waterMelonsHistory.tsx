@@ -135,7 +135,7 @@ export class waterMelonsHistory extends Component
 						{finishedWaterMelonsList}
 					</div>
           <Pagination defaultCurrent={1}
-            pageSize={3}
+            pageSize={3} // 每页显示3条数据，可以与上面的 currentPage*3 对应上
             hideOnSinglePage={true}
             total={Object.keys(this.dailyFinishedWaterMelons).length}
             current={this.state.currentPage}
