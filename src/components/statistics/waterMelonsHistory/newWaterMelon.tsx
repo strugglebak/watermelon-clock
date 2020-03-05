@@ -11,8 +11,8 @@ interface INewWaterMelonProps {
 }
 
 interface INewWaterMelonState {
-  startedAt: string
-  endedAt: string
+  startedAt: any
+  endedAt: any
   description: string
 }
 
@@ -29,30 +29,31 @@ class newWaterMelon extends Component
 
   // 提交时需要进行表单验证
   submitNewWaterMelon = (values: any) => {
-
     const { startedAt, endedAt, description } = this.state
-    console.log(startedAt, endedAt, description)
 
     if (!description) return message.error('请检查是否已经填写好[西瓜描述]')
     if (!endedAt || !startedAt) return message.error('请检查是否已经填写好[开始/结束]时间')
     if (startedAt.valueOf() > endedAt.valueOf()) return message.error('不合理的时间设置')
 
     this.props.addNewWaterMelon({
-      stated_at: startedAt,
+      started_at: startedAt,
       ended_at: endedAt,
       description,
       manually_created: true
     })
+
+    // 提交完成时应该关闭 pane
+    this.props.cancelAddPane()
   }
 
   // 保存开始时间
   saveStartedAtTime = (e: any) => {
     if (!e) return this.setState({startedAt: ''})
 
-    const startedAt = e.toDate()
+    const startedAt =  new Date(e.toDate())
     if(startedAt !== this.state.startedAt) {
       const { endedAt } = this.state
-      if(!endedAt) return this.setState({ startedAt: e.toDate() })
+      if(!endedAt) return this.setState({ startedAt })
       if(startedAt.valueOf() > endedAt.valueOf()) return message.error('不合理的时间设置')
 
       this.setState({ startedAt })
@@ -63,10 +64,10 @@ class newWaterMelon extends Component
   saveEndedAtTime = (e: any) => {
     if (!e) return this.setState({endedAt: ''})
 
-    const endedAt = e.toDate()
+    const endedAt = new Date(e.toDate())
     if(endedAt !== this.state.endedAt) {
       const { startedAt } = this.state
-      if(!startedAt) return this.setState({ endedAt: e.toDate() })
+      if(!startedAt) return this.setState({ endedAt })
       if(startedAt.valueOf() > endedAt.valueOf()) return message.error('不合理的时间设置')
 
       this.setState({ endedAt })

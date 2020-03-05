@@ -9,12 +9,15 @@ import WaterMelonsHistory from './waterMelonsHistory/waterMelonsHistory'
 import MonthlyHistory from './monthlyHistory/monthlyHistory'
 import { delegate } from '../../helper/util'
 import classNames from 'classnames'
+import http from '../../config/http'
+import { addWaterMelon } from '../../redux/actions/waterMelonActions'
 
 import './statistics.styl'
 
 interface IStatisticsProps {
   todos: any[]
   waterMelons: any[]
+  addWaterMelon: (payload: any) => void
 }
 
 interface IStatisticsState {
@@ -56,7 +59,7 @@ export class statistics extends Component
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateSize)
   }
-  
+
   componentDidMount() {
     this.updateSize()
     window.addEventListener('resize', this.updateSize)
@@ -80,13 +83,13 @@ export class statistics extends Component
     return mapTitleVisible
   }
 
-  get finishedTodos() { 
-    return this.props.todos.filter((todo: any) => todo.completed && !todo.deleted) 
+  get finishedTodos() {
+    return this.props.todos.filter((todo: any) => todo.completed && !todo.deleted)
   }
 
   get finishedWaterMelons() {
      return this.props.waterMelons.filter(
-       (wm: any) => 
+       (wm: any) =>
         wm.description && wm.ended_at && !wm.aborted && !wm.extra?.deleted
      )
   }
@@ -122,6 +125,14 @@ export class statistics extends Component
     ).length
   }
 
+  addNewWaterMelon = async (params: any) => {
+    try {
+      const response = await http.post(`/tomatoes`, params)
+      this.props.addWaterMelon(response.data.resource)
+    } catch (e) {
+      throw new Error(e)
+    }
+  }
 
   render() {
     const monthlyTitleClasses = classNames({
@@ -184,13 +195,15 @@ export class statistics extends Component
       </ul>
       <div className="history-wrapper">
         <div className={monthlyTitleClasses}>
-          <MonthlyHistory 
+          <MonthlyHistory
             finishedTodos={this.finishedTodos}
             finishedWaterMelons={this.finishedWaterMelons}
             width={this.state.ulWidth}/>
         </div>
         <div className={watermelonTitleClasses}>
-          <WaterMelonsHistory/>
+          <WaterMelonsHistory
+            addNewWaterMelon={this.addNewWaterMelon}
+          />
         </div>
         <div className={todosTitleClasses}>
           <TodosHistory/>
@@ -207,5 +220,8 @@ const mapStateToProps = (state: any, ownProps: any) => ({
     ownProps
 })
 
-export default connect(mapStateToProps)(statistics)
+const mapDispatchToProps = {
+ addWaterMelon
+}
 
+export default connect(mapStateToProps, mapDispatchToProps)(statistics)

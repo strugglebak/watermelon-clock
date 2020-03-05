@@ -10,10 +10,6 @@ import {
 } from '../../../helper/util'
 import WaterMelonHistoryItem from './waterMelonsHistoryItem'
 import AddNewWaterMelon from './newWaterMelon'
-import {
-  addWaterMelon,
-  updateWaterMelon
-} from '../../../redux/actions/waterMelonActions'
 
 import './waterMelonsHistory.styl'
 
@@ -21,8 +17,7 @@ const TabPane = Tabs.TabPane
 
 interface IWaterMelonsHistoryProps {
   waterMelons: any[]
-  addWaterMelon: (payload: any) => any
-  updateWaterMelon: (payload: any) => any
+  addNewWaterMelon: (params: any) => any
 }
 interface IWaterMelonsHistoryState {
   currentPage: number
@@ -132,7 +127,7 @@ export class waterMelonsHistory extends Component
 
   addNewWaterMelon = (params: any) => {
     this.setState({isShowSupplyPane: true})
-    this.props.addWaterMelon(params)
+    this.props.addNewWaterMelon(params)
   }
 
   render() {
@@ -210,9 +205,4 @@ const mapStateToProps = (state: any, ownProps: any) => ({
   ...ownProps
 })
 
-const mapDispatchToProps = {
-  addWaterMelon,
-  updateWaterMelon
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(waterMelonsHistory)
+export default connect(mapStateToProps)(waterMelonsHistory)
