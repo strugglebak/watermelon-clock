@@ -31,6 +31,7 @@
 - React 16.12
 - antd 4.0.1
 - axios 库
+- react-router-dom 5.1.2
 - react-redux 7.1.3
 - redux 4.0.5
 - typescript 3.7.2
