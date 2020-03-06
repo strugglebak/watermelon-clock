@@ -1,3 +1,4 @@
+$--inputbox-color-- = #ccc
 .todos
   border 1px solid #ddd
   width calc(50% - 8px)
@@ -14,3 +15,8 @@
     background #fff
   .ant-collapse-header
     user-select none
+  .ant-checkbox-checked .ant-checkbox-inner
+    background-color $--inputbox-color--
+    border-color $--inputbox-color--
+  .ant-checkbox-checked::after
+    border-color $--inputbox-color--
