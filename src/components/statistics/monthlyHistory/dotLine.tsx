@@ -10,8 +10,13 @@ interface IDotLineProps {
 }
 
 // 调整 x, y 点之间的坐标差，使得图形能够完全显示
-const xBias = 35
-const yBias = 10 
+const xBias = 70
+const yBias = 10
+
+// 调整点线图中圆圈大小用的
+const MAX_WIDTH = 707
+const MAX_RADIUS = 5
+const times = MAX_RADIUS / MAX_WIDTH
 
 export class dotLine extends Component
 <IDotLineProps> {
@@ -33,13 +38,18 @@ export class dotLine extends Component
     )
   }
 
+  get circleRadius() {
+    const { width } = this.props
+    let radius = width > MAX_WIDTH ? MAX_RADIUS : times * width
+    return "" + radius
+  }
+
   render() {
-    // const { width } = this.props
     return (
       <div className="dot-line">
         <svg width='100%' height='200'>
           <rect x={0} y={0} width='100%' height={170}/>
-          <path 
+          <path
             d={
               this.points().reduce(
                 // M,x,y,x1,y1 的形式画直线
@@ -52,18 +62,20 @@ export class dotLine extends Component
             // x 坐标轴上的值显示 1 2 3 4...
             this.points().map(
               (point, index) => (
-                <text key={index} x={point[0] - 5} y="200">
-                  {index + 1}
-                </text>
+                index % 2 === 0
+                ? <text key={index} x={point[0] - 5} y="200">
+                    {index + 1}
+                  </text>
+                : null
             ))
           }
           {
             this.points().map((point, index) => (
-              <Tooltip 
-                key={index} placement="top" 
+              <Tooltip
+                key={index} placement="top"
                 title={`${point[2]}`} overlayClassName='daily_tips'>
                 {/* 坐标点对应的⚪ */}
-                <circle r="5" cx={point[0]} cy={point[1]} />
+                <circle r={this.circleRadius} cx={point[0]} cy={point[1]} />
               </Tooltip>
             ))
           }
