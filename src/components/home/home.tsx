@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import http from '../../config/http'
 import Header from '../header/header'
+import Footer from '../footer/footer'
 import Todos from '../todos/todos'
 import WaterMelon from '../waterMelon/waterMelon'
 import Statistics from '../statistics/statistics'
@@ -74,6 +75,7 @@ export class home extends Component<any, IIndexState> {
         <main className="statistics-content">
           <Statistics/>
         </main>
+        <Footer/>
       </div>
     )
   }
