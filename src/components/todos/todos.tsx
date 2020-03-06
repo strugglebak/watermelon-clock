@@ -4,8 +4,11 @@ import TodoItem from './todoItem'
 
 import { connect } from 'react-redux'
 import { updateTodo } from '../../redux/actions/todosActions'
+import { Collapse } from 'antd'
 
 import './todos.styl'
+
+const { Panel } = Collapse
 
 export class todos extends Component<any> {
 
@@ -26,12 +29,16 @@ export class todos extends Component<any> {
                 />
               )
             }
-            {
-              this.completedTodos.map((todo: any) =>
-                <TodoItem key={todo.id} {...todo}
-                />
-              )
-            }
+          <Collapse bordered={false} defaultActiveKey={['1']}>
+            <Panel header="最近完成的任务" key="1">
+              {
+                this.completedTodos.map((todo: any) =>
+                  <TodoItem key={todo.id} {...todo}
+                  />
+                )
+              }
+            </Panel>
+          </Collapse>
           </ul>
         </main>
       </div>
