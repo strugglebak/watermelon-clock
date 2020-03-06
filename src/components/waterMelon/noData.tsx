@@ -8,9 +8,8 @@ export class noData extends Component {
     return (
       <div className="no-data">
         <DropboxOutlined
-          className="no-data"
           style={{
-            fontSize: '100px',
+            fontSize: '15em',
             color: '#eee'
           }} />
         <p className="no-record">没有记录</p>
