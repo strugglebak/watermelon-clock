@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/watermelon-clock/static/css/main.8455e325.chunk.css",
+    "main.js": "/watermelon-clock/static/js/main.ceae2608.chunk.js",
+    "main.js.map": "/watermelon-clock/static/js/main.ceae2608.chunk.js.map",
+    "runtime-main.js": "/watermelon-clock/static/js/runtime-main.551e29e2.js",
+    "runtime-main.js.map": "/watermelon-clock/static/js/runtime-main.551e29e2.js.map",
+    "static/css/2.9dd65991.chunk.css": "/watermelon-clock/static/css/2.9dd65991.chunk.css",
+    "static/js/2.c871527e.chunk.js": "/watermelon-clock/static/js/2.c871527e.chunk.js",
+    "static/js/2.c871527e.chunk.js.map": "/watermelon-clock/static/js/2.c871527e.chunk.js.map",
+    "index.html": "/watermelon-clock/index.html",
+    "precache-manifest.a9626c1c05b229799695d34c311d706d.js": "/watermelon-clock/precache-manifest.a9626c1c05b229799695d34c311d706d.js",
+    "service-worker.js": "/watermelon-clock/service-worker.js",
+    "static/css/2.9dd65991.chunk.css.map": "/watermelon-clock/static/css/2.9dd65991.chunk.css.map",
+    "static/css/main.8455e325.chunk.css.map": "/watermelon-clock/static/css/main.8455e325.chunk.css.map",
+    "static/js/2.c871527e.chunk.js.LICENSE": "/watermelon-clock/static/js/2.c871527e.chunk.js.LICENSE",
+    "static/media/logo.png": "/watermelon-clock/static/media/logo.6c4bd1c9.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.551e29e2.js",
+    "static/css/2.9dd65991.chunk.css",
+    "static/js/2.c871527e.chunk.js",
+    "static/css/main.8455e325.chunk.css",
+    "static/js/main.ceae2608.chunk.js"
+  ]
+}
