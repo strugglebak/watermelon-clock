@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/watermelon-clock/static/css/main.8455e325.chunk.css",
-    "main.js": "/watermelon-clock/static/js/main.bab44fff.chunk.js",
-    "main.js.map": "/watermelon-clock/static/js/main.bab44fff.chunk.js.map",
+    "main.js": "/watermelon-clock/static/js/main.3a3a73dc.chunk.js",
+    "main.js.map": "/watermelon-clock/static/js/main.3a3a73dc.chunk.js.map",
     "runtime-main.js": "/watermelon-clock/static/js/runtime-main.551e29e2.js",
     "runtime-main.js.map": "/watermelon-clock/static/js/runtime-main.551e29e2.js.map",
     "static/css/2.9dd65991.chunk.css": "/watermelon-clock/static/css/2.9dd65991.chunk.css",
     "static/js/2.c871527e.chunk.js": "/watermelon-clock/static/js/2.c871527e.chunk.js",
     "static/js/2.c871527e.chunk.js.map": "/watermelon-clock/static/js/2.c871527e.chunk.js.map",
     "index.html": "/watermelon-clock/index.html",
-    "precache-manifest.7576d3e3941e297b0ab5838712f7f3a8.js": "/watermelon-clock/precache-manifest.7576d3e3941e297b0ab5838712f7f3a8.js",
+    "precache-manifest.c1261c620903ce888a0ef0057b1b93ef.js": "/watermelon-clock/precache-manifest.c1261c620903ce888a0ef0057b1b93ef.js",
     "service-worker.js": "/watermelon-clock/service-worker.js",
     "static/css/2.9dd65991.chunk.css.map": "/watermelon-clock/static/css/2.9dd65991.chunk.css.map",
     "static/css/main.8455e325.chunk.css.map": "/watermelon-clock/static/css/main.8455e325.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.9dd65991.chunk.css",
     "static/js/2.c871527e.chunk.js",
     "static/css/main.8455e325.chunk.css",
-    "static/js/main.bab44fff.chunk.js"
+    "static/js/main.3a3a73dc.chunk.js"
   ]
 }
