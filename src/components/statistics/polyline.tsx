@@ -48,8 +48,13 @@ export class polyline extends Component
       <svg className="polyline peity" width="100%" height="60">
         <polygon
           fill="rgba(215,78,78,0.1)"
+          points={this.points()}
+        />
+        <polygon
+          fill="none"
           stroke="rgba(215,78,78,0.5)"
           strokeWidth="1"
+          strokeLinecap="square"
           points={this.points()}
         />
       </svg>
