@@ -110,6 +110,21 @@ export class waterMelonsHistory extends Component
     .slice((abortedCurrentPage-1)*3, abortedCurrentPage*3) // 分页逻辑
   }
 
+  get finishedTodosLength() {
+    let length = 0
+    Object.keys(this.dailyFinishedWaterMelons).forEach(key => {
+      length += this.dailyFinishedWaterMelons[key].length
+    })
+    return length
+  }
+  get abortedTodosLength() {
+    let length = 0
+    Object.keys(this.dailyAbortedWaterMelons).forEach(key => {
+      length += this.dailyAbortedWaterMelons[key].length
+    })
+    return length
+  }
+
   togglePagination = (currentPage: number) => {
     this.setState({currentPage})
   }
@@ -175,25 +190,33 @@ export class waterMelonsHistory extends Component
 					<div className="watermelons-history">
 						{finishedWaterMelonsList}
 					</div>
-          <Pagination defaultCurrent={1}
-            pageSize={3} // 每页显示3条数据，可以与上面的 currentPage*3 对应上
-            hideOnSinglePage={true}
-            total={Object.keys(this.dailyFinishedWaterMelons).length}
-            current={this.state.currentPage}
-            onChange={this.togglePagination}
-          />
+          <div className="tab-pane-page-footer">
+            <Pagination defaultCurrent={1}
+              pageSize={3} // 每页显示3条数据，可以与上面的 currentPage*3 对应上
+              hideOnSinglePage={true}
+              total={Object.keys(this.dailyFinishedWaterMelons).length}
+              current={this.state.currentPage}
+              onChange={this.togglePagination}
+            />
+            <div></div>
+            <p className="total-num-of-todos">总计 {this.finishedTodosLength} 个已完成的任务</p>
+          </div>
 				</TabPane>
 				<TabPane tab="打断记录" key="2">
 					<div className="watermelons-history">
 						{abortedWaterMelonsList}
 					</div>
-          <Pagination defaultCurrent={1}
-            pageSize={3}
-            hideOnSinglePage={true}
-            total={Object.keys(this.abortedWaterMelons).length}
-            current={this.state.abortedCurrentPage}
-            onChange={this.toggleAbortedPagination}
-          />
+          <div className="tab-pane-page-footer">
+            <Pagination defaultCurrent={1}
+              pageSize={3}
+              hideOnSinglePage={true}
+              total={Object.keys(this.abortedWaterMelons).length}
+              current={this.state.abortedCurrentPage}
+              onChange={this.toggleAbortedPagination}
+            />
+            <div></div>
+            <p className="total-num-of-todos">总计 {this.abortedTodosLength} 个打断的任务</p>
+          </div>
 				</TabPane>
 			</Tabs>
     )

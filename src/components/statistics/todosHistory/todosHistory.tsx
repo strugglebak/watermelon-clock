@@ -52,6 +52,14 @@ export class todosHistory extends Component
     .slice((currentPage-1)*3, currentPage*3) // 分页逻辑
   }
 
+  get finishedTodosLength() {
+    return this.finishedTodos.length
+  }
+
+  get deletedTodosLength() {
+    return this.deletedTodos.length
+  }
+
   togglePagination = (currentPage: number) => {
     this.setState({currentPage})
   }
@@ -111,25 +119,33 @@ export class todosHistory extends Component
 					<div className="todos-history">
 						{finishedTodosList}
 					</div>
-          <Pagination defaultCurrent={1}
-            pageSize={3} // 每页显示3条数据，可以与上面的 currentPage*3 对应上
-            hideOnSinglePage={true}
-            total={Object.keys(this.dailyFinishedTodos).length}
-            current={this.state.currentPage}
-            onChange={this.togglePagination}
-          />
+          <div className="tab-pane-page-footer">
+            <Pagination defaultCurrent={1}
+              pageSize={3} // 每页显示3条数据，可以与上面的 currentPage*3 对应上
+              hideOnSinglePage={true}
+              total={Object.keys(this.dailyFinishedTodos).length}
+              current={this.state.currentPage}
+              onChange={this.togglePagination}
+            />
+            <div></div>
+            <p className="total-num-of-todos">总计 {this.finishedTodosLength} 个已完成的任务</p>
+          </div>
 				</TabPane>
 				<TabPane tab="已删除的任务" key="2">
 					<div className="todos-history">
 						{deletedTodosList}
 					</div>
-          <Pagination defaultCurrent={1}
-            pageSize={12}
-            hideOnSinglePage={true}
-            total={this.deletedTodos.length}
-            current={this.state.deletedCurrentPage}
-            onChange={this.toggleDeletedPagination}
-          />
+          <div className="tab-pane-page-footer">
+            <Pagination defaultCurrent={1}
+              pageSize={12}
+              hideOnSinglePage={true}
+              total={this.deletedTodos.length}
+              current={this.state.deletedCurrentPage}
+              onChange={this.toggleDeletedPagination}
+            />
+            <div></div>
+            <p className="total-num-of-todos">总计 {this.deletedTodosLength} 个已删除的任务</p>
+          </div>
 				</TabPane>
 			</Tabs>
     )
