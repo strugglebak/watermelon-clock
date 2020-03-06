@@ -41,7 +41,7 @@ export class dotLine extends Component
   get circleRadius() {
     const { width } = this.props
     let radius = width > MAX_WIDTH ? MAX_RADIUS : times * width
-    return "" + radius
+    return '' + radius
   }
 
   render() {
