@@ -6,6 +6,8 @@ import { connect } from 'react-redux'
 import { updateTodo } from '../../redux/actions/todosActions'
 import { Collapse } from 'antd'
 
+import { MehOutlined } from '@ant-design/icons'
+
 import './todos.styl'
 
 const { Panel } = Collapse
@@ -24,9 +26,14 @@ export class todos extends Component<any> {
         <main>
           <ul className="todo-list">
             {
+              this.unCompletedTodos.length <= 0 &&
+                <div className="no-data"><MehOutlined
+                  style={{ fontSize: '15em', color: '#eee' }}
+                /></div>
+            }
+            {
               this.unCompletedTodos.map((todo: any) =>
-                <TodoItem key={todo.id} {...todo}
-                />
+                <TodoItem key={todo.id} {...todo}/>
               )
             }
           <Collapse bordered={false} defaultActiveKey={['1']}>
