@@ -32,10 +32,11 @@ instance.interceptors.response.use(
     return res
   },
   e => {
-    console.log('response error: ', e)
-    if (e.response.status === 401 || e.response.status >= 500) {
+    // eslint-disable-next-line
+    if (e.response && e.response.status === 401 || e.response.status >= 500) {
       // 一般是如果鉴权失败，需要做重定向跳转到登录页
-      history.push('/login')
+      console.log(history.location.pathname)
+      if (history.location.pathname === '/') history.push('/login')
     }
     return Promise.reject(e)
   }

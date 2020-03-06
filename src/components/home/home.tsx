@@ -32,13 +32,9 @@ export class home extends Component<any, IIndexState> {
   }
 
   getUserInfo = async () => {
-    try {
-      const response = await http.get('/me')
-      const userInfo = response.data
-      this.setState({ userInfo })
-    } catch (e) {
-      throw new Error(e)
-    }
+    const response = await http.get('/me')
+    const userInfo = response.data
+    this.setState({ userInfo })
   }
 
   getTodos = async () => {
