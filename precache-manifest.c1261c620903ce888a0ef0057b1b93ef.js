@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "802f7da3c858066084ee44e2e1c354d7",
+    "revision": "386df8ee83a24a88831f71eed97b488b",
     "url": "/watermelon-clock/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/watermelon-clock/static/css/2.9dd65991.chunk.css"
   },
   {
-    "revision": "966eb34e129a2c060b14",
+    "revision": "9eb5dba91670efcb8f30",
     "url": "/watermelon-clock/static/css/main.8455e325.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/watermelon-clock/static/js/2.c871527e.chunk.js.LICENSE"
   },
   {
-    "revision": "966eb34e129a2c060b14",
-    "url": "/watermelon-clock/static/js/main.ceae2608.chunk.js"
+    "revision": "9eb5dba91670efcb8f30",
+    "url": "/watermelon-clock/static/js/main.3a3a73dc.chunk.js"
   },
   {
     "revision": "56d3f463503c77baba5b",
