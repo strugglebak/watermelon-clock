@@ -57,6 +57,7 @@ export class login extends Component<IRouter, ILoginState> {
           placeholder="账号" allowClear
           prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('account', e)}}
+          style={{marginBottom: '1em'}}
         />
         <Input.Password
           className="password-input"

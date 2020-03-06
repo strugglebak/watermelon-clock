@@ -64,18 +64,21 @@ export class signUp extends Component<IRouter, ISignUpState> {
           placeholder="账号" allowClear
           prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('account', e)}}
+          style={{marginBottom: '1em'}}
         />
         <Input.Password
           className="password-input"
           placeholder="密码" allowClear
           prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('password', e)}}
+          style={{marginBottom: '1em'}}
         />
         <Input.Password
           className="password-confirmed-input"
           placeholder="确认密码" allowClear
           prefix={<SafetyCertificateOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
           onChange={e => {this.onChange('passwordConfirmed', e)}}
+          style={{marginBottom: '1em'}}
         />
         <Button
           className="sign-up-btn"
