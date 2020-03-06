@@ -12,6 +12,7 @@ import http from '../../config/http'
 
 import _ from 'lodash'
 import { format } from 'date-fns'
+import NoData from './noData'
 
 import './waterMelon.styl'
 
@@ -56,6 +57,9 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
   }
 
   render() {
+    const HasWaterMelons = <WaterMelonList finishedWaterMelons={this.finishedWaterMelons} />
+    const NoWaterMelons = <NoData/>
+    console.log(this.finishedWaterMelons)
     return (
       <div className="watermelon">
         <WaterMelonAction
@@ -63,9 +67,7 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
           unFinishedWaterMelon={this.unFinishedWaterMelon}
           updateWaterMelon={this.props.updateWaterMelon}
         />
-        <WaterMelonList
-          finishedWaterMelons={this.finishedWaterMelons}
-        />       
+        {Object.keys(this.finishedWaterMelons).length > 0 ? HasWaterMelons : NoWaterMelons}
       </div>
     )
   }
