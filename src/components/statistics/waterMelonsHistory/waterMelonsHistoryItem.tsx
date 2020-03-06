@@ -138,10 +138,10 @@ export class waterMelonsHistoryItem extends Component
       ? <p className="supply"><span>{description}</span><span className="supply-info">（补）</span></p>
       : description
 
-    const normalDescription = <p className="description">
+    const normalDescription = <div className="description">
       {/* eslint-disable-next-line */}
       {desc || <span className="null">🍉描述为空</span>}
-    </p>
+    </div>
     const inputDescription = <textarea
       ref={this.inputRef}
       rows={1} cols={30}
