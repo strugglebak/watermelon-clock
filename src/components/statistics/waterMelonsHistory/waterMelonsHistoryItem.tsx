@@ -130,13 +130,16 @@ export class waterMelonsHistoryItem extends Component
   inputRef = React.createRef<HTMLTextAreaElement>()
 
   render() {
-    const { updated_at, created_at, description } = this.props.watermelon
+    const { updated_at, created_at, description, manually_created } = this.props.watermelon
     const { itemType } = this.props
     const formatText = 'HH:mm'
 
-    const normalDescription = <p
-      className="description">
-      {description || <span className="null">🍉描述为空</span>}
+    const desc = manually_created
+      ? <p className="supply"><span>{description}</span><span className="supply-info">（补）</span></p>
+      : description
+
+    const normalDescription = <p className="description">
+      {desc || <span className="null">🍉描述为空</span>}
     </p>
     const inputDescription = <textarea
       ref={this.inputRef}
