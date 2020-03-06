@@ -30,12 +30,12 @@ export class todosHistoryItem extends Component
 
   update = async (e: any, params: any) => {
     const {id} = this.props.todo
-    const {className} = e.currentTarget
-    this.changeActionText({submit: true, className})
+    // const {className} = e.currentTarget
+    // this.changeActionText({submit: true, className})
     try {
       const response = await http.put(`/todos/${id}`, params)
       this.props.updateTodo(response.data.resource)
-      this.changeActionText({submit: false, className})
+      // this.changeActionText({submit: false, className})
     } catch (e) {
       throw new Error(e)
     }
