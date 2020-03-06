@@ -85,4 +85,4 @@ yarn run deploy
 
 ## 协议
 
-MIT
+[MIT](./LICENSE)
