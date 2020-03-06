@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { format } from 'date-fns'
 import _ from 'lodash'
 import { Tabs, Pagination, Button, Tooltip } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { PlusOutlined, MinusOutlined } from '@ant-design/icons'
 import {
   dayOfWeekTransfer,
   yearMonthDayTransfer
@@ -145,6 +145,10 @@ export class waterMelonsHistory extends Component
     this.props.addNewWaterMelon(params)
   }
 
+  onSupplyWaterMelonBtnClick = () => {
+    this.setState({isShowSupplyPane: !this.state.isShowSupplyPane})
+  }
+
   render() {
     const finishedWaterMelonsList = this.finishedDatesKeys.map(
       (datesKey: any) => {
@@ -162,13 +166,15 @@ export class waterMelonsHistory extends Component
         return List(Props)
       }
     )
-
+    const icon = this.state.isShowSupplyPane
+      ? <MinusOutlined />
+      : <PlusOutlined />
     const operations = this.state.tabKey === '1'
       ? (
         <Tooltip title="补记西瓜">
           <Button className="supply-watermelon"
-            icon={<PlusOutlined />}
-            onClick={() => this.setState({isShowSupplyPane: true})}
+            icon={icon}
+            onClick={this.onSupplyWaterMelonBtnClick}
           />
         </Tooltip>
       )
