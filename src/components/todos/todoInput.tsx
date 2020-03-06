@@ -10,6 +10,7 @@ import http from '../../config/http'
 interface ITodoInputState {
   description: string
   focus: boolean
+  mouseFocus: boolean
 }
 
 interface ITodoInputProps {
@@ -21,7 +22,8 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
     super(props);
     this.state = {
       description: '',
-      focus: false
+      focus: false,
+      mouseFocus: false
     }
   }
 
@@ -58,10 +60,16 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
     this.setState({description: ''})
   }
 
+  onMouseEnter = (e: any) => {
+    this.setState({mouseFocus: true})
+  }
+  onMouseLeave = (e: any) => {
+    this.setState({mouseFocus: false})
+  }
+
   render() {
-    const { focus, description } = this.state
-    console.log(focus)
-    const suffix = description
+    const { mouseFocus, description } = this.state
+    const suffix = description || mouseFocus
       ? <EnterOutlined
       style={{
             fontSize: '18px', cursor: 'pointer'
@@ -77,6 +85,8 @@ export class todoInput extends Component<ITodoInputProps, ITodoInputState> {
           onChange={this.onChange}
           value={this.state.description}
           suffix={suffix}
+          onMouseEnter={this.onMouseEnter}
+          onMouseLeave={this.onMouseLeave}
         />
       </div>
     )
