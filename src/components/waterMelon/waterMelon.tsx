@@ -59,7 +59,6 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
   render() {
     const HasWaterMelons = <WaterMelonList finishedWaterMelons={this.finishedWaterMelons} />
     const NoWaterMelons = <NoData/>
-    console.log(this.finishedWaterMelons)
     return (
       <div className="watermelon">
         <WaterMelonAction
