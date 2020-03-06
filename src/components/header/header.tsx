@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { DownOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Menu, Dropdown } from 'antd';
 import history from '../../config/history'
+import logo from './logo.png'
 
 import './header.styl'
 
@@ -31,7 +32,8 @@ export class header extends Component<IHeaderProps> {
     return (
       <div className="page-header page-container">
         <h1 className="logo">
-          <a href="/">西瓜闹钟</a>
+          <img src={logo} alt="" width="50" />
+          <a href="/">闹钟</a>
         </h1>
         <Dropdown overlay={menu} trigger={['click']}>
           <span className="dropdown-title">
