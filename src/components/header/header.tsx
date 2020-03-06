@@ -32,11 +32,15 @@ export class header extends Component<IHeaderProps> {
     return (
       <div className="page-header page-container">
         <h1 className="logo">
-          <img src={logo} alt="" width="50" />
-          <a href="/">闹钟</a>
+          <a href="/">
+            <img src={logo} alt="" width="50" />
+            ⏰
+          </a>
         </h1>
         <Dropdown overlay={menu} trigger={['click']}>
           <span className="dropdown-title">
+            {/* eslint-disable-next-line */}
+            🎃
             {
               this.props.userInfo && this.props.userInfo.account
             }

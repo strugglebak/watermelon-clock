@@ -157,7 +157,7 @@ export class statistics extends Component
           <h3 className="title">统计</h3>
           <div className="description-wrapper">
             <span className="description">
-              {new Date().getMonth() + 1}月累计
+              {new Date().getMonth() + 1}月累计📈
             </span>
             <span className="number">
               {this.monthlyWaterMelonsLength}
@@ -169,9 +169,9 @@ export class statistics extends Component
           />
         </li>
         <li className={watermelonTitleClasses}>
-          <h3 className="title">西瓜历史</h3>
+          <h3 className="title">🍉历史</h3>
           <div className="description-wrapper">
-            <span className="description">累计完成西瓜</span>
+            <span className="description">累计完成🍉</span>
             <span className="number">{this.finishedWaterMelons.length}</span>
           </div>
           <Polyline
@@ -181,9 +181,9 @@ export class statistics extends Component
           />
         </li>
         <li className={todosTitleClasses}>
-          <h3 className="title">任务历史</h3>
+          <h3 className="title">任务👀历史</h3>
           <div className="description-wrapper">
-            <span className="description">累计完成任务</span>
+            <span className="description">累计完成任务👌</span>
             <span className="number">{this.finishedTodos.length}</span>
           </div>
           <Polyline

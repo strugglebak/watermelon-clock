@@ -104,7 +104,7 @@ class newWaterMelon extends Component
             </FormItem>
           </div>
           <div>
-            <FormItem label="西瓜描述">
+            <FormItem label="🍉 描述">
               <Input value={this.state.description} onChange={this.saveDescription}/>
             </FormItem>
           </div>

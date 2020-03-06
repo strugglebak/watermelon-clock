@@ -39,7 +39,7 @@ export class todos extends Component<any> {
             {
               this.completedTodos.length > 0 &&
                 <Collapse bordered={false} defaultActiveKey={['1']}>
-                  <Panel header="最近完成的任务" key="1">
+                  <Panel header="最近完成的任务✔" key="1">
                     {
                       this.completedTodos.map((todo: any) =>
                         <TodoItem key={todo.id} {...todo}

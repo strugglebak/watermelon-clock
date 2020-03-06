@@ -136,7 +136,7 @@ export class waterMelonsHistoryItem extends Component
 
     const normalDescription = <p
       className="description">
-      {description || <span className="null">西瓜描述为空</span>}
+      {description || <span className="null">🍉描述为空</span>}
     </p>
     const inputDescription = <textarea
       ref={this.inputRef}

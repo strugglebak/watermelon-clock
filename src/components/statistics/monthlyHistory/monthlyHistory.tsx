@@ -29,7 +29,7 @@ export class weeklyHistory extends Component
     const { width } = this.props
     return (
       <Tabs defaultActiveKey="1" type="card">
-				<TabPane tab="西瓜统计" key="1">
+				<TabPane tab="🍉统计" key="1">
 					<div className="monthly-history">
             <MonthlyHistoryCore
               finishedData={this.finishedWaterMelons}

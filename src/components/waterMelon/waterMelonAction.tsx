@@ -105,7 +105,8 @@ export class waterMelonAction extends Component
       onClick={this.abort} />
 
     if (waterMelon === undefined) {
-      html = <Button className="start-task-btn" onClick={this.props.startWaterMelon} >开始西瓜</Button>
+      // eslint-disable-next-line
+      html = <Button className="start-task-btn" onClick={this.props.startWaterMelon} >开始🍉</Button>
     } else {
       const startedAtTime = Date.parse(waterMelon.started_at)
       const currentTime = new Date().getTime()

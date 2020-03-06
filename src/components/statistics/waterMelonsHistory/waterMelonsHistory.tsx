@@ -171,7 +171,7 @@ export class waterMelonsHistory extends Component
       : <PlusOutlined />
     const operations = this.state.tabKey === '1'
       ? (
-        <Tooltip title="补记西瓜">
+        <Tooltip title="补记🍉">
           <Button className="supply-watermelon"
             icon={icon}
             onClick={this.onSupplyWaterMelonBtnClick}
@@ -184,7 +184,7 @@ export class waterMelonsHistory extends Component
       <Tabs defaultActiveKey="1" type="card" tabBarExtraContent={operations}
         onChange={this.onChangeTab}
       >
-				<TabPane tab="完成的西瓜" key="1">
+				<TabPane tab="完成的🍉" key="1">
           {
             this.state.isShowSupplyPane
               ? <AddNewWaterMelon
