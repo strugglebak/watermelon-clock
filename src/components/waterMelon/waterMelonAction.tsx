@@ -80,11 +80,13 @@ export class waterMelonAction extends Component
   render() {
     let waterMelon = this.props.unFinishedWaterMelon
     let html = <div/>
+
+    // eslint-disable-next-line
     const modal = <Modal
       visible={this.state.visible}
       onOk={this.handleOk}
       onCancel={this.handleCancel}
-      okText="放弃西瓜"
+      okText="放弃🍉"
       cancelText="取消"
       >
       <h3 style={{
