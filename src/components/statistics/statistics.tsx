@@ -169,8 +169,10 @@ export class statistics extends Component
           />
         </li>
         <li className={watermelonTitleClasses}>
+          {/* eslint-disable-next-line */}
           <h3 className="title">🍉历史</h3>
           <div className="description-wrapper">
+            {/* eslint-disable-next-line */}
             <span className="description">累计完成🍉</span>
             <span className="number">{this.finishedWaterMelons.length}</span>
           </div>
@@ -181,8 +183,10 @@ export class statistics extends Component
           />
         </li>
         <li className={todosTitleClasses}>
+          {/* eslint-disable-next-line */}
           <h3 className="title">任务👀历史</h3>
           <div className="description-wrapper">
+            {/* eslint-disable-next-line */}
             <span className="description">累计完成任务👌</span>
             <span className="number">{this.finishedTodos.length}</span>
           </div>

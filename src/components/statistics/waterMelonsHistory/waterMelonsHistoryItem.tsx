@@ -139,6 +139,7 @@ export class waterMelonsHistoryItem extends Component
       : description
 
     const normalDescription = <p className="description">
+      {/* eslint-disable-next-line */}
       {desc || <span className="null">🍉描述为空</span>}
     </p>
     const inputDescription = <textarea
