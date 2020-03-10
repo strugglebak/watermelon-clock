@@ -43,7 +43,7 @@
 ### 使用 yarn
 
 ```bash
-yarn add -D
+yarn install
 ```
 
 ### 使用 npm
