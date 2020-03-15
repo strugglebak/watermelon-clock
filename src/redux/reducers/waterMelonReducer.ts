@@ -1,13 +1,15 @@
 import {
   ADD_WATERMELON,
   INIT_WATERMELON,
-  UPDATE_WATERMELON
+  UPDATE_WATERMELON,
+  FETCH_WATERMELON_SUCCESS
 } from '../actionTypes'
 
 export default (state: any[] = [], action: any) => {
   switch(action.type) {
     case ADD_WATERMELON:
       return [action.payload, ...state]
+    case FETCH_WATERMELON_SUCCESS:
     case INIT_WATERMELON:
       return [...(action.payload).map((wm: any) => {
         if (!wm.extra) {
