@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { CloseCircleOutlined } from '@ant-design/icons';
 import { Button, Input, Modal } from 'antd';
 
-import CountDown from './countDown'
+import CountDown from './countDownHooks'
 import http from '../../config/http'
 
 import './waterMelonAction.styl'
