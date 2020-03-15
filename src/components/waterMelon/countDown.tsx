@@ -21,7 +21,7 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
   constructor(props: ICountDownProps) {
     super(props)
     this.state = {
-      countDown: this.props.time
+      countDown: this.props.time,
     }
   }
 
@@ -45,8 +45,10 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
       this.setState({
         countDown: time - 1000
       })
+      document.title = `${this.countDown} - 西瓜闹钟 App`
 
       if (time < 0) {
+        document.title = '西瓜闹钟 App'
         this.props.onEnd()
         window.clearInterval(timerId)
       }
@@ -55,6 +57,7 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
 
   componentWillUnmount() {
     window.clearInterval(timerId)
+    document.title = '西瓜闹钟 App'
   }
 
   render() {
