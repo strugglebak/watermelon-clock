@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import http from '../../config/http'
 import Header from '../header/header'
 import Footer from '../footer/footer'
 import Todos from '../todos/todos'
@@ -7,8 +6,7 @@ import WaterMelon from '../waterMelon/waterMelon'
 import Statistics from '../statistics/statistics'
 
 import { connect } from 'react-redux'
-import { initTodos } from '../../redux/actions/todosActions'
-import { initWaterMelon } from '../../redux/actions/waterMelonActions'
+import { getUserInfo, initTodos, initWaterMelon } from '../../redux/actions/userActions'
 
 import './home.styl'
 
@@ -16,54 +14,25 @@ interface IIndexState {
   userInfo: any
 }
 
-export class home extends Component<any, IIndexState> {
+interface IIndexProps {
+  userInfo: any
+  getUserInfo: () => (dispatch: any) => Promise<any>
+  initTodos: () => (dispatch: any) => Promise<any>
+  initWaterMelon: () => (dispatch: any) => Promise<any>
+}
 
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      userInfo: {}
-    }
-  }
+export class home extends Component<IIndexProps, IIndexState> {
 
   async componentWillMount() {
-    await this.getUserInfo()
-    await this.getTodos()
-    await this.getWaterMelon()
-  }
-
-  getUserInfo = async () => {
-    const response = await http.get('/me')
-    const userInfo = response.data
-    this.setState({ userInfo })
-  }
-
-  getTodos = async () => {
-    try {
-      const response = await http.get('/todos')
-      const { resources } = response.data
-      // mount 时需要对每个 todo 的编辑状态置为 false
-      const newTodos = resources.map((todo: any) => {
-        return Object.assign({}, todo, { editing: false })
-      })
-      this.props.initTodos(newTodos)
-    } catch (e) {
-      throw new Error(e)
-    }
-  }
-
-  getWaterMelon = async () => {
-    try {
-      const response = await http.get('/tomatoes')
-      this.props.initWaterMelon(response.data.resources)
-    } catch (e) {
-      throw new Error(e)
-    }
+    this.props.getUserInfo()
+    this.props.initWaterMelon()
+    this.props.initTodos()
   }
 
   render() {
     return (
       <div id="Home">
-        <Header userInfo={this.state.userInfo} />
+        <Header userInfo={this.props.userInfo} />
         <main className="content">
           <WaterMelon/>
           <Todos/>
@@ -78,12 +47,14 @@ export class home extends Component<any, IIndexState> {
 }
 
 const mapStateToProps = (state: any, ownProps: any) => ({
-  ...ownProps
+  ...state,
+  userInfo: state.userReducer.userInfo,
 })
 
 const mapDispatchToProps = {
   initTodos,
-  initWaterMelon
+  initWaterMelon,
+  getUserInfo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(home)

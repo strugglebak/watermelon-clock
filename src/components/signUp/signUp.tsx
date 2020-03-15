@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { LockOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons';
-import { Input, Button, message } from 'antd';
-import http from '../../config/http'
+import { Input, Button, message, Alert } from 'antd';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getUserInfo, register, hasReadErrorInfo } from '../../redux/actions/userActions'
 
 import './signUp.styl'
 
@@ -12,11 +13,15 @@ interface ISignUpState {
   passwordConfirmed: string
 }
 
-interface IRouter {
+interface ISignUpProps {
   history: any
+  errorInfo: any
+  getUserInfo: () => (dispatch: any) => Promise<any>
+  register: (params: any) => (dispatch: any) => Promise<any>
+  hasReadErrorInfo: () => (dispatch: any) => Promise<any>
 }
 
-export class signUp extends Component<IRouter, ISignUpState> {
+export class signUp extends Component<ISignUpProps, ISignUpState> {
 
   constructor(props: any) {
     super(props);
@@ -27,38 +32,49 @@ export class signUp extends Component<IRouter, ISignUpState> {
     }
   }
 
+  componentDidMount() {
+    this.props.getUserInfo()
+  }
+
   onChange = (key: keyof ISignUpState, e: any) => {
     const newState = {} as ISignUpState
     newState[key] = e.target.value
     this.setState(newState)
   }
 
-  goToLogin = () => {
-    this.props.history.push('/login')
-  }
-
   submit = async () => {
     const { account, password, passwordConfirmed } = this.state
-    try {
-      await http.post('/sign_up/user', {
-        account, password, password_confirmation: passwordConfirmed
-      })
-
-      message.success('注册成功! 3s 后跳转至登录页...')
-      setTimeout(() => {
-        this.goToLogin()
-      }, 3000)
-
-    } catch (e) {
-      message.error('注册失败!')
-      throw new Error(e)
+    if (!account) message.error('账号为空')
+    if (!password) message.error('密码为空')
+    if (!passwordConfirmed) message.error('确认密码为空')
+    if (!account || !password || !passwordConfirmed) return
+    if (password !== passwordConfirmed) {
+      message.error('输入密码跟确认密码不一致')
+      return
     }
+    this.props.register({ account, password, password_confirmation: passwordConfirmed })
   }
 
   render() {
+    const { errorInfo } = this.props
     return (
       <div className="page-sign-up">
         <h1 className="sign-up-header">注册</h1>
+        {
+          errorInfo ? (
+            <Alert
+              message={
+                typeof errorInfo === 'string'
+                  ? errorInfo // 网络问题
+                  : errorInfo.reduce((acc: any, cur: any) => acc.concat(`+ ${cur}`),'') // 其他问题拼凑成字符串
+              }
+              type="error"
+              showIcon={true}
+              closable={true}
+              onClose={()=>this.props.hasReadErrorInfo()}
+            />
+          ) : null
+        }
         <Input
           className="account-input"
           placeholder="账号" allowClear
@@ -93,4 +109,15 @@ export class signUp extends Component<IRouter, ISignUpState> {
   }
 }
 
-export default signUp
+const mapStateToProps = (state: any, ownProps: any) => ({
+  ...state,
+  errorInfo: state.userReducer.error,
+})
+
+const mapDispatchToProps = {
+  getUserInfo,
+  register,
+  hasReadErrorInfo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(signUp)

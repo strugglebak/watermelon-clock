@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Input, Button } from 'antd';
-import http from '../../config/http'
+import { Input, Button, Alert, message } from 'antd';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { getUserInfo, signIn, hasReadErrorInfo } from '../../redux/actions/userActions'
 
 import './login.styl'
 
@@ -11,11 +12,15 @@ interface ILoginState {
   password: string
 }
 
-interface IRouter {
+interface ILoginProps {
   history: any
+  errorInfo: any
+  getUserInfo: () => (dispatch: any) => Promise<any>
+  signIn: (params: any) => (dispatch: any) => Promise<any>
+  hasReadErrorInfo: () => (dispatch: any) => Promise<any>
 }
 
-export class login extends Component<IRouter, ILoginState> {
+export class login extends Component<ILoginProps, ILoginState> {
 
   constructor(props: any) {
     super(props);
@@ -31,27 +36,36 @@ export class login extends Component<IRouter, ILoginState> {
     this.setState(newState)
   }
 
-  goToSignUp = () => {
-    this.props.history.push('/signUp')
-  }
-  goToIndex = () => {
-    this.props.history.push('/')
-  }
-
   submit = async () => {
     const { account, password } = this.state
-    try {
-      await http.post('/sign_in/user', { account, password })
-      this.goToIndex()
-    } catch (e) {
-      throw new Error(e)
-    }
+    if (!account) message.error('账号为空')
+    if (!password) message.error('密码为空')
+
+    if (!account || !password) return
+    this.props.signIn({ account, password })
   }
 
   render() {
+    const { errorInfo } = this.props
     return (
       <div className="page-login">
         <h1 className="login-header">登录</h1>
+        {
+          errorInfo ? (
+            <Alert
+              message={
+                typeof errorInfo === 'string'
+                  ? errorInfo // 网络问题
+                  : errorInfo.reduce((acc: any, cur: any) => acc.concat(`+ ${cur}`),'') // 其他问题拼凑成字符串
+              }
+              type="error"
+              showIcon={true}
+              closable={true}
+              onClose={()=>this.props.hasReadErrorInfo()}
+              style={{marginBottom: '15px'}}
+            />
+          ) : null
+        }
         <Input
           className="account-input"
           placeholder="账号" allowClear
@@ -78,4 +92,15 @@ export class login extends Component<IRouter, ILoginState> {
   }
 }
 
-export default login
+const mapStateToProps = (state: any, ownProps: any) => ({
+  ...state,
+  errorInfo: state.userReducer.error,
+})
+
+const mapDispatchToProps = {
+  getUserInfo,
+  signIn,
+  hasReadErrorInfo
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(login)
