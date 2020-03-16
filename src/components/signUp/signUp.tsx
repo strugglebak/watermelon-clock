@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { LockOutlined, SafetyCertificateOutlined, UserOutlined } from '@ant-design/icons';
-import { Input, Button, message, Alert } from 'antd';
+import { Input, Button, message, Alert, Form } from 'antd';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getUserInfo, register, hasReadErrorInfo } from '../../redux/actions/userActions'
@@ -72,35 +72,39 @@ export class signUp extends Component<ISignUpProps, ISignUpState> {
               showIcon={true}
               closable={true}
               onClose={()=>this.props.hasReadErrorInfo()}
+              style={{marginBottom: '15px'}}
             />
           ) : null
         }
-        <Input
-          className="account-input"
-          placeholder="账号" allowClear
-          prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={e => {this.onChange('account', e)}}
-          style={{marginBottom: '1em'}}
-        />
-        <Input.Password
-          className="password-input"
-          placeholder="密码" allowClear
-          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={e => {this.onChange('password', e)}}
-          style={{marginBottom: '1em'}}
-        />
-        <Input.Password
-          className="password-confirmed-input"
-          placeholder="确认密码" allowClear
-          prefix={<SafetyCertificateOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={e => {this.onChange('passwordConfirmed', e)}}
-          style={{marginBottom: '1em'}}
-        />
-        <Button
-          className="sign-up-btn"
-          type="primary" onClick={this.submit}>
-            注册
-        </Button>
+        <Form onFinish={this.submit}>
+          <Input
+            className="account-input"
+            placeholder="账号" allowClear
+            prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+            onChange={e => {this.onChange('account', e)}}
+            style={{marginBottom: '1em'}}
+          />
+          <Input.Password
+            className="password-input"
+            placeholder="密码" allowClear
+            prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+            onChange={e => {this.onChange('password', e)}}
+            style={{marginBottom: '1em'}}
+          />
+          <Input.Password
+            className="password-confirmed-input"
+            placeholder="确认密码" allowClear
+            prefix={<SafetyCertificateOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+            onChange={e => {this.onChange('passwordConfirmed', e)}}
+            style={{marginBottom: '1em'}}
+          />
+          <Button
+            className="sign-up-btn"
+            htmlType="submit"
+            type="primary">
+              注册
+          </Button>
+        </Form>
         <p className="login-link">
           已经有账号？<Link to="/login">立即登录</Link>
         </p>

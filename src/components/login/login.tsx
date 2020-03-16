@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Input, Button, Alert, message } from 'antd';
+import { Input, Button, Alert, message, Form } from 'antd';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getUserInfo, signIn, hasReadErrorInfo } from '../../redux/actions/userActions'
@@ -66,24 +66,27 @@ export class login extends Component<ILoginProps, ILoginState> {
             />
           ) : null
         }
-        <Input
-          className="account-input"
-          placeholder="账号" allowClear
-          prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={e => {this.onChange('account', e)}}
-          style={{marginBottom: '1em'}}
-        />
-        <Input.Password
-          className="password-input"
-          placeholder="密码" allowClear
-          prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
-          onChange={e => {this.onChange('password', e)}}
-        />
-        <Button
-          className="login-btn"
-          type="primary" onClick={this.submit}>
-            登录
-        </Button>
+        <Form onFinish={this.submit}>
+          <Input
+            className="account-input"
+            placeholder="账号" allowClear
+            prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+            onChange={e => {this.onChange('account', e)}}
+            style={{marginBottom: '1em'}}
+          />
+          <Input.Password
+            className="password-input"
+            placeholder="密码" allowClear
+            prefix={<LockOutlined style={{ color: 'rgba(0,0,0,.25)' }} />}
+            onChange={e => {this.onChange('password', e)}}
+          />
+          <Button
+            className="login-btn"
+            htmlType="submit"
+            type="primary">
+              登录
+          </Button>
+        </Form>
         <p className="register-link">
           还没有账号？<Link to="/signUp">立即注册</Link>
         </p>
