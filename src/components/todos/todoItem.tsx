@@ -5,7 +5,7 @@ import classNames from 'classnames'
 import http from '../../config/http'
 
 import { connect } from 'react-redux'
-import {editingTodo, updateTodo} from '../../redux/actions/todosActions'
+import {editingTodo, updateTodo, syncUpdateTodo} from '../../redux/actions/todosActions'
 
 import './todoItem.styl'
 
@@ -21,6 +21,7 @@ interface ITodoItemProps {
   created_at: string
   updated_at: string
   updateTodo: (payload: any) => any
+  syncUpdateTodo: (id: number, params: any) => (dispatch: any) => Promise<any>
   editingTodo: (payload: number) => any
   editing: boolean
 }
@@ -44,12 +45,13 @@ export class todoItem extends Component<ITodoItemProps, ITodoItemState> {
       params.completed_at = new Date()
     }
 
-    try {
-      const response = await http.put(`/todos/${id}`, params)
-      this.props.updateTodo(response.data.resource)
-    } catch (e) {
-      throw new Error(e)
-    }
+    // try {
+    //   const response = await http.put(`/todos/${id}`, params)
+    //   this.props.updateTodo(response.data.resource)
+    // } catch (e) {
+    //   throw new Error(e)
+    // }
+    this.props.syncUpdateTodo(id, params)
   }
 
   getIntoEditingState = () => {
@@ -124,7 +126,8 @@ const mapStateToProps = (state: any, ownProps: any) => ({
 
 const mapDispatchToProps = {
 	editingTodo,
-	updateTodo
+  updateTodo,
+  syncUpdateTodo
 }
 
 

@@ -2,7 +2,8 @@ import {
   ADD_WATERMELON,
   INIT_WATERMELON,
   UPDATE_WATERMELON,
-  FETCH_WATERMELON_SUCCESS
+  FETCH_WATERMELON_SUCCESS,
+  SYNC_UPDATE_TODO_SUCCESS
 } from '../actionTypes'
 
 export default (state: any[] = [], action: any) => {
@@ -18,7 +19,6 @@ export default (state: any[] = [], action: any) => {
         }
         return wm
       })]
-      // return [...action.payload]
     case UPDATE_WATERMELON:
       return state.map(wm => {
         return wm.id === action.payload.id

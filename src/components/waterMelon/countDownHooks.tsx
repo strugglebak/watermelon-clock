@@ -23,16 +23,17 @@ const CountDown:FunctionComponent<ICountDownProps> = (props: ICountDownProps) =>
 
   // progress bar 进度条长度计算显示
   const { duration } = props
-  const progressWidth = (100 - countDown * 100 / duration).toFixed(3)
+  const progressWidth = (100 - (countDown - 1000) * 100 / duration).toFixed(3)
 
   useEffect(()=> {
     document.title = `${time} - 西瓜闹钟 App`
     timerId = setInterval(()=> {
       setCountDown(countDown - 1000)
-      if (countDown < 0) {
-        document.title = '西瓜闹钟 App'
+      if (countDown < 1000) {
+        console.log(countDown)
         props.onEnd()
         window.clearInterval(timerId)
+        document.title = '西瓜闹钟 App'
       }
     }, 1000)
 

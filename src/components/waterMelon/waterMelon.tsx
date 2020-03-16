@@ -48,7 +48,7 @@ export class waterMelon extends Component<IWaterMelonProps, any> {
     try {
       const response = await http.post('/tomatoes', {
         duration: 1500000 // 25min = 25 * 60 * 1000ms
-        // duration: 10000 // test 10s
+        // duration: 20000 // test 20s
       })
       this.props.addWaterMelon(response.data.resource)
     } catch (e) {

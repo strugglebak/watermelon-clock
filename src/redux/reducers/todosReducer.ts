@@ -3,7 +3,7 @@ import {
   INIT_TODOS,
   UPDATE_TODO,
   EDITING_TODO,
-  FETCH_TODOS_SUCCESS
+  FETCH_TODOS_SUCCESS,
 } from '../actionTypes'
 
 import { orderState } from '../../helper/util'
@@ -20,6 +20,7 @@ export default (state: any[] = [], action: any): any => {
       return [...newTodos]
     case INIT_TODOS:
       return [...orderState(action.payload)]
+    case SYNC_UPDATE_TODO_SUCCESS:
     case UPDATE_TODO:
       // 新 state
       let newState = state.map(todo=> {
