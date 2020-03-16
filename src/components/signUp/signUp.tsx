@@ -66,7 +66,7 @@ export class signUp extends Component<ISignUpProps, ISignUpState> {
               message={
                 typeof errorInfo === 'string'
                   ? errorInfo // 网络问题
-                  : errorInfo.reduce((acc: any, cur: any) => acc.concat(`+ ${cur}`),'') // 其他问题拼凑成字符串
+                  : 'username' + errorInfo.reduce((acc: any, cur: any) => acc.concat(` ${cur}`),'') // 其他问题拼凑成字符串
               }
               type="error"
               showIcon={true}
