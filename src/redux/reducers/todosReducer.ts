@@ -5,8 +5,8 @@ import {
   EDITING_TODO,
   FETCH_TODOS_SUCCESS
 } from '../actionTypes'
-import _ from 'lodash'
-import { format } from 'date-fns'
+
+import { orderState } from '../../helper/util'
 
 export default (state: any[] = [], action: any): any => {
   switch(action.type) {
@@ -19,7 +19,7 @@ export default (state: any[] = [], action: any): any => {
       })
       return [...newTodos]
     case INIT_TODOS:
-      return [...action.payload]
+      return [...orderState(action.payload)]
     case UPDATE_TODO:
       // 新 state
       let newState = state.map(todo=> {
@@ -27,14 +27,8 @@ export default (state: any[] = [], action: any): any => {
           ? action.payload
           : todo
       })
-      // 根据时间排序 stateOfOrderByTime = { 时间1: {...}, 时间2: {...}, ...}
-      let stateOfOrderByTime = _.groupBy(newState, (todo: any) => format(new Date(todo.updated_at), 'yyyy-MM-dd HH:mm:ss'))
-      // keyOfTime = [时间1, 时间2, ...]
-      let keyOfTime = Object.keys(stateOfOrderByTime).sort((a, b) => Date.parse(b) - Date.parse(a))
-      let orderedState: any[] = []
-      keyOfTime.map(key => stateOfOrderByTime[key].forEach(item => orderedState.push(item)))
-
-      return [...orderedState]
+      // 根据时间排序(主要是根据 update_at 排序)
+      return [...orderState(newState)]
     case EDITING_TODO:
       return state.map(todo => {
         return todo.id === action.payload
@@ -42,6 +36,6 @@ export default (state: any[] = [], action: any): any => {
           : Object.assign({}, todo, { editing: false })
       })
     default:
-      return state
+      return orderState(state)
   }
 }

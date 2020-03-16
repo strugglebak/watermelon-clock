@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-
+import _ from 'lodash'
 /**
  *
  * @param element 监听元素
@@ -51,4 +51,14 @@ export function timeTransfer (time: string, formatText: string, itemType: string
 
 export function formatTimeToClock(date: string) {
   return format(new Date(date), 'HH:mm')
+}
+
+export function orderState(state: any[] = []): any[] {
+  // 根据时间排序 stateOfOrderByTime = { 时间1: {...}, 时间2: {...}, ...}
+  let stateOfOrderByTime = _.groupBy(state, (todoOrWm: any) => format(new Date(todoOrWm.updated_at || new Date()), 'yyyy-MM-dd HH:mm:ss'))
+  // keyOfTime = [时间1, 时间2, ...]
+  let keyOfTime = Object.keys(stateOfOrderByTime).sort((a, b) => Date.parse(b) - Date.parse(a))
+  let orderedState: any[] = []
+  keyOfTime.map(key => stateOfOrderByTime[key].forEach(item => orderedState.push(item)))
+  return orderedState
 }
