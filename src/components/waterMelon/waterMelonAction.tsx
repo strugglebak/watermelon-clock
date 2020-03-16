@@ -116,7 +116,7 @@ export class waterMelonAction extends Component
       const { duration } = waterMelon
 
       // 倒计时已到
-      if (deltaTime > duration) {
+      if (deltaTime >= duration) {
         // 显示 input 框
         html = <div className="input-wrapper">
           <Input
@@ -129,7 +129,7 @@ export class waterMelonAction extends Component
         </div>
       } else if (deltaTime < duration) {
         // 显示倒计时组件
-        const time = duration - (currentTime - startedAtTime)
+        const time = duration - deltaTime
         html = <div className="count-down-wrapper">
           <CountDown time={time} onEnd={this.onEnd} duration={duration}/>
           {closeIcon}

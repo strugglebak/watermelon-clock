@@ -14,8 +14,6 @@ interface ICountDownState {
 
 let timerId:NodeJS.Timeout
 
-const delayTime = 0 // 延时
-
 export class countDown extends Component<ICountDownProps, ICountDownState> {
 
   constructor(props: ICountDownProps) {
@@ -27,7 +25,7 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
 
   get countDown() {
     const { countDown } = this.state
-    const time = countDown + delayTime
+    const time = countDown
     const min = Math.floor(time/1000/60)
     const sec = Math.floor(time/1000%60)
     return `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`

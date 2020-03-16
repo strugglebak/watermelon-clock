@@ -8,10 +8,6 @@ interface ICountDownProps {
   duration: number
 }
 
-interface ICountDownState {
-  countDown: number // 倒计时，单位是 ms
-}
-
 let timerId:NodeJS.Timeout
 
 // const delayTime = 0 // 延时
@@ -24,7 +20,6 @@ const CountDown:FunctionComponent<ICountDownProps> = (props: ICountDownProps) =>
   const min = Math.floor(countDown/1000/60)
   const sec = Math.floor(countDown/1000%60)
   const time = `${min < 10 ? `0${min}` : min}:${sec < 10 ? `0${sec}` : sec}`
-  console.log(time)
 
   // progress bar 进度条长度计算显示
   const { duration } = props
