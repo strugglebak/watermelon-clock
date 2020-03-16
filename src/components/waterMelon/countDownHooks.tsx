@@ -23,7 +23,7 @@ const CountDown:FunctionComponent<ICountDownProps> = (props: ICountDownProps) =>
 
   // progress bar 进度条长度计算显示
   const { duration } = props
-  const progressWidth = (Math.floor(100 - countDown * 100 / duration))
+  const progressWidth = (100 - countDown * 100 / duration).toFixed(3)
 
   useEffect(()=> {
     document.title = `${time} - 西瓜闹钟 App`
