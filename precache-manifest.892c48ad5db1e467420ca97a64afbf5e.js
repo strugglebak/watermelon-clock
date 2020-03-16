@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "46a97ba9c058236fb1d61a490fb0449e",
+    "revision": "4706155083ecc903c725395818682930",
     "url": "/watermelon-clock/index.html"
   },
   {
-    "revision": "ff15a4b9f021c7b58a71",
+    "revision": "eb485ced46365817e210",
     "url": "/watermelon-clock/static/css/2.5e48711d.chunk.css"
   },
   {
-    "revision": "38b7d1b1248fc346e480",
+    "revision": "ef726cae8f4bbbc069b1",
     "url": "/watermelon-clock/static/css/main.8455e325.chunk.css"
   },
   {
-    "revision": "ff15a4b9f021c7b58a71",
-    "url": "/watermelon-clock/static/js/2.e35728b1.chunk.js"
+    "revision": "eb485ced46365817e210",
+    "url": "/watermelon-clock/static/js/2.d3990d95.chunk.js"
   },
   {
     "revision": "d487770040833d2e5f6c1d23c9412cc6",
-    "url": "/watermelon-clock/static/js/2.e35728b1.chunk.js.LICENSE"
+    "url": "/watermelon-clock/static/js/2.d3990d95.chunk.js.LICENSE"
   },
   {
-    "revision": "38b7d1b1248fc346e480",
-    "url": "/watermelon-clock/static/js/main.e3d2de32.chunk.js"
+    "revision": "ef726cae8f4bbbc069b1",
+    "url": "/watermelon-clock/static/js/main.4286e478.chunk.js"
   },
   {
     "revision": "56d3f463503c77baba5b",
