@@ -5,6 +5,8 @@ import {
   EDITING_TODO,
   FETCH_TODOS_SUCCESS
 } from '../actionTypes'
+import _ from 'lodash'
+import { format } from 'date-fns'
 
 export default (state: any[] = [], action: any): any => {
   switch(action.type) {
@@ -19,11 +21,20 @@ export default (state: any[] = [], action: any): any => {
     case INIT_TODOS:
       return [...action.payload]
     case UPDATE_TODO:
-      return state.map(todo=> {
+      // 新 state
+      let newState = state.map(todo=> {
         return todo.id === action.payload.id
           ? action.payload
           : todo
       })
+      // 根据时间排序 stateOfOrderByTime = { 时间1: {...}, 时间2: {...}, ...}
+      let stateOfOrderByTime = _.groupBy(newState, (todo: any) => format(new Date(todo.updated_at), 'yyyy-MM-dd HH:mm:ss'))
+      // keyOfTime = [时间1, 时间2, ...]
+      let keyOfTime = Object.keys(stateOfOrderByTime).sort((a, b) => Date.parse(b) - Date.parse(a))
+      let orderedState: any[] = []
+      keyOfTime.map(key => stateOfOrderByTime[key].forEach(item => orderedState.push(item)))
+
+      return [...orderedState]
     case EDITING_TODO:
       return state.map(todo => {
         return todo.id === action.payload
