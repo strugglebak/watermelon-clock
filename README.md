@@ -6,6 +6,8 @@
 
 > 📢 [项目相关博客地址可点击这个链接](https://strugglebak.github.io/2020/03/17/watermelon-clock-%E5%9F%BA%E4%BA%8ETypeScript-React%E7%9A%84%E8%A5%BF%E7%93%9C%E9%97%B9%E9%92%9F%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/)
 
+> 🤣 [项目预览可点击这个链接哦~](https://strugglebak.github.io/watermelon-clock/)
+
 ## 预览
 
 ### 整体页面
