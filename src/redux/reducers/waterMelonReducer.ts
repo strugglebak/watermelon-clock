@@ -3,7 +3,6 @@ import {
   INIT_WATERMELON,
   UPDATE_WATERMELON,
   FETCH_WATERMELON_SUCCESS,
-  SYNC_UPDATE_TODO_SUCCESS
 } from '../actionTypes'
 
 export default (state: any[] = [], action: any) => {
