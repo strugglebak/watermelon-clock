@@ -1,13 +1,6 @@
 # watermelon-clock
 
-<style>
-  .watermelon-clock-logo {
-    display: flex;
-    justify-content: center;
-  }
-</style>
-
-<div class="watermelon-clock-logo">
+<div class="watermelon-clock-logo" style="display: flex; justify-content: center;">
   <img src="./README_IMG/watermelon-clock-logo.png" width="200" />
 </div>
 
