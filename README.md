@@ -1,5 +1,16 @@
 # watermelon-clock
 
+<style>
+  .watermelon-clock-logo {
+    display: flex;
+    justify-content: center;
+  }
+</style>
+
+<div class="watermelon-clock-logo">
+  <img src="./README_IMG/watermelon-clock-logo.png" width="200" />
+</div>
+
 > 这是一个🍉闹钟，可以随时用来记录你的个人计划和生活琐事哦~
 
 > ⚠: 目前可测试账号跟密码为 `pppxxx`/`pppxxx`，有意者可以先进入页面登陆然后就可以进行预览了
