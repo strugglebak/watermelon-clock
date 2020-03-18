@@ -37,14 +37,14 @@
 ## 主要技术栈
 
 - React 16.12
-- antd 4.0.1
-- axios 库
-- react-router-dom 5.1.2
-- react-redux 7.1.3
-- redux 4.0.5
-- typescript 3.8.3
-- history 4.10.1
-- lodash 4.14
+- Antd 4.0.1
+- Axios 库
+- React-Router-Dom 5.1.2
+- React-Redux 7.1.3
+- Redux 4.0.5
+- TypeScript 3.8.3
+- History 4.10.1
+- Lodash 4.14
 
 ## 安装
 

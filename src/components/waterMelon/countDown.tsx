@@ -71,5 +71,3 @@ export class countDown extends Component<ICountDownProps, ICountDownState> {
     )
   }
 }
-
-export default countDown
